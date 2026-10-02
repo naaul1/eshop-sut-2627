@@ -8,7 +8,42 @@
 - 23120066: Võ Thiện Nhân
 
 
-# I. Tool short-list
+# I. Web Automation Test's basis
+
+## 1. Definition
+
+Web Automation Testing là kiểm thử tự động giao diện và luồng nghiệp vụ web bằng script/tool thay cho thao tác thủ công lặp lại. Mục tiêu là để tăng tốc độ test, bao phủ cross-browser, tích hợp CI/CD.
+
+Web Automation Testing nên được thực hiện khi:
+- regression test, smoke test
+- cần chạy nhiều môi trường/trình duyệt
+- chạy những test tốn công (như nhập dữ liệu)
+- cần phối hợp với CI  
+
+và không nên thực hiện khi:
+- tính năng còn prototype và sẽ thay đổi liên tục
+- test dùng vài lần
+- những thứ khó automate (captcha, OPT, ...)
+
+
+## 2. Keywords
+
+| # | Keyword | Giải thích chung |
+|---|---|---|
+| 1 | DOM | Cấu trúc cây biểu diễn trang web, mọi thao tác tự động đều dựa trên việc truy vấn và tương tác với các node trong cây này |
+| 2 | Locator / Selector | Là cách chỉ đường để tool tìm ra nút cần bấm, ví dụ tìm theo tên, theo class hay theo vai trò của nút đó trên trang |
+| 3 | Synchronization & Waiting | Trang web cần thời gian để tải xong, còn tool thì chạy rất nhanh. Khái niệm này là cách bắt tool chờ trang load xong rồi mới bấm, tránh bấm hụt |
+| 4 | Assertion | Câu lệnh kiểm tra kết quả thực tế có khớp kỳ vọng hay không và quyết định test pass hay fail |
+| 5 | Test Data | Là dữ liệu được chuẩn bị sẵn để thử (ví dụ tài khoản mẫu hay giỏ hàng mẫu), sao cho test có thể thực hiện lặp lại giống nhau |
+| 6 | Test Environment | Môi trường chạy kiểm thử gồm trình duyệt, hệ điều hành, cấu hình mạng và hạ tầng thực thi, tách biệt với môi trường thật |
+| 7 | POM (Page Object Model) | Là cách gói mỗi trang web thành một bản vẽ riêng, ghi sẵn nút nào ở đâu và bấm ra sao. Test chỉ cần gọi bản vẽ đó, khi giao diện đổi thì sửa một chỗ thay vì sửa hết mọi test |
+| 8 | Browser Context | Phiên trình duyệt cách ly độc lập (cookie, storage riêng), cho phép chạy nhiều vai trò song song không lẫn session |
+
+## 3. Procedure
+
+
+
+# II. Tool short-list
 
 ## 1. Candidate tools
 

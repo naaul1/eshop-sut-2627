@@ -23,7 +23,7 @@ Web Automation Testing nên được thực hiện khi:
 và không nên thực hiện khi:
 - tính năng còn prototype và sẽ thay đổi liên tục
 - test dùng vài lần
-- những thứ khó automate (captcha, OPT, ...)
+- những thứ khó automate (captcha, OTP, ...)
 
 
 ## 2. Keywords
@@ -77,13 +77,13 @@ Chọn việc lặp lại nhiều, ít thay đổi (Login, Search, Cart, Checkou
 - Tối ưu cho tác vụ kiểm thử Web Frontend (thông qua khả năng quản lý nhiều trình duyệt/context riêng biệt, có thể chặn và can thiệp Backend API để test các lỗi bảo mật và logic cố ý cắm sẵn trong mã nguồn).
 - Cộng đồng phát triển cực nhanh, được Microsoft hậu thuẫn. Tài liệu xuất sắc, hỗ trợ sôi nổi qua GitHub, Discord và StackOverflow, có MCP hỗ trợ AI Agent.
 
-**WebdriverIO (bổ sung / thay Backup Selenium 4)**
+**WebdriverIO**
 - Miễn phí, mã nguồn mở, chạy trên Node.js nên đồng nhất với stack React + Vite của EShop, chỉ cần giỏi JS/TS là đủ.
 - Cấu hình nhẹ hơn Selenium 4, hỗ trợ sẵn WebDriver + BiDi/CDP với plugin phong phú, dễ viết test chéo Web + Admin và intercept API kiểm thử bảo mật.
 - Cộng đồng Node.js lớn, Discord sôi nổi, tài liệu hiện đại ít lẫn doc cũ như Selenium 2/3, có MCP hỗ trợ AI Agent, phù hợp định hướng AI-augmented của môn học.
 
 
-# II. AI Disclosure
+# III. AI Disclosure
 Sử dụng Muse Spark 1.3 để tra cứu các từ khoá (đã tìm hiểu và xác nhận thủ công), cũng như giải thích về quy trình test tự động.
 Sử dụng Gemini Pro để tìm hiểu các phần Learning curve, AI capabilities và Community của các phần mềm kiểm thử.
 Đã cross-check các thông tin về các phần mềm trên bằng Claude Sonnet 5 Medium.

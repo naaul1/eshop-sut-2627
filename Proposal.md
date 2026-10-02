@@ -42,36 +42,50 @@ và không nên thực hiện khi:
 ## 3. Procedure
 
 
+1. Phân tích cái gì cần test tự động
+Chọn việc lặp lại nhiều, ít thay đổi (Login, Search, Cart, Checkout, Admin CRUD, ...). Chức năng mới bắt đầu làm lần đầu thì test tay trước.
+2. Chọn tool + framework: theo tiêu chí Proposal: phí, learning curve, EShop Fit, AI, community.
+3. Thiết kế framework: POM + cấu trúc tests/, quản lý data, quản lý secret/JWT.
+4. Viết script: Viết từng bước: mở trang -> tìm nút bằng Locator -> bấm/nhập -> chờ trang load -> kiểm tra đúng sai bằng assertion.
+5. Chạy script và bảo cáo: Chạy thử local để sửa lỗi, rồi chuyển sang chạy ngầm, chạy nhiều trình duyệt song song. Fail thì xem screenshot và log để biết và sửa.
+6. Bảo trì: Giao diện đổi thì phải sửa lại test, không cần viết mới mà thông qua sửa locator và POM.
 
 # II. Tool short-list
 
 ## 1. Candidate tools
 
-**Traditional tool:** Playwright
+**Traditional tool:** Playwright, Selenium 4, Cypress, WebdriverIO.
 
-**AI-augmented tool:** Mabl
-
-**Backup:** Selenium 4
+**AI-augmented tool:** Mabl, Testim AI.
 
 
 ## 2. Comparison Matrix
-| Tiêu chí | Playwright | Mabl | Selenium 4 |
-| :--- | :--- | :--- | :--- |
-| **1. Phí bản quyền** | - Hoàn toàn miễn phí và mã nguồn mở (Giấy phép Apache License 2.0) | - Không miễn phí, không mã nguồn mở.<br>- Chi phí bản quyền dạng Subscription và được báo giá tùy chỉnh dựa trên số lượng tính năng và nhu cầu chạy test song song trên Cloud của doanh nghiệp. | - Hoàn toàn miễn phí và mã nguồn mở (Giấy phép Apache License 2.0) |
-| **2. Learning curve** | - Độ khó cao.<br>- Đòi hỏi nền tảng lập trình vững (hỗ trợ JavaScript/TypeScript, Python, Java, .NET) và kiến thức về xử lý bất đồng bộ.<br>- Phù hợp nhất với Lập trình viên hoặc Kỹ sư tự động hóa (SDET). | - Độ khó rất thấp, dễ tiếp cận nhất trong 3 công cụ.<br>- Sử dụng mô hình low-code/no-code (ghi hình thao tác record-and-playback, kéo thả) kết hợp AI tự động sửa lỗi.<br>- Phù hợp với Manual Tester, Business Analyst (BA), hoặc người không có chuyên môn sâu về lập trình. | - Độ khó cực cao.<br>- Đòi hỏi kỹ năng lập trình xuất sắc, am hiểu cấu trúc framework (Page Object Model) và tự quản lý cơ chế chờ.<br>- Dành riêng cho Kỹ sư tự động hóa chuyên sâu.<br>- Hỗ trợ Ruby, JavaScript, C#, Python và Java.|
-| **3. EShop Fit** | - Rất tối ưu cho việc kiểm thử 2 phân hệ Frontend Web và Web Admin (React + Vite).<br>- Xử lý rất tốt các kịch bản test chéo (ví dụ: User đặt hàng ở Web sau đó Admin xác nhận ở Web Admin) nhờ khả năng quản lý nhiều trình duyệt/context riêng biệt.<br>- Hỗ trợ mạnh mẽ việc chặn và can thiệp Backend API để test các lỗi bảo mật và logic cố ý cắm sẵn trong mã nguồn.<br>- Hạn chế: Không thể kiểm thử trực tiếp phân hệ Frontend Mobile (React Native + Expo). | - Là công cụ duy nhất trong 3 phần mềm có thể kiểm thử trọn vẹn cả 3 phân hệ: Web, Mobile App (React Native) và trực tiếp Backend API trên cùng một nền tảng.<br>- Đặc biệt phù hợp với kho lưu trữ này vì EShop có chứa các lỗi giao diện cố ý.<br>- Tính năng Visual Testing tích hợp AI của Mabl sẽ phát hiện các sai lệch giao diện như lệch nút, tràn chữ dễ dàng hơn so với việc viết assertion bằng code.<br>- Hạn chế: Free Trial 14 ngày và có yêu cầu email doanh nghiệp. | - Đáp ứng tốt việc kiểm thử Frontend Web và Web Admin.<br>- Có thể kết hợp với hệ sinh thái Appium để mở rộng kiểm thử phân hệ Mobile App (React Native).<br>- Hạn chế: Khó bảo trì khi giao diện React thay đổi, phải tự viết code chờ đợi phần tử tải xong.<br>- Không có cơ chế intercept mạng tinh gọn như Playwright để đánh giá bảo mật hoặc API Backend. |
-| **4. AI capabilities** | - Không tích hợp sẵn AI bên trong nền tảng lõi.<br>- Có thể kết hợp với AI để sinh mã.<br>- Có hỗ trợ MCP cho các AI Agent. | - Tích hợp AI rất mạnh mẽ là điểm mạnh cốt lõi.<br>- Nổi bật với tính năng Auto-healing (AI tự động cập nhật và sửa locators khi giao diện web/app thay đổi mà test không bị fail).<br>- Dùng AI để phát hiện lỗi hiển thị và tối ưu hóa thời gian chờ. | - Bản thân thư viện lõi không chứa bất kỳ tính năng AI nào.<br>- Thuần túy là công cụ điều khiển trình duyệt cơ bản.<br>- Việc áp dụng AI hoàn toàn phụ thuộc vào việc kỹ sư tự tích hợp với các thư viện hoặc AI Agent bên ngoài. |
-| **5. Community** | - Cộng đồng mã nguồn mở đang phát triển cực mạnh, được chống lưng bởi Microsoft.<br>- Được thảo luận sôi nổi, tốc độ fix bug và ra mắt tính năng mới rất nhanh.<br>- Dễ dàng tìm kiếm hỗ trợ trên GitHub, Discord. | - Cộng đồng người dùng bên ngoài khá khiêm tốn do là phần mềm thương mại đóng.<br>- Rất ít tài liệu hay giải pháp chia sẻ trên các diễn đàn như StackOverflow.<br>- Việc giải quyết vấn đề chủ yếu phụ thuộc vào tài liệu nội bộ và đội ngũ Customer Support của chính hãng Mabl. | - Lâu đời nhất, phổ biến nhất và có hệ sinh thái lớn nhất.<br>- Số lượng tài liệu và khóa học vô tận.<br>- Có nhiều tài liệu cũ và lỗi thời từ Selenium 2/3 trôi nổi. |
+
+| Tiêu chí | Playwright | Mabl | Cypress | Selenium 4 | Testim AI | WebdriverIO |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **1. Phí bản quyền** | Miễn phí, Open-source (Apache 2.0). | Trả phí (Subscription), báo giá custom. | Freemium (Local: Miễn phí (MIT), Cloud: Trả phí). | Miễn phí, Open-source (Apache 2.0) . | Trả phí, có bản Free trial giới hạn. | Miễn phí, Open-source (MIT) . |
+| **2. Learning curve** | Khó. Yêu cầu JS/TS, Python, Java, .NET. Phù hợp Dev/SDET. | Rất dễ. Low-code/No-code. Phù hợp Manual QA/BA. | Trung bình. Yêu cầu biết JS/TS. Phù hợp QA/FE Dev. | Rất khó. Cần kỹ năng code cao, bắt buộc biết POM + tự quản wait. Phù hợp Automation Engineer. | Rất dễ. Low-code/No-code. Phù hợp Manual QA/BA. | Trung bình. Yêu cầu biết JS/TS. Dễ cấu hình hơn Selenium. |
+| **3. EShop Fit** | Rất tốt cho Web/Admin. Test chéo và API xuất sắc. Không hỗ trợ Mobile. | Tốt cho cả 3 (Web, Mobile, API). Hỗ trợ Visual test mạnh. Hạn chế: Trial ngắn. | Tốt cho Web độc lập. Không hỗ trợ Mobile. Test chéo domain cồng kềnh. | Tốt cho Web. Có thể kết hợp Appium cho Mobile. Khó bảo trì, có chặn API nhưng cồng kềnh hơn Playwright. | Tối ưu cho Web (React) và Mobile. Giả lập mạng và xử lý API phức tạp. | Rất tốt cho cả Web, Admin và Mobile. Xử lý API dễ, nhưng cần tự code bắt lỗi. |
+| **4. AI capabilities** | Không có sẵn. Phải tích hợp Agent ngoài (MCP). | Rất mạnh. Tích hợp sẵn Auto-healing (AI tự động cập nhật và sửa locators khi giao diện web/app thay đổi mà test không bị fail), Visual test. | Mạnh. Có Cypress AI Studio, auto-healing và trợ lý AI. | Không có sẵn. | Rất mạnh. Auto-healing, sinh test data thông minh. | Không có sẵn. Có MCP hỗ trợ AI Agent. |
+| **5. Community** | Rất lớn mạnh, hỗ trợ tốt từ Microsoft, fix bug nhanh. | Nhỏ, hệ sinh thái đóng. Phụ thuộc Support của hãng. | Rất lớn, tài liệu phong phú, hệ sinh thái Plugin khổng lồ. | Lớn nhất, lâu đời. Dễ lẫn lộn với tài liệu cũ/lỗi thời. | Trung bình. Dựa chủ yếu vào Support ticket chính hãng. | Lớn mạnh trong hệ Node.js. Cộng đồng Discord sôi nổi, nhiều plugin. |
 
 
-## 3. Recommended pick: Playwright
-- Cộng đồng phát triển cực nhanh, được Microsoft hậu thuẫn. Tài liệu xuất sắc, hỗ trợ sôi nổi qua GitHub, Discord và StackOverflow.
-- Miễn phí nên phù hợp với nhu cầu tối thiểu của sinh viên.
+## 3. Recommended pick
+
+**Playwright (chính)**
+- Miễn phí và mã nguồn mở nên phù hợp với nhu cầu và khả năng của sinh viên.
 - Tối ưu cho tác vụ kiểm thử Web Frontend (thông qua khả năng quản lý nhiều trình duyệt/context riêng biệt, có thể chặn và can thiệp Backend API để test các lỗi bảo mật và logic cố ý cắm sẵn trong mã nguồn).
+- Cộng đồng phát triển cực nhanh, được Microsoft hậu thuẫn. Tài liệu xuất sắc, hỗ trợ sôi nổi qua GitHub, Discord và StackOverflow, có MCP hỗ trợ AI Agent.
+
+**WebdriverIO (bổ sung / thay Backup Selenium 4)**
+- Miễn phí, mã nguồn mở, chạy trên Node.js nên đồng nhất với stack React + Vite của EShop, chỉ cần giỏi JS/TS là đủ.
+- Cấu hình nhẹ hơn Selenium 4, hỗ trợ sẵn WebDriver + BiDi/CDP với plugin phong phú, dễ viết test chéo Web + Admin và intercept API kiểm thử bảo mật.
+- Cộng đồng Node.js lớn, Discord sôi nổi, tài liệu hiện đại ít lẫn doc cũ như Selenium 2/3, có MCP hỗ trợ AI Agent, phù hợp định hướng AI-augmented của môn học.
 
 
 # II. AI Disclosure
-Sử dụng Gemini Pro để tìm hiểu các phần Learning curve, AI capabilities và Community.
-Đã cross-check các thông tin trên bằng Claude Sonnet 5 Medium.
-Đã fact check thủ công các criteria, chỉnh sửa phần ngôn ngữ hỗ trợ của 3 software.
-Có sử dụng GitHub Copilot để đánh giá mức độ phù hợp của EShop đối với 3 software.
+Sử dụng Muse Spark 1.3 để tra cứu các từ khoá (đã tìm hiểu và xác nhận thủ công), cũng như giải thích về quy trình test tự động.
+Sử dụng Gemini Pro để tìm hiểu các phần Learning curve, AI capabilities và Community của các phần mềm kiểm thử.
+Đã cross-check các thông tin về các phần mềm trên bằng Claude Sonnet 5 Medium.
+Đã fact check thủ công các criteria, chỉnh sửa phần ngôn ngữ hỗ trợ.
+Có sử dụng GitHub Copilot để đánh giá mức độ phù hợp của EShop đối với các phần mềm.

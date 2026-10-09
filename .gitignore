@@ -22,6 +22,10 @@ blob-report/
 # Expo / React Native
 .expo/
 
+# SQLite (local seed DB, regenerate with `node database.js`)
+*.sqlite
+*.sqlite-journal
+
 # OS
 .DS_Store
 Thumbs.db

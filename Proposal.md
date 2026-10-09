@@ -117,7 +117,7 @@ Quay video chạy test dự phòng và chụp sẵn report phòng trường hợ
 **Kỹ thuật Playwright:** chạy headed + `slowMo` để khán giả thấy trình duyệt tự bấm; locator ưu tiên `getByRole`/`getByPlaceholder`; assertion tự retry.
 
 
-## Kịch bản #2: "Đơn hàng ma" (User + Admin)
+## Kịch bản #2: End-to-end (User + Admin)
 
 **Mục đích:** demo flow phức tạp nhất, chạm 6 FR, trình bày tính năng nhiều context context và intercept của Playwright.
 

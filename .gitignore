@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Package manager caches
+.npm/
+.yarn/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+.vite/
+.expo/
+web-build/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Test artifacts
+coverage/
+.nyc_output/
+playwright-report/
+test-results/

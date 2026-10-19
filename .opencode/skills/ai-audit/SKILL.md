@@ -1,39 +1,71 @@
 ---
 name: AI Audit Logger for HW02
-description: Log one AI session to "[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md" per HW02 req §9. Use after any AI-assisted testing step, or to emit the no-AI declaration.
+description: Record one AI session in the HW02 AI Audit Report (docs/) per req.md §9. Logging only — never executes tests, scripts, or shell commands.
 ---
 
 # AI Audit Logger — EShop HW02
 
-Satisfies `req.md` §9 (mandatory appendix) and `AGENTS.md` §5. Every AI interaction during HW02 must be traceable. Prefer logging immediately after each session; never batch from memory.
+## Scope
+
+Satisfies `req.md` §9 (mandatory appendix) and `AGENTS.md` §5. Record one row per **AI-generated artifact** (test-case table, skill, script, report section) in:
+
+- Official report: `docs/[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md`
+- Short running log: `docs/prompt-log.md`
+
+This skill only **writes documentation**. It does not run tests and does not execute shell commands.
+
+## Hard rules
+
+- DO NOT run `date`, `touch`, `git`, test scripts, or any other shell command.
+- DO NOT run or re-run the test cases being logged.
+- DO NOT modify `docs/Report.md` or any SUT file.
+- DO NOT fabricate tool names, timestamps, prompts, outputs, or verdicts.
+- If the timestamp is unknown, use the current date/time available to the agent and mark it `(agent clock)`; the student corrects it.
+- Log the **visible prompt and produced artifact**, not hidden reasoning.
 
 ## Inputs
-- Tool name (e.g. OpenCode + model ID, ChatGPT, Claude, Gemini, Copilot).
-- datetime (`date -u +%Y-%m-%d %H:%M:%S`).
-<!-- time is using UTC+7 timezone -->
-- Verbatim user prompt.
-- Verbatim or faithfully summarised AI output + file/line refs touched.
+
+| Input | Source |
+| --- | --- |
+| AI tool + model | Session metadata (e.g. OpenCode + model ID) |
+| Date and time (UTC+7) | Current session time; student verifies |
+| Verbatim prompt | The student's exact message |
+| AI output | Verbatim output or a faithful summary + files/lines touched |
+| Verdict | `VALID` / `INVALID` / `INCOMPLETE` |
+| Reason | Cite the SRS, ISTQB section, or RFC that justifies the verdict |
+| Student correction | What the student accepted, fixed, or rejected |
 
 ## Procedure
-1. After each AI session, append one entry to `[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md`'s audit table using the template below. One entry per prompt-response pair, not one per feature.
-2. Keep prompts student-unique. Copying prompts between students scores 0 per `req.md` §17.
-3. If no AI was used at all, do not create log entries; instead place the literal declaration `I do not use any AI help in this exercise.` in the report appendix.
-4. Commit log updates with testing commits (`git log --oneline --decorate > git-log.txt` for submission).
 
-## Entry template (append verbatim, fill brackets)
+1. Identify the artifact produced in this session (e.g. "FR-04 Domain Testing tables", "BVA skill v2").
+2. Append **one row** to section 3 of `docs/[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md` using the template below. Replace the first empty `Artifact #n` row; do not insert in the middle of filled rows.
+3. Mark the verdict:
+   - `VALID` — correct and used as-is.
+   - `INCOMPLETE` — usable after student correction.
+   - `INVALID` — wrong; discarded.
+4. In `(5) Bản SV sửa`, record the concrete correction or `Pending student review`. Do not claim review that has not happened.
+5. Recalculate section 4 totals (artifact count, VALID/INVALID/INCOMPLETE counts and ratios).
+6. Append a short entry to `docs/prompt-log.md` with tool, datetime, prompt, output, and review status.
+7. Stop. Do not commit; the student decides when to commit.
+
+## Entry template (report, section 3)
 
 ```md
-| **Tool: AI Tool (e.g., ChatGPT, Claude, Gemini) Thời gian: 14:32 25/02/2026 Prompt:"Sinh test case cho hàm parsePhoneNumberVN…"** | TC01: parsePhoneNumberVN("0912345678")Kỳ vọng: {prefix:84, number:912345678, valid:true}… | INCOMPLETE | AI bỏ qua định dạng RFC 3966\. ISTQB FL §4.3 Boundary Value Analysis yêu cầu test ranh giới định dạng. | Thêm TC: parsePhoneNumberVN("+84-91-234-5678")Kỳ vọng: {prefix:84, number:912345678, valid:true} |
+| **Artifact #<n> — <artifact name>**<br><br>**Tool:** <tool + model><br>**Thời gian:** <YYYY-MM-DD HH:MM:SS> (UTC+7)<br>**Prompt (nguyên văn):**<br>"<verbatim prompt>" | <verbatim output or faithful summary><br>Paths: `<file:line>`, ... | <VALID/INVALID/INCOMPLETE> | <reason citing SRS/ISTQB/RFC> | <student correction or "Pending student review"> |
 ```
 
+## Prompt-log template (append)
 
-## Execution aid
-
-```bash
-date -u +%Y-%m-%dT%H:%M:%SZ
-touch assignment-docs/"[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md"
+```md
+## [<YYYY-MM-DD HH:MM:SS>] — <tool + model>
+- Prompt: |
+  <verbatim prompt>
+- Output: |
+  <summary + paths touched>
+- Human review: pending — student to mark accepted / corrected
 ```
 
 ## Guardrails
-- DO: log promptly; mark corrections explicitly (supports req §10 critique and §6 gap analysis causes: a) poor prompt, b) tool limit, c) feature complexity).
-- DO NOT: fabricate datetimes, prompts, or outputs; omit failed or misleading AI turns.
+
+- DO: log immediately after the session; keep prompts student-unique (copying prompts scores 0 per `req.md` §17); mark corrections explicitly for the §10 critique and §6 gap analysis.
+- DO NOT: batch logs from memory; log failed or misleading turns selectively — include them when they explain a gap; invent evidence.

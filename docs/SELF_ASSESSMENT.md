@@ -1,19 +1,6 @@
 # HW02 – Submission README
 
-> Template: headers only. This file is the `README.md` required inside the submission ZIP.
-
-## 1. Student Information
-
-| Field | Value |
-| --- | --- |
-| Student name |  |
-| Student ID |  |
-| Group |  |
-| Exercise ID | HW02-AI |
-| Submission date |  |
-| Self-assessed grade | `<000-100>` |
-
-## 2. Self-Assessment Table
+## 1. Self-Assessment
 
 | No. | Criteria | Grade | Self-Assessed |
 | --- | --- | --- | --- |
@@ -24,7 +11,9 @@
 | 5 | Agent Skills | 10 |  |
 |  | Total | 100 |  |
 
-## 3. Feature Selection
+## 2. Test Summary
+
+### 2.1 Features
 
 | Pool | Feature | FR ID |
 | --- | --- | --- |
@@ -33,19 +22,14 @@
 | C |  |  |
 | D |  |  |
 
-## 4. Test Summary Report
-
-### 4.1 Test Case Metrics
+### 2.2 Test Cases
 
 | Feature | Designed | Executed | Passed | Failed | Not yet executed |
 | --- | --- | --- | --- | --- | --- |
-| Feature A |  |  |  |  |  |
-| Feature B |  |  |  |  |  |
-| Feature C |  |  |  |  |  |
-| Feature D |  |  |  |  |  |
+|  |  |  |  |  |  |
 | Total |  |  |  |  |  |
 
-### 4.2 Bug Summary
+### 2.3 Bugs
 
 | Severity | Count |
 | --- | --- |
@@ -55,42 +39,8 @@
 | Low |  |
 | Total |  |
 
-### 4.3 Environment Summary
+## 3. Demo Videos
 
-| Item | Value |
-| --- | --- |
-| Backend |  |
-| Frontend Web |  |
-| Frontend Admin |  |
-| Mobile |  |
-| Test accounts |  |
-
-## 5. Demo Videos
-
-| No. | Video title | Feature demonstrated | YouTube link |
-| --- | --- | --- | --- |
-|  |  |  |  |
-
-## 6. Deliverables Checklist
-
-| Deliverable | File / Location | Status |
+| No. | Feature demonstrated | YouTube link |
 | --- | --- | --- |
-| Main report (Markdown) |  |  |
-| Main report (PDF) |  |  |
-| Bug report and GitHub Issue screenshots |  |  |
-| AI Critique (Markdown + PDF) |  |  |
-| AI Audit Report (Markdown + PDF) |  |  |
-| Git commit log (text file) |  |  |
-| Agent Skills |  |  |
-| Agent Skill demo videos |  |  |
-| Supporting materials |  |  |
-
-## 7. How to Reproduce
-
-### 7.1 Setup
-
-### 7.2 Seed Data Reset
-
-### 7.3 Run Test Scripts
-
-## 8. Notes and Known Limitations
+|  |  |  |

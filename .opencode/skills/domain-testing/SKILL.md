@@ -1,35 +1,36 @@
 ---
 name: Domain Testing for EShop
-description: Design-only stepwise Domain Testing for one EShop FR (FR-01..FR-24). Fills the Domain Testing tables in docs/Report.md; never executes API/UI tests or records actual results.
+description: Design-only Domain Testing for one EShop FR (FR-01..FR-24). Fills concise manual-UI tables in docs/report.md; never executes tests or records actual results.
 ---
 
 # Domain Testing — design-only (EShop HW02)
 
 ## Scope
 
-Produce the Domain Testing **design artifacts** and write them into `docs/Report.md`:
+Fill the Domain Testing tables in `docs/report.md`:
 
-1. Input variables
-2. Equivalence domains
-3. ON/OFF points + combination table
-4. Test cases
-5. Execution notes (left blank)
+1. §x.1.1 — Input/output variables
+2. §x.1.2 — Equivalence domains
+3. §x.1.3 — Test cases
 
-**Do NOT execute anything.** The student runs all tests and records results. This skill only reads specs/source and edits the report tables.
+Leave `Actual output` and `Pass / Fail` empty for the student.
+
+**Do NOT execute anything.** The student runs all tests manually on the UI and records results.
 
 ## Hard rules
 
 - DO NOT start servers, reset the database, call APIs, run `curl`/`node`/`npm`/scripts, open a browser, or use Expo.
-- DO NOT fill `Actual result`, `Pass / Fail`, `Evidence`, or `Execution Notes` — leave those cells empty for the student.
-- DO NOT fill `AI Gap Analysis` or `Defects Found` — those are completed after human execution/review.
-- DO NOT report, confirm, or file bugs. If source inspection suggests a possible deviation, mention it in chat as an **unverified suspect** only, never in the report as a defect.
+- DO NOT fill `Actual output` or `Pass / Fail`.
+- DO NOT fill `AI Gap Analysis` or `Bug Report` — those come after human execution/review.
+- DO NOT report, confirm, or file bugs. Source-based suspicions stay in chat as **unverified suspects**.
 - DO NOT modify SUT source, seed data, or other features' report sections.
+- DO NOT add columns to the existing tables.
 
 ## Inputs
 
 1. FR identifier + verbatim spec excerpt from `README.md`.
-2. Endpoint(s) and auth mode from `api_specification.md` (used only to write the API steps).
-3. Target section in `docs/Report.md`:
+2. Field list from `api_specification.md` (only to know which variables exist, not to write API calls).
+3. Target section in `docs/report.md`:
 
 | FR | Report section |
 | --- | --- |
@@ -38,72 +39,74 @@ Produce the Domain Testing **design artifacts** and write them into `docs/Report
 | FR-14 | §4 Feature C |
 | FR-20 | §5 Feature D |
 
-For any other FR, locate the heading `## <n>. Feature ... — <FR-ID>: ...`. If the section is missing, ask the student before creating it.
+For another FR, locate `## <n>. Feature ... — <FR-ID>: ...`. If missing, ask first.
 
-If the FR spec excerpt is missing or ambiguous, ask. Never invent an oracle.
+## Writing style — concise, manual UI
+
+- Table cells are short values/phrases, **not sentences or prose**.
+- `Data type`: write the actual type in English — `string`, `int`, `float`, `boolean`, `array`, `JWT string`, etc. Do not write "Chuỗi", "Số".
+- `Required / Optional`: write only one word.
+  - `Required` = missing/empty means the FR cannot be performed, or the record becomes invalid. In FR-04, `name` and `phone` are **Required**.
+  - `Optional` = missing is okay ("không có cũng không sao"); it does **not** mean the value can be arbitrary. If provided, all constraints still apply.
+- `Valid domain` / `Invalid domain`: use numbers, symbols, ranges, and simple words:
+  `0`, `10–11`, `bắt đầu 0`, `trống`, `sai định dạng`, `ký tự`, `độ dài`, `N/A`.
+  - Invalid domains must be written as **sets/ranges**, not only the exact boundary values.
+  - Example for a 10–11 digit phone: invalid = `độ dài ≤ 9 hoặc ≥ 12`, not just `9` and `12`.
+- `Domain description`: short formula/description, e.g.
+  `10 ≤ độ dài phone ≤ 11, bắt đầu 0`; invalid: `độ dài ≤ 9 hoặc ≥ 12`, `ký tự ∉ [0-9]`, `name trống`.
+- `Objective`: state which domain is tested, short like the domain description, e.g.
+  `FR04-N3 — phone ≤ 9 số`, `FR08-N4 — total_amount < thực tế`.
+- `Inputs`: one variable per bullet line, **no JSON, no `{...}`**, e.g.
+  `- name: "Nguyễn Văn A"<br>- phone: "0786456884"`.
+  In a Markdown table cell, separate lines with `<br>` and start each line with `- `.
+- `Expected output`: what the user sees on screen — toast, inline error, or screen state. Do **not** write HTTP status/JSON, e.g.
+  - `Toast "Cập nhật thành công"; phone mới hiển thị`
+  - `Toast "Số điện thoại không hợp lệ"; phone giữ nguyên`
+- `Oracle`: short `FR-xx` reference, not a long quote.
 
 ## Procedure (one step per turn, stop for student review)
 
-### Step 1 — Identify input variables
-
-Read `README.md` and `api_specification.md` (read-only). Fill §x.1.1:
+### Step 1 — Fill §x.1.1
 
 | Variable | Data type | Required / Optional | Valid domain | Invalid domain | Oracle |
 
-Include request-body fields, query/path params, auth/role context, and state preconditions that affect the outcome. In `Oracle`, cite the exact rule (`README.md:line` or FR clause), not code behavior.
+- Include only variables that affect the FR result (fields, auth/role, state).
+- `Data type`: actual English type (`string`, `int`, `float`, `boolean`, `array`, `JWT string`, ...).
+- Keep each cell short; no explanations.
+- `Required` if missing/empty blocks the FR or invalidates the record; otherwise `Optional`.
+- If the SRS sets no constraint for a variable, write `N/A` in the invalid cell.
 
-### Step 2 — Partition into equivalence domains
+### Step 2 — Fill §x.1.2
 
-Fill §x.1.2 with disjoint domains:
+| Variable | Domain ID | Domain description | Valid / Invalid |
 
-| Variable | Domain ID | Domain description | Valid / Invalid | Expected behavior |
+- IDs: `<FR>-P<n>` valid, `<FR>-N<n>` invalid (e.g. `FR04-P3`, `FR04-N3`).
+- One row per domain; description short and formula-like.
+- Invalid domains must be written as **sets/ranges**: `độ dài ≤ 9 hoặc ≥ 12`, `ký tự ∉ [0-9]`, `trống`; not only `9` and `12`.
+- `Valid / Invalid` column contains only `Valid` or `Invalid`.
 
-- Use IDs `<FR>-P<n>` for valid and `<FR>-N<n>` for invalid (e.g. `FR04-P1`, `FR04-N1`).
-- Cover each variable's valid and invalid classes, plus required/optional and boundary-adjacent classes.
-- `Expected behavior` must be derived from the SRS only.
+### Step 3 — Fill §x.1.3
 
-### Step 3 — ON/OFF points + combination table
+| Test case ID | Objective | Inputs | Expected output | Actual output | Pass / Fail |
 
-Fill §x.1.3:
+- IDs: `<FR>-D<NN>`.
+- `Objective`: domain ID + short domain, e.g. `FR04-P3 — phone 10–11 số`.
+- `Inputs`: bullet list, one variable per line, format `- name: "Nguyễn Văn A"<br>- phone: "0786456884"`; no JSON/braces.
+- `Expected output`: visible UI feedback/state only.
+- Leave `Actual output` and `Pass / Fail` empty.
 
-| Combo ID | Variable 1 | Variable 2 | Variable 3 | Covered domains | Expected result |
+## EShop anchors (verify against `README.md` before use)
 
-- ON point = a value inside the domain; OFF point = nearest value outside it.
-- Add/remove `Variable n` columns to match the number of variables actually combined.
-- Include: one all-valid row, one row per single-invalid condition, and any invalid-combination rows worth covering.
-- Number rows `C01..Cn`; list the domain IDs each row covers.
-
-### Step 4 — Design test cases
-
-Fill §x.1.4:
-
-| Test case ID | Objective | Inputs | Steps (API) | Steps (UI) | Expected result | Actual result | Pass / Fail | Evidence |
-
-- IDs: `<FR>-D<NN>` (e.g. `FR08-D01`).
-- `Objective`: which domain/condition the case proves.
-- `Inputs`: concrete values (emails, phone numbers, amounts, IDs, tokens as roles).
-- `Steps (API)`: method, path, headers/auth role, body — written as instructions for the student, not executed here.
-- `Steps (UI)`: screen → action → submit, or `N/A` when the FR is API-only.
-- `Expected result`: quote the SRS rule and state `>` vs `>=` where relevant.
-- Leave `Actual result`, `Pass / Fail`, `Evidence` **empty**.
-- One case may cover several related combos; note the combo IDs in `Objective`.
-
-### Step 5 — Execution notes
-
-Leave §x.1.5 empty. Do not pre-write results, evidence links, or pass/fail summaries.
-
-## EShop domain anchors (verify against `README.md` before use)
-
-- FR-02: wrong-login counter +1 per fail; lockout after ≥3 consecutive fails; 30s demo lockout.
-- FR-04: phone starts with `0`, 10–11 digits; email immutable; only `name`, `phone`, `shipping_address` updatable.
-- FR-08: login required; total computed by backend; client `total_amount` must not be trusted; cart cleared on success.
-- FR-09: conditions C1–C5; `percent = total*value/100`; `fixed = value`.
+- FR-02: wrong-login +1; lockout after ≥3 fails; 30s.
+- FR-04: `name`, `phone` **Required**; `shipping_address` Optional; phone starts `0`, 10–11 digits (invalid: `độ dài ≤ 9 hoặc ≥ 12`, or not starting `0`); email and `role` immutable.
+- FR-08: login required; total computed by backend; client `total_amount` ignored; cart cleared on success.
+- FR-09: C1–C5; `percent = total*value/100`; `fixed = value`.
 - FR-10: `pending → confirmed → shipping → delivered`; cancel only from `pending`/`confirmed`; `delivered`/`canceled` final.
 - FR-14: admin-only; name required, non-empty.
-- FR-16: header `name,price,description,imageUrl,category_id`; RFC 4180 quoting; all-or-nothing rollback.
+- FR-16: header `name,price,description,imageUrl,category_id`; RFC 4180; all-or-nothing rollback.
 - FR-20: mobile parity; same checkout/cancel rules as web.
 
 ## Guardrails
 
-- DO: read `README.md` and `api_specification.md` first; cite oracle refs; keep the report's existing headings/columns; summarize added rows in chat for review.
-- DO NOT: run tests, fabricate actual results, fill pass/fail, file GitHub issues, or mark AI gap analysis/defects without student-provided execution evidence.
+- DO: read specs first; keep the report's existing headings/columns; summarize added rows in chat.
+- DO NOT: run tests, write API/HTTP expectations, fabricate results, fill pass/fail, or file issues.

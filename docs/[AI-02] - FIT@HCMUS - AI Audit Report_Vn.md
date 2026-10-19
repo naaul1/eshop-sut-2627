@@ -36,16 +36,27 @@
 
 | (1) Prompt \+ Công cụ | (2) Output AI | (3) Verdict | (4) Lý do (ISTQB) | (5) Bản SV sửa |
 | :---- | :---- | :---- | :---- | :---- |
-| **Artifact #1 — guide.md v2 (FR-04/FR-08/FR-14 + Pool D)**<br><br>**Tool:** OpenCode (Muse Spark 1.3 Free)<br>**Thời gian:** 2026-10-16 00:57:56 (UTC+7)<br>**Prompt (nguyên văn):**<br>"now that i choose to proceed with FR4, FR8, and FR14 in pool A, B, and C respectively, please edit @guide.md to be shorter and more concise into those 3 FRs, as well as suggest a way of doing pool D, mobile app, as your interpretation. edit altogether back into @guide.md" | Rewrote guide.md to v2 scoped to FR-04 (Profile), FR-08 (Checkout), FR-14 (Categories) with oracle + suspect refs + partition/ON-OFF/BVA tables, plus Pool D (FR-20) parity re-execution interpretation.<br>Paths: `guide.md` (full rewrite); refs `README.md:62-67`, `README.md:102-108`, `README.md:186-189`, `README.md:233-236`, `backend/server.js:118-135`, `backend/server.js:249-278`, `backend/server.js:297-309`, `frontend-mobile/App.js:287`, `frontend-mobile/App.js:391`, `frontend-mobile/App.js:348`, `frontend-mobile/App.js:684-690`. | INCOMPLETE | Chưa có human review (prompt-log ghi pending). req.md §2 bắt buộc rà soát mọi output AI; ISTQB FL §1.3 yêu cầu rà soát độc lập trước khi dùng artifact. Output mới ở dạng tóm tắt, chưa dán nguyên văn/screenshot theo Mục 2. | SV cần đánh dấu accepted/corrected, đối chiếu `guide.md` với `README.md` + `backend/server.js`, tô sáng phần sửa. |
-| **Artifact #2 — 3 skills HW02 (domain-testing, bva, ai-audit)**<br><br>**Tool:** OpenCode (Muse Spark 1.3 Free)<br>**Thời gian:** 2026-10-16 01:00:17 (UTC+7)<br>**Prompt (nguyên văn):**<br>"regarding the requirements and this repo document, create needed skills in percise language." | Created 3 reusable skills per req.md §7 and AGENTS.md §4, each with inputs (FR excerpt), stepwise procedure, output templates, and demo script:<br>- domain-testing: variables → partitions → ON/OFF + combination T1..Tn → cases FRxx-Dnn → execute via curl/JWT.<br>- bva: bounded variables → 2/3-value choice → min-1/min/min+1 tables → cases FRxx-Bnn → execute.<br>- ai-audit: per-session log (tool, datetime, prompt, output).<br>Paths: `.opencode/skills/domain-testing/SKILL.md` (new), `.opencode/skills/bva/SKILL.md` (new), `.opencode/skills/ai-audit/SKILL.md` (new); refs `README.md:1-288`, `api_specification.md:1-214`, `AGENTS.md:1-103`. | INCOMPLETE | Chưa có human review (prompt-log ghi pending). req.md §2 + §7 yêu cầu review/correct mọi AI output và kiểm chứng skill bằng demo end-to-end; ISTQB FL §4.2/§4.3 yêu cầu kỹ thuật phân vùng/biên phải được rà soát trước khi dùng. Chưa có link demo YouTube. | SV cần review 3 file `SKILL.md`, chạy thử `@domain-testing` / `@bva` trên 1 FR, ghi link demo + tô sáng phần sửa. |
-| **Artifact \#3** |  |  |  |  |
-| **Artifact \#4** |  |  |  |  |
-| **Artifact \#5** |  |  |  |  |
-| **Artifact \#6** |  |  |  |  |
-| **Artifact \#7** |  |  |  |  |
-| **Artifact \#8** |  |  |  |  |
-| **Artifact \#9** |  |  |  |  |
-| **Artifact \#10** |  |  |  |  |
+| **Artifact \#4**
+
+ |  |  |  |  |
+| **Artifact \#5**
+
+ |  |  |  |  |
+| **Artifact \#6**
+
+ |  |  |  |  |
+| **Artifact \#7**
+
+ |  |  |  |  |
+| **Artifact \#8**
+
+ |  |  |  |  |
+| **Artifact \#9**
+
+ |  |  |  |  |
+| **Artifact \#10**
+
+ |  |  |  |  |
 
 ## **4\. Tổng kết Độ chính xác AI**
 
@@ -53,10 +64,10 @@ Tổng hợp verdict từ Mục 3 và điền vào bảng dưới.
 
 | Chỉ số | Số lượng | Tỉ lệ |
 | :---- | :---- | :---- |
-| **Tổng artifact AI sinh đã audit** | 2 | 100% |
+| **Tổng artifact AI sinh đã audit** | 0 | 0% |
 | **VALID (đúng, dùng nguyên)** | 0 | 0% |
 | **INVALID (sai; loại bỏ)** | 0 | 0% |
-| **INCOMPLETE (chấp nhận sau khi sửa)** | 2 | 100% |
+| **INCOMPLETE (chấp nhận sau khi sửa)** | 0 | 0% |
 
 ## **5\. Kết luận — Khi nào nên / không nên dùng AI?**
 
@@ -87,7 +98,7 @@ Viết 80–150 chữ mô tả pattern quan sát được. AI mạnh ở đâu? 
 | **Môn học:** | CS423 / CSC13003 – Kiểm chứng Phần mềm |
 | **Giảng viên:** | Lâm Quang Vũ |
 | **Ngày:** | 20/09/2026 |
-| **Chữ ký:** |  |
+| **Chữ ký:** | Trần Đình Luân |
 
 ## **Tham khảo**
 

@@ -126,7 +126,7 @@ Nhóm: 03\
 | `items` | FR08-P4 | đủ sản phẩm trong giỏ | Valid |
 | `items` | FR08-N4 | thiếu sản phẩm | Invalid |
 | `order_total` (output) | FR08-P5 | `= tổng server tính từ giỏ` | Valid |
-| `order_total` (output) | FR08-N5 | `= total_amount client` | Invalid |
+| `order_total` (output) | FR08-N5 | `= total_amount client != tổng server tính từ giỏ` | Invalid |
 | `cart_after_checkout` (output) | FR08-P6 | `số sản phẩm = 0` | Valid |
 | `cart_after_checkout` (output) | FR08-N6 | `số sản phẩm ≥ 1` | Invalid |
 
@@ -134,19 +134,20 @@ Nhóm: 03\
 
 | Test case ID | Objective | Inputs | Expected output | Actual output | Pass / Fail |
 | --- | --- | --- | --- | --- | --- |
-| FR08-D01 | P1, P2, P3, P4, P5, P6 — thanh toán hợp lệ | - Đã đăng nhập<br>- cart: 2 sản phẩm, tổng 500000<br>- total_amount: 500000<br>- Bấm Xác Nhận Thanh Toán | Trang "Thanh toán thành công!"; đơn tổng 500000; giỏ trống |  |  |
-| FR08-D02 | N1 — thiếu token | - Chưa đăng nhập<br>- Mở trang Thanh toán | Chuyển trang đăng nhập hoặc "Vui lòng đăng nhập"; không tạo đơn |  |  |
-| FR08-D03 | N2 — token sai/hết hạn | - Token hết hạn/không hợp lệ<br>- Mở trang Thanh toán | Chuyển trang đăng nhập hoặc "Vui lòng đăng nhập"; không tạo đơn |  |  |
-| FR08-D04 | N5 — order_total = 1 | - Đã đăng nhập; cart 500000<br>- Sửa ô tổng tiền thành 1<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly; nếu sửa được, đơn vẫn 500000 |  |  |
-| FR08-D05 | N5 — order_total = 0 | - Đã đăng nhập; cart 500000<br>- Sửa ô tổng tiền thành 0<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly; nếu sửa được, đơn vẫn 500000 |  |  |
-| FR08-D06 | N5 — order_total âm | - Đã đăng nhập; cart 500000<br>- Sửa ô tổng tiền thành -100000<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly; nếu sửa được, đơn vẫn 500000 |  |  |
-| FR08-D07 | N5 — order_total > thực tế | - Đã đăng nhập; cart 500000<br>- Sửa ô tổng tiền thành 999999<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly; nếu sửa được, đơn vẫn 500000 |  |  |
-| FR08-D08 | N5 — order_total không phải số | - Đã đăng nhập; cart 500000<br>- Sửa ô tổng tiền thành "abc"<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền không nhận chữ; nếu nhận, đơn vẫn 500000 |  |  |
-| FR08-D09 | P3 — total_amount trống | - Đã đăng nhập; cart 500000<br>- Xóa trắng ô tổng tiền<br>- Bấm Xác Nhận Thanh Toán | Không thanh toán được hoặc đơn vẫn 500000 do server tính |  |  |
-| FR08-D10 | N3 — giỏ rỗng | - Đã đăng nhập<br>- cart: 0 sản phẩm<br>- Mở trang Thanh toán | Hiển thị giỏ trống; không có nút thanh toán/không tạo đơn |  |  |
-| FR08-D11 | P4, N4 — hiển thị đủ items | - Đã đăng nhập<br>- cart: 2 sản phẩm<br>- Mở trang Thanh toán | Hiển thị đủ 2 tên, số lượng, thành tiền |  |  |
-| FR08-D12 | P3 — total readonly | - Đã đăng nhập; cart có sản phẩm<br>- Mở trang Thanh toán | Ô tổng tiền readonly/disabled; không sửa được |  |  |
-| FR08-D13 | P6, N6 — giỏ rỗng sau thanh toán | - Thanh toán thành công<br>- Mở Giỏ hàng/Lịch sử đơn | Giỏ trống, badge = 0; đơn mới có tổng đúng |  |  |
+| FR08-D01 | P1, P2, P3, P4, P5, P6 — thanh toán hợp lệ | - Đã đăng nhập<br>- cart: 2 sản phẩm, tổng 10000000<br>- total_amount: 10000000<br>- Bấm Xác Nhận Thanh Toán | Trang "Thanh toán thành công!"; đơn tổng 10000000; giỏ trống | Trang "Thanh toán thành công!"; đơn tổng 10000000; giỏ trống | Pass |
+| FR08-D02 | N1 — thiếu token | - Chưa đăng nhập<br>- Mở trang Thanh toán | Chuyển trang đăng nhập hoặc "Vui lòng đăng nhập"; không tạo đơn | Toast "Bạn cần đăng nhập để tạo đơn" và chuyển hướng về trang đăng nhập | Pass |
+| FR08-D03 | N2 — token sai/hết hạn | - Mở trang Thanh toán<br>- Chỉnh sửa token trong local storage thành "huhuhu" | Chuyển trang đăng nhập hoặc "Vui lòng đăng nhập"; không tạo đơn | Tạo đơn và thanh toán bình thường | Fail |
+| FR08-D04 | N5 — order_total = 1 | - Đã đăng nhập; cart 10000000<br>- Sửa ô tổng tiền thành 1<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly | Người dùng chỉnh sửa được, và đơn hàng bị tính giá 1đ | Fail |
+| FR08-D05 | N5 — order_total = 0 | - Đã đăng nhập; cart 10000000<br>- Sửa ô tổng tiền thành 0<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly | Người dùng chỉnh sửa được, và đơn hàng bị tính giá 0đ | Fail |
+| FR08-D06 | N5 — order_total âm | - Đã đăng nhập; cart 10000000<br>- Sửa ô tổng tiền thành -100000<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly | Người dùng chỉnh sửa được, và đơn hàng bị tính giá -100000đ | Fail |
+| FR08-D07 | N5 — order_total > thực tế | - Đã đăng nhập; cart 10000000<br>- Sửa ô tổng tiền thành 20000000<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly |  | Người dùng chỉnh sửa được, và đơn hàng bị tính giá 20000000đ | Fail |
+| FR08-D08 | N5 — order_total không phải số | - Đã đăng nhập; cart 10000000<br>- Sửa ô tổng tiền thành "abc"<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền không nhận chữ | Ô tổng tiền không nhận chữ | Pass |
+| FR08-D09 | P3 — total_amount trống | - Đã đăng nhập; cart 10000000<br>- Xóa trắng ô tổng tiền<br>- Bấm Xác Nhận Thanh Toán | Không thanh toán được hoặc đơn vẫn 10000000 do server tính | Ô tổng tiền hiện 0 và thanh toán vẫn bị tính 0đ | Fail |
+| FR08-D10 | N3 — giỏ rỗng | - Đã đăng nhập<br>- cart: 0 sản phẩm<br>- Mở trang Thanh toán | Hiển thị giỏ trống; không có nút thanh toán/không tạo đơn | Hiển thị giỏ trống; không có nút thanh toán/không tạo đơn | Pass |
+| FR08-D11 | P4, N4 — hiển thị đủ items | - Đã đăng nhập<br>- cart: 2 sản phẩm<br>- Mở trang Thanh toán | Hiển thị đủ 2 tên, số lượng, thành tiền | Hiển thị đủ 2 tên, số lượng, thành tiền | Pass |
+| FR08-D12 | P3 — total readonly | - Đã đăng nhập; cart có sản phẩm<br>- Mở trang Thanh toán | Ô tổng tiền readonly/disabled; không sửa được | Ô tổng tiền sửa được | Fail |
+| FR08-D13 | P6, N6 — giỏ rỗng sau thanh toán | - Thanh toán thành công<br>- Mở Giỏ hàng/Lịch sử đơn | Giỏ trống, badge = 0; đơn mới có tổng đúng | Giỏ trống, badge = 0; đơn mới có tổng đúng | Pass |
+| FR08-D14 | N5 — backend không tính lại tổng tiền | - Cart gồm 2 sản phẩm (AirPods Pro 2 + Keychron Q1) có tổng 10000000<br>- Thanh toán thành công<br>- Edit request, tăng số lượng Bàn phím Keychron lên 2 | Đơn được tạo có giá trị 14000000 | Đơn được tạo có giá trị 10000000 | Fail |
 
 ### 3.2 Boundary Value Analysis
 
@@ -155,25 +156,20 @@ Nhóm: 03\
 | Variable | Boundary / threshold |
 | --- | --- |
 | `cart` | `số sản phẩm ≥ 1` |
-| `total_amount` (client) | `= tổng server` (lệch ±1) |
 
 #### 3.2.2 Step 2 - Boundary Table
 
 | Variable | Boundary ID | min-1 | min | min+1 | max-1 | max | max+1 | Expected output |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `cart` | FR08-BD01 | 0 | 1 | 2 | N/A | N/A | N/A | 0: không thanh toán; 1/2: thành công |
-| `total_amount` (client) | FR08-BD02 | 9999999 | 10000000 | 10000001 | N/A | N/A | N/A | Mọi giá trị: đơn = 10000000; ô readonly |
 
 #### 3.2.3 Step 3 - Test Cases
 
 | Test case ID | Objective | Inputs | Expected output | Actual result | Pass / Fail |
 | --- | --- | --- | --- | --- | --- |
-| FR08-B01 | BD01 — cart 0 sản phẩm | - Đã đăng nhập<br>- cart: 0 sản phẩm<br>- Mở Thanh toán | Hiển thị giỏ trống; không có nút thanh toán/không tạo đơn |  |  |
-| FR08-B02 | BD01 — cart 1 sản phẩm | - Đã đăng nhập<br>- cart: 1 sản phẩm "Bàn phím cơ Keychron Q1", tổng 4000000<br>- Bấm Xác Nhận Thanh Toán | Thanh toán thành công; đơn tổng 4000000; giỏ trống |  |  |
-| FR08-B03 | BD01 — cart 2 sản phẩm | - Đã đăng nhập<br>- cart: 2 sản phẩm (AirPods Pro 2 + Keychron Q1), tổng 10000000<br>- Bấm Xác Nhận Thanh Toán | Thanh toán thành công; đơn tổng 10000000; giỏ trống |  |  |
-| FR08-B04 | BD02 — total 9999999 | - Đã đăng nhập; cart 2 sản phẩm (AirPods Pro 2 + Keychron Q1), tổng 10000000<br>- total_amount (nếu sửa được): 9999999<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly; nếu sửa được, đơn vẫn 10000000 |  |  |
-| FR08-B05 | BD02 — total 10000000 | - Đã đăng nhập; cart 2 sản phẩm (AirPods Pro 2 + Keychron Q1), tổng 10000000<br>- total_amount (nếu sửa được): 10000000<br>- Bấm Xác Nhận Thanh Toán | Thanh toán thành công; đơn tổng 10000000; giỏ trống |  |  |
-| FR08-B06 | BD02 — total 10000001 | - Đã đăng nhập; cart 2 sản phẩm (AirPods Pro 2 + Keychron Q1), tổng 10000000<br>- total_amount (nếu sửa được): 10000001<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly; nếu sửa được, đơn vẫn 10000000 |  |  |
+| FR08-B01 | BD01 — cart 0 sản phẩm | - Đã đăng nhập<br>- cart: 0 sản phẩm<br>- Mở trang Thanh toán | Hiển thị giỏ trống; không có nút thanh toán/không tạo đơn | Hiển thị giỏ trống; không có nút thanh toán/không tạo đơn | Pass |
+| FR08-B02 | BD01 — cart 1 sản phẩm | - Đã đăng nhập<br>- cart: 1 sản phẩm "Bàn phím cơ Keychron Q1", tổng 4000000<br>- Bấm Xác Nhận Thanh Toán | Thanh toán thành công; đơn tổng 4000000; giỏ trống | Thanh toán thành công; đơn tổng 4000000; giỏ trống | Pass |
+| FR08-B03 | BD01 — cart 2 sản phẩm | - Đã đăng nhập<br>- cart: 2 sản phẩm (AirPods Pro 2 + Keychron Q1), tổng 10000000<br>- Bấm Xác Nhận Thanh Toán | Thanh toán thành công; đơn tổng 10000000; giỏ trống | Thanh toán thành công; đơn tổng 10000000; giỏ trống | Pass |
 
 ## 4. Feature C - FR-14: Category Management
 
@@ -187,7 +183,7 @@ Nhóm: 03\
 | `role` | `string` | Required | `role = "admin"` | `role ≠ "admin"` | FR-14; FR-12 |
 | `name` | `string` | Required | `độ dài sau trim ≥ 1` | `độ dài sau trim = 0` (trống/khoảng trắng) | FR-14 |
 | `id` | `int` | Required | `id` của danh mục đang hiển thị | `id` không còn tồn tại (xóa lần 2) | FR-14 |
-| `category_list` (output) | `array` | Required | chứa danh mục mới; không còn danh mục xóa | không đổi sau thao tác | FR-14 |
+| `category_list` (output) | `array` | Required | chứa danh mục mới; không còn danh mục đã xóa | không đổi sau thao tác | FR-14 |
 
 #### 4.1.2 Step 2 - Phân thành các domain tương đương
 
@@ -201,7 +197,7 @@ Nhóm: 03\
 | `name` | FR14-P3 | `độ dài sau trim ≥ 1` | Valid |
 | `name` | FR14-N4 | `độ dài sau trim = 0` | Invalid |
 | `id` | FR14-P4 | `id` của danh mục đang hiển thị | Valid |
-| `id` | FR14-N5 | `id` không còn tồn tại | Invalid |
+| `id` | FR14-N5 | `id` không tồn tại | Invalid |
 | `category_list` (output) | FR14-P5 | chứa danh mục mới; không còn danh mục xóa | Valid |
 | `category_list` (output) | FR14-N6 | không đổi sau thao tác | Invalid |
 
@@ -209,17 +205,15 @@ Nhóm: 03\
 
 | Test case ID | Objective | Inputs | Expected output | Actual output | Pass / Fail |
 | --- | --- | --- | --- | --- | --- |
-| FR14-D01 | P1, P2, P3, P5, N6 — admin thêm hợp lệ | - Đăng nhập admin<br>- Mở Quản lý Danh mục<br>- name: "Điện tử"<br>- Bấm Thêm mới | Danh mục "Điện tử" xuất hiện trong bảng; không lỗi |  |  |
-| FR14-D02 | N4 — name trống | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: ""<br>- Bấm Thêm mới | Form báo "Tên danh mục là bắt buộc"; không thêm |  |  |
-| FR14-D03 | N4 — name chỉ khoảng trắng | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: "   "<br>- Bấm Thêm mới | Toast "Tên danh mục là bắt buộc"; không thêm |  |  |
-| FR14-D04 | N2 — token hết hạn | - Token admin hết hạn<br>- Mở Quản lý Danh mục | Chuyển trang đăng nhập; không thấy form |  |  |
-| FR14-D05 | N1 — thiếu token | - Chưa đăng nhập<br>- Mở Admin | Trang Admin Login; không thấy Quản lý Danh mục |  |  |
-| FR14-D06 | N3 — role user | - Đăng nhập user<br>- Mở Admin | Không vào được Quản lý Danh mục; báo không có quyền |  |  |
-| FR14-D07 | P4 — xóa danh mục tồn tại | - Admin; danh mục "Điện tử"<br>- Bấm Xóa | Dòng "Điện tử" biến mất; danh sách cập nhật |  |  |
-| FR14-D08 | N5 — xóa danh mục không tồn tại | - Admin; danh mục đã bị xóa<br>- Bấm Xóa lần 2 | Toast lỗi; danh sách không đổi |  |  |
-| FR14-D09 | N1 — thiếu token khi xóa | - Chưa đăng nhập<br>- Mở Quản lý Danh mục | Không có nút Xóa; không xóa được |  |  |
-| FR14-D10 | N3 — user xóa | - Đăng nhập user<br>- Mở Quản lý Danh mục | Không có nút Xóa/không có quyền |  |  |
-| FR14-D11 | P5 — admin xem danh sách | - Đăng nhập admin<br>- Mở Quản lý Danh mục | Bảng hiển thị ID, Tên Danh Mục, Hành động |  |  |
+| FR14-D01 | P1, P2, P3, P5, N6 — admin thêm hợp lệ | - Đăng nhập admin<br>- Mở Quản lý Danh mục<br>- name: "Điện tử"<br>- Bấm Thêm mới | Danh mục "Điện tử" xuất hiện trong bảng; không lỗi | Danh mục "Điện tử" xuất hiện trong bảng; không lỗi | Pass |
+| FR14-D02 | N4 — name trống | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: ""<br>- Bấm Thêm mới | Form báo "Tên danh mục là bắt buộc"; không thêm | Danh mục mới không có tên được thêm vào | Fail |
+| FR14-D03 | N4 — name chỉ khoảng trắng | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: "   "<br>- Bấm Thêm mới | Toast "Tên danh mục là bắt buộc"; không thêm | Danh mục mới có tên " " được thêm vào | Fail |
+| FR14-D04 | N2 — token sai/hết hạn | - Mở Quản lý Danh mục<br>- Thay đổi token trong local storage thành "hahaha" | Chuyển trang đăng nhập | Vẫn còn ở trang Quản lý danh mục và có thể thêm danh mục bình thường | Fail |
+| FR14-D05 | N1 — thiếu token | - Chưa đăng nhập<br>- Mở Admin | Trang Admin Login; không thấy Quản lý Danh mục | Chỉ thấy trang Admin Login; không thấy Quản lý Danh mục | Pass |
+| FR14-D06 | N3 — role user | - Đăng nhập user<br>- Mở Admin | Không vào được Quản lý Danh mục; báo không có quyền | Toast "Bạn không phải là admin", không vào được web | Pass |
+| FR14-D07 | P4 — xóa danh mục tồn tại | - Admin; danh mục "Điện tử"<br>- Bấm Xóa | Dòng "Điện tử" biến mất; danh sách cập nhật | Dòng "Điện tử" biến mất; danh sách cập nhật | Pass |
+| FR14-D08 | N1 — thiếu token khi xóa | - Chưa đăng nhập<br>- Mở Quản lý Danh mục | Chuyển hướng về trang đăng nhập | Chuyển hướng về trang đăng nhập | Pass |
+| FR14-D09 | P5 — admin xem danh sách | - Đăng nhập admin<br>- Mở Quản lý Danh mục | Bảng hiển thị ID, Tên Danh Mục, Hành động | Bảng hiển thị ID, Tên Danh Mục, Hành động | Pass |
 
 ### 4.2 Boundary Value Analysis
 
@@ -239,8 +233,8 @@ Nhóm: 03\
 
 | Test case ID | Objective | Inputs | Expected output | Actual result | Pass / Fail |
 | --- | --- | --- | --- | --- | --- |
-| FR14-B01 | BD01 — name 0 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: ""<br>- Bấm Thêm mới | Form báo "Tên danh mục là bắt buộc"; không thêm |  |  |
-| FR14-B02 | BD01 — name 1 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: "A"<br>- Bấm Thêm mới | Danh mục "A" xuất hiện trong bảng |  |  |
+| FR14-B01 | BD01 — name 0 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: ""<br>- Bấm Thêm mới | Form báo "Tên danh mục là bắt buộc"; không thêm | Vẫn thêm danh mục được bình thường | Fail |
+| FR14-B02 | BD01 — name 1 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: "A"<br>- Bấm Thêm mới | Danh mục "A" xuất hiện trong bảng | Danh mục "A" xuất hiện trong bảng | Pass |
 | FR14-B03 | BD01 — name 2 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: "AB"<br>- Bấm Thêm mới | Danh mục "AB" xuất hiện trong bảng |  |  |
 
 ### 4.3 AI Gap Analysis
@@ -289,9 +283,11 @@ Nhóm: 03\
 
 ## 6. AI Gap Analysis
 
-| Gap ID | Missed test case / bug | Cause class (a/b/c) | Explanation |
-| --- | --- | --- | --- |
-|  |  |  |  |
+| Gap ID | Problem | Cause |
+| --- | --- | --- |
+| G01 | Invalid domain FR04-N4 và FR04-N5 khoan sai khoảng invalid, độ dài của `phone` phải là <= 9 và >= 12 thay vì chỉ đúng 9 và 12 kí tự. Đã sửa thủ công.  | Giới hạn của AI tool |
+| G02 | Các case từ FR08-D04 đền D09 bị sai expected output, đáng ra expected chỉ dừng lại ở việc không chỉnh sửa trực tiếp được `total`, thay vì giả sử. Đã sửa thủ công | Giới hạn của AI tool |
+| G03 | Thiếu mất FR08-D14 nên không kiểm tra được requirement backend phải tính lại tổng đơn hàng. Đã thêm thủ công. | Giới hạn của AI tool |
 
 ## 7. Bug Report
 

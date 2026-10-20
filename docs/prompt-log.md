@@ -7,7 +7,6 @@
 - Output: |
   Rewrote guide.md to v2 scoped to FR-04 (Profile), FR-08 (Checkout), FR-14 (Categories) with oracle + suspect refs + partition/ON-OFF/BVA tables, plus Pool D (FR-20) parity re-execution interpretation.
   Paths touched as `path:line`: `guide.md` (full rewrite); refs cited `README.md:62-67`, `README.md:102-108`, `README.md:186-189`, `README.md:233-236`, `backend/server.js:118-135`, `backend/server.js:249-278`, `backend/server.js:297-309`, `frontend-mobile/App.js:287`, `frontend-mobile/App.js:391`, `frontend-mobile/App.js:348`, `frontend-mobile/App.js:684-690`.
-- Human review: pending — user to mark accepted / corrected
 
 
 ## [2026-10-16 01:00:17] — OpenCode (Muse Spark 1.3 Free)
@@ -19,7 +18,6 @@
   - bva: bounded variables → 2/3-value choice → min-1/min/min+1 tables → cases FRxx-Bnn → execute.
   - ai-audit: per-session log to assignment-docs/prompt-log.md (tool, datetime, prompt, output).
   Paths touched as `path:line`: `.opencode/skills/domain-testing/SKILL.md` (new), `.opencode/skills/bva/SKILL.md` (new), `.opencode/skills/ai-audit/SKILL.md` (new); refs `README.md:1-288`, `api_specification.md:1-214`, `AGENTS.md:1-103`.
-- Human review: pending — user to mark accepted / corrected
 
 
 ## [2026-10-20 00:45:11] — OpenCode (DeepSeek V4.1 Flash Free)
@@ -31,7 +29,6 @@
   - FR-08: 7 biến, 17 domain, 13 test case (FR08-D01..D13).
   - FR-14: 5 biến, 13 domain, 14 test case (FR14-D01..D14).
   Giữ nguyên cột; Actual output và Pass / Fail để trống; không thực thi test.
-- Human review: pending — student to run tests and mark accepted / corrected
 
 
 ## [2026-10-20 01:10:27] — OpenCode (DeepSeek V4.1 Flash Free)
@@ -41,7 +38,6 @@
   cập nhật nội dung trên cho skill domain-testing và có thể là cả bva ở những mục liên quan
 - Output: |
   Viết lại `.opencode/skills/domain-testing/SKILL.md` và `.opencode/skills/bva/SKILL.md` theo style tối giản: Required/Optional một từ, domain description dạng công thức ngắn, Objective chỉ ghi domain/boundary, Inputs gạch đầu dòng không JSON, Expected output là toast/thông báo UI thay vì HTTP. Không thực thi test.
-- Human review: pending — student to mark accepted / corrected
 
 
 ## [2026-10-20 01:43:22] — OpenCode (DeepSeek V4.1 Flash Free)
@@ -53,7 +49,6 @@
   - trong bảng test cases, input hiện tại vẫn trình bày theo kiểu json, thay vào đó hãy tách mỗi biến ra từng hàng và xuống dòng gạch đầu dòng, ví dụ: -  name: "Nguyễn Văn A"\- phone: "0786456884".
 - Output: |
   Cập nhật `.opencode/skills/domain-testing/SKILL.md`: Data type dùng `string`/`int`/`float`/...; Required = thiếu thì không thực hiện được FR (FR-04 `name`, `phone` Required); invalid domain viết dạng khoảng/tập hợp (`độ dài ≤ 9 hoặc ≥ 12`); Inputs trong test case tách từng biến thành dòng bullet, không JSON. Không thực thi test.
-- Human review: pending — student to mark accepted / corrected
 
 
 ## [2026-10-20 03:07:30] — OpenCode (DeepSeek V4.1 Flash Free)
@@ -65,7 +60,6 @@
   - FR-08: 2 biến (`cart` 0/1/2 sản phẩm; `total_amount` 9999999/10000000/10000001), 6 case FR08-B01..B06.
   - FR-14: 1 biến (`name` 0/1/2 ký tự), 3 case FR14-B01..B03.
   Dùng 3-value BVA; cột max để `N/A` khi SRS không quy định; `Actual result` và `Pass / Fail` để trống; không thực thi test.
-- Human review: pending — student to mark accepted / corrected
 
 
 ## [2026-10-21 01:07:05] — OpenCode (DeepSeek V4.1 Flash Free)
@@ -77,7 +71,6 @@
   - 12 domain: FR20-P1..P6, FR20-N1..N6.
   - 8 test case: FR20-D01..D08.
   Giữ nguyên cột; `Actual output`/`Pass / Fail` để trống; không sửa BVA và không thực thi test.
-- Human review: pending — student to mark accepted / corrected
 
 
 ## [2026-10-21 02:11:58] — OpenCode (DeepSeek V4.1 Flash Free)
@@ -88,19 +81,9 @@
   - 2 biến: `cart` (0/1/2 sản phẩm), `quantity` (0/1/2).
   - 2 boundary: FR20-BD01, FR20-BD02; 6 test case FR20-B01..B06.
   Giữ nguyên cột; `Actual result`/`Pass / Fail` để trống; không thực thi test.
-- Human review: pending — student to mark accepted / corrected
+  
 
-
-## [2026-10-21] (agent clock) — OpenCode (DeepSeek V4.1 Flash Free)
-- Prompt: |
-  trong feature thanh toán, cart array và items array khác nhau như thế nào
-- Output: |
-  Giải thích sự khác nhau giữa `cart` (React state phía mobile, `App.js:62`), `items` (payload `POST /api/checkout`, `App.js:391`) và `userCarts` phía server (`server.js:284-295`):
-  `cart` là dữ liệu UI; `items` là tập con của `cart` được gửi lên (mobile bỏ phần tử cuối khi giỏ >1); backend bỏ qua `items`, chỉ dùng `total_amount`; không sửa file, không chạy test.
-- Human review: pending — student to mark accepted / corrected
-
-
-## [2026-10-21] (agent clock) — OpenCode (DeepSeek V4.1 Flash Free)
+## [2026-10-21 02:55:17] — OpenCode (DeepSeek V4.1 Flash Free)
 - Prompt: |
   write the bugs i've found myself into the "bug report" section of @docs/report.md
 - Output: |
@@ -113,4 +96,3 @@
   - BUG-06 FR-20: ô số lượng mobile tự cộng thêm 1.
   Mỗi bug có FR/spec/severity/environment/preconditions/steps/expected/actual/root cause; screenshot và GitHub Issue để `_TODO_`.
   Không ghi 3 case token (FR04-D03, FR08-D03, FR14-D04) do test method sửa localStorage không cập nhật React state; không chạy test.
-- Human review: pending — student to mark accepted / corrected

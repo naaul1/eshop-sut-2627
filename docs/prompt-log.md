@@ -66,3 +66,26 @@
   - FR-14: 1 biến (`name` 0/1/2 ký tự), 3 case FR14-B01..B03.
   Dùng 3-value BVA; cột max để `N/A` khi SRS không quy định; `Actual result` và `Pass / Fail` để trống; không thực thi test.
 - Human review: pending — student to mark accepted / corrected
+
+
+## [2026-10-21 01:07:05] — OpenCode (DeepSeek V4.1 Flash Free)
+- Prompt: |
+  @domain-testing trên app mobile, chỉ riêng feature thanh toán. thực hiện vào bảng trong @docs/report.md và không thêm hay bớt cột. @ai-audit sau khi thực hiện xong.
+- Output: |
+  Điền Domain Testing cho FR-20 (§5.1.1–5.1.3), chỉ phạm vi checkout trên mobile:
+  - 6 biến: `token`, `cart`, `items`, `total_amount` (client), `order_total`, `cart_after_checkout`.
+  - 12 domain: FR20-P1..P6, FR20-N1..N6.
+  - 8 test case: FR20-D01..D08.
+  Giữ nguyên cột; `Actual output`/`Pass / Fail` để trống; không sửa BVA và không thực thi test.
+- Human review: pending — student to mark accepted / corrected
+
+
+## [2026-10-21 02:11:58] — OpenCode (DeepSeek V4.1 Flash Free)
+- Prompt: |
+  @bva hãy thực hiện bva lên fr20, feature thanh toán cho mobile. điền nội dung vào bảng trong @docs/report.md , không được thêm hay xoá cột. sau khi thực hiện, @ai-audit
+- Output: |
+  Điền BVA cho FR-20 (§5.2.1–5.2.3) trong `docs/report.md`, chỉ phạm vi thanh toán trên mobile:
+  - 2 biến: `cart` (0/1/2 sản phẩm), `quantity` (0/1/2).
+  - 2 boundary: FR20-BD01, FR20-BD02; 6 test case FR20-B01..B06.
+  Giữ nguyên cột; `Actual result`/`Pass / Fail` để trống; không thực thi test.
+- Human review: pending — student to mark accepted / corrected

@@ -18,15 +18,15 @@
 | **MSSV:** |  23120059 |
 | **Lớp / Khoá:** | 23CTT1\_3 |
 | **Mã bài tập (ví dụ HW\#00, HW\#02):** | HW\# |
-| **Ngày làm bài:** | 20/09/2026 |
-| **Công cụ AI đã dùng:** | OpenCode (Muse Spark 1.3 Free) |
-| **Công cụ AI đã dùng:** | \[ \] Có  \[ \] Không |
+| **Ngày làm bài:** | 16/10/2026 |
+| **Công cụ AI đã dùng:** | OpenCode (Muse Spark 1.3 Free, DeepSeek V4.1 Flash) |
+| **Công cụ AI đã dùng:** | \[x\] Có  \[ \] Không |
 
 ## **2\. Hướng dẫn (đọc trước khi điền)**
 
 * Thêm 1 hàng cho mỗi artifact AI sinh (test case, script, checklist, OpenAPI spec, JMeter plan…).  
 * Dán nguyên văn prompt — KHÔNG paraphrase.  
-* Dán nguyên văn output AI (hoặc kèm screenshot có chú thích trong báo cáo).  
+* Dán nguyên văn output AI (hoặc kèm screenshot có chú thích trong báo cáo).
 * Gắn nhãn: VALID / INVALID / INCOMPLETE.  
 * Lý do phải dẫn chiếu slide, mục ISTQB, hoặc RFC kỹ thuật.  
 * Hiển thị bản sửa với phần thay đổi được tô sáng.  
@@ -97,7 +97,7 @@ Viết 80–150 chữ mô tả pattern quan sát được. AI mạnh ở đâu? 
 | **Lớp / Khoá:** | 23CTT1\_3 |
 | **Môn học:** | CS423 / CSC13003 – Kiểm chứng Phần mềm |
 | **Giảng viên:** | Lâm Quang Vũ |
-| **Ngày:** | 20/09/2026 |
+| **Ngày:** | 21/10/2026 |
 | **Chữ ký:** | Trần Đình Luân |
 
 ## **Tham khảo**

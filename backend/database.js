@@ -104,11 +104,16 @@ function initDatabase() {
 
         // Seed Coupons
         const insertCoupon = db.prepare('INSERT INTO coupons (code, type, discount_value, min_order_amount, expired_at, is_active, max_uses_per_user) VALUES (?, ?, ?, ?, ?, ?, ?)');
-        insertCoupon.run('SAVE10', 'percent', 10, 300000, '2099-12-31', 1, 1);   // 10% off, min 300k, valid
+        insertCoupon.run('SAVE10', 'percent', 10, 300000, '2099-12-31', 1, 2);   // 10% off, min 300k, valid
         insertCoupon.run('BIGBUY', 'fixed', 50000, 500000, '2099-12-31', 1, 1);  // 50k off, min 500k, valid
         insertCoupon.run('VIP100', 'fixed', 100000, 300000, '2099-12-31', 1, 2); // 100k off, min 300k, max 2 uses
         insertCoupon.run('EXPIRED', 'percent', 20, 100000, '2020-01-01', 1, 1);  // 20% off, EXPIRED
+        insertCoupon.run('TEST', 'percent', 15, 200000, '2026-10-20', 1, 1); // 15% off, INACTIVE
         insertCoupon.finalize();
+
+        const insertCouponUsage = db.prepare('INSERT INTO coupon_usage (coupon_id, user_id) VALUES (?, ?)');
+        insertCouponUsage.run(1, 2);
+        insertCouponUsage.finalize();
 
         console.log('Database initialized and seeded (Phase 2).');
     });

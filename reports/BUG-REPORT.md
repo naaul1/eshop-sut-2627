@@ -21,3 +21,23 @@ Screenshot: ![alt text](bug-report/er-fr03-03.png)
 **[ER-FR03-04]** *Giao diện đổi mật khẩu thiếu trường Xác nhận mật khẩu mới*
 Screenshot: ![alt text](bug-report/er-fr03-04.png)
 
+**[ER-FR09-01]** *Áp dụng sai công thức giảm giá*
+Chi tiết lỗi:
+- Dữ liệu đầu vào:
+{
+    "code": "SAVE10",
+    "total_amount": "500000"
+}
+(áp dụng giảm giá 10% cho đơn 500.000 đ)
+- Dữ liệu đầu ra:
+{
+    "discount_amount": -4500000, 
+    "final_amount": 5000000
+}
+(giá tiền sau giảm giá là 5.000.000 đ)
+- Mô tả lỗi: Chương trình áp dụng sai công thức giảm giá theo %
+- Screenshot: ![alt text](bug-report/er-fr09-01.png)
+
+**[ER-FR09-02]** *Chương trình không kiểm tra người dùng đã đăng nhập và có JWT hợp lệ khi áp dụng coupon*
+Screenshot: ![alt text](bug-report/er-fr09-02.png)
+

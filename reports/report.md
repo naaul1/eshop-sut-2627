@@ -24,7 +24,6 @@
 ## 2.1. FR-03 - Quên mật khẩu & Đặt lại mật khẩu (2 bước)
 
 ### 2.1.1. Đặc tả
-**FR-03: Quên mật khẩu & Đặt lại mật khẩu (2 bước)**
 *Bước 1 — Lấy mã OTP:*
 - Người dùng nhập địa chỉ Email đã đăng ký.
 - Hệ thống sinh mã OTP 6 chữ số ngẫu nhiên và gửi qua Email (trong môi trường demo: hiển thị trực tiếp trên màn hình).
@@ -81,3 +80,60 @@
 - ER-FR03-02: Chương trình chấp nhận sai điều kiện mật khẩu mới.
 - ER-FR03-03: Giao diện không có nút Quay lại đăng nhập và chỉ báo số bước.
 - ER-FR03-04: Giao diện đổi mật khẩu thiếu trường Xác nhận mật khẩu mới.
+
+## 2.2. FR-09 - Mã giảm giá (Coupon)
+
+### 2.2.1. Đặc tả
+Tại bước Checkout, người dùng có thể nhập mã giảm giá. Hệ thống áp dụng giảm giá dựa trên **5 điều kiện** sau, tất cả phải thỏa mãn:
+
+| #   | Điều kiện              | Mô tả                                                       |
+| --- | ---------------------- | ----------------------------------------------------------- |
+| C1  | **Mã tồn tại**         | Mã phải có trong CSDL và đang hoạt động (`is_active = 1`)   |
+| C2  | **Còn hạn sử dụng**    | Ngày hiện tại phải trước `expired_at`                       |
+| C3  | **Đủ ngưỡng đơn hàng** | Tổng đơn hàng **>= (lớn hơn hoặc bằng)** `min_order_amount` |
+| C4  | **Đã đăng nhập**       | Người dùng phải có JWT Token hợp lệ                         |
+| C5  | **Chưa dùng hết lượt** | Số lần đã dùng mã này của user < `max_uses_per_user`        |
+
+**Công thức tính giảm giá:**
+
+- Loại `percent`: `discount_amount = total × discount_value / 100`
+- Loại `fixed`: `discount_amount = discount_value`
+- `final_amount = total - discount_amount`
+
+**Mã giảm giá mẫu trong hệ thống:**
+
+| Mã        | Loại    | Giá trị   | Ngưỡng tối thiểu | Hạn dùng   | Số lần/người |
+| --------- | ------- | --------- | ---------------- | ---------- | ------------ |
+| `SAVE10`  | percent | 10%       | 300,000 ₫        | 2099-12-31 | 1            |
+| `BIGBUY`  | fixed   | 50,000 ₫  | 500,000 ₫        | 2099-12-31 | 1            |
+| `VIP100`  | fixed   | 100,000 ₫ | 300,000 ₫        | 2099-12-31 | 2            |
+| `EXPIRED` | percent | 20%       | 100,000 ₫        | 2020-01-01 | 1            |
+
+### 2.2.2. Áp dụng Domain Testing
+**a. Các biến và các miền tương đương**
+| Tên biến | Kiểu dữ liệu | Miền hợp lệ | Miền không hợp lệ |
+|---|---|---|---|
+| `code` / mã coupon | Chuỗi | Mã tồn tại trong CSDL và `is_active = 1`; chuỗi chuẩn theo mã đã cấp | Không tồn tại; tồn tại nhưng `is_active != 1`; sai kiểu; rỗng; whitespace-only; `null`/thiếu |
+| Trạng thái `expired_at` | Ngày/giờ lưu trong coupon | Thời điểm hiện tại trước `expired_at` | Hiện tại bằng hoặc sau `expired_at`; định dạng không hợp lệ, thiếu, `null`, timezone không rõ (chưa có luật xử lý) |
+| `total_amount` | Số tiền | Số hợp lệ và thỏa `total_amount >= min_order_amount` | Số hợp lệ nhưng thấp hơn ngưỡng; sai kiểu; rỗng; whitespace-only; `null`/thiếu; số âm/0 |
+| JWT Token | Chuỗi header Authorization | JWT hợp lệ và xác thực thành công | Thiếu; sai scheme/cấu trúc; chữ ký không hợp lệ; đã hết hạn; `null`/rỗng (nếu header nhận được) |
+| `user_id` | Số nguyên trong JSON body | User hợp lệ, theo quan hệ với JWT nếu hệ thống yêu cầu | Sai kiểu; rỗng; `null`/thiếu; user không tồn tại; không khớp JWT |
+| Số lần user đã dùng mã | Số nguyên do hệ thống lưu | `used_count < max_uses_per_user` | `used_count = max_uses_per_user`; `used_count > max_uses_per_user` |
+| `min_order_amount` | Số tiền lưu trong coupon | Giá trị số dùng được để so sánh với `total_amount` | Sai kiểu; rỗng; `null`/thiếu; đơn vị/độ chính xác không tương thích (chưa được đặc tả) |
+| Kết quả giảm giá | JSON chứa số tiền | `discount_amount` và `final_amount` theo công thức đã nêu | Thiếu field; kiểu không phải số |
+
+**b. Kết hợp và chọn giá trị đại diện** (như mục 2.1.2)
+
+**c. Danh sách Test Cases**
+    Xem file: [fr09-domain-testing](FR-09_domain_test_cases.xlsx)
+
+### 2.1.3. Áp dụng Boundary Value Analysis
+**a. Xác định các giá trị biên và thiết kế giá trị kiểm thử tại biên**
+
+**b. Danh sách Test Cases**
+
+### 2.1.4. Điểm AI bỏ sót
+   
+
+### 2.1.5. Kết quả kiểm thử
+**Các lỗi tìm được** (chi tiết trong file BUG-REPORT.md)**:**

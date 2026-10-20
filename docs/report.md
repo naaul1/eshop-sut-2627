@@ -273,12 +273,12 @@ Nhóm: 03\
 
 | Test case ID | Objective | Inputs | Expected output | Actual output | Pass / Fail |
 | --- | --- | --- | --- | --- | --- |
-| FR20-D01 | P1, P2, P3, P4, P5, P6 — thanh toán 1 sản phẩm hợp lệ | - Đã đăng nhập<br>- Giỏ: 1 sản phẩm "Bàn phím cơ Keychron Q1", tổng 4000000<br>- Mở Giỏ → Tiến hành thanh toán<br>- Bấm Xác Nhận Thanh Toán | Màn hình "Thanh toán thành công!"; đơn mới tổng 4000000; giỏ trống | Màn hình "Thanh toán thành công!"; đơn mới tổng 4000000; giỏ trống | Pass |
-| FR20-D02 | P1, P2, P3, P4, P5, P6 — thanh toán 2 sản phẩm | - Đã đăng nhập<br>- Giỏ: 2 sản phẩm (AirPods Pro 2 6000000 + Keychron Q1 4000000), tổng 10000000<br>- Mở Giỏ → Tiến hành thanh toán | Màn hình "Thanh toán thành công!"; đơn mới tổng 10000000; giỏ trống | Màn hình "Thanh toán thành công!"; đơn mới tổng 10000000; | Pass |
-| FR20-D03 | N1 — chưa đăng nhập | - Chưa đăng nhập<br>- Giỏ có 1 sản phẩm<br>- Mở Giỏ → Tiến hành thanh toán | Alert "Bạn cần đăng nhập để thanh toán!"; chuyển màn hình Đăng nhập; | Alert "Bạn cần đăng nhập để thanh toán!"; chuyển màn hình Đăng nhập; | Pass |
+| FR20-D01 | P1, P2, P3, P4, P5, P6 — thanh toán 1 sản phẩm hợp lệ | - Đã đăng nhập<br>- Giỏ: 1 sản phẩm "Bàn phím cơ Keychron Q1", tổng 4000000<br>- Mở Giỏ -> Tiến hành thanh toán<br>- Bấm Xác Nhận Thanh Toán | Màn hình "Thanh toán thành công!"; đơn mới tổng 4000000; giỏ trống | Màn hình "Thanh toán thành công!"; đơn mới tổng 4000000; giỏ trống | Pass |
+| FR20-D02 | P1, P2, P3, P4, P5, P6 — thanh toán 2 sản phẩm | - Đã đăng nhập<br>- Giỏ: 2 sản phẩm (AirPods Pro 2 6000000 + Keychron Q1 4000000), tổng 10000000<br>- Mở Giỏ -> Tiến hành thanh toán | Màn hình "Thanh toán thành công!"; đơn mới tổng 10000000; giỏ trống | Màn hình "Thanh toán thành công!"; đơn mới tổng 10000000; | Pass |
+| FR20-D03 | N1 — chưa đăng nhập | - Chưa đăng nhập<br>- Giỏ có 1 sản phẩm<br>- Mở Giỏ -> Tiến hành thanh toán | Alert "Bạn cần đăng nhập để thanh toán!"; chuyển màn hình Đăng nhập; | Alert "Bạn cần đăng nhập để thanh toán!"; chuyển màn hình Đăng nhập; | Pass |
 | FR20-D04 | N3 — giỏ rỗng | - Đã đăng nhập<br>- Giỏ: 0 sản phẩm<br>- Mở Giỏ | Hiển thị "Giỏ hàng của bạn đang trống"; không có nút "Tiến hành thanh toán" | Hiển thị "Giỏ hàng của bạn đang trống"; không có nút "Tiến hành thanh toán" | Pass |
 | FR20-D05 | P4 — tổng tiền readonly | - Đã đăng nhập<br>- Giỏ: 1 sản phẩm, tổng 4000000<br>- Mở Checkout<br>- Thử chạm/sửa ô "Tổng tiền thanh toán" | Ô tổng tiền disabled/không sửa được; vẫn hiển thị 4000000 | Ô tổng tiền disabled/không sửa được; vẫn hiển thị 4000000 | Pass |
-| FR20-D06 | P6 — giỏ trống sau thanh toán | - Thanh toán thành công ở D01/D02<br>- Mở Giỏ; mở Hồ sơ → Lịch sử đơn hàng | Giỏ trống, badge Giỏ (0); đơn mới trong Lịch sử có tổng đúng | Giỏ trống, badge Giỏ (0); đơn mới trong Lịch sử có tổng đúng | Pass |
+| FR20-D06 | P6 — giỏ trống sau thanh toán | - Thanh toán thành công ở D01/D02<br>- Mở Giỏ; mở Hồ sơ -> Lịch sử đơn hàng | Giỏ trống, badge Giỏ (0); đơn mới trong Lịch sử có tổng đúng | Giỏ trống, badge Giỏ (0); đơn mới trong Lịch sử có tổng đúng | Pass |
 
 ### 5.2 Boundary Value Analysis
 
@@ -301,8 +301,8 @@ Nhóm: 03\
 | Test case ID | Objective | Inputs | Expected output | Actual result | Pass / Fail |
 | --- | --- | --- | --- | --- | --- |
 | FR20-B01 | BD01 — cart 0 sản phẩm | - Đã đăng nhập<br>- cart: 0 sản phẩm<br>- Mở Giỏ | Hiển thị "Giỏ hàng của bạn đang trống"; không có nút thanh toán | Hiển thị "Giỏ hàng của bạn đang trống"; không có nút thanh toán | Pass |
-| FR20-B02 | BD01 — cart 1 sản phẩm | - Đã đăng nhập<br>- cart: 1 sản phẩm "Bàn phím cơ Keychron Q1", tổng 4000000<br>- Bấm Tiến hành thanh toán → Xác nhận | "Thanh toán thành công!"; đơn mới tổng 4000000; giỏ trống | "Thanh toán thành công!"; đơn mới tổng 4000000; giỏ trống | Pass |
-| FR20-B03 | BD01 — cart 2 sản phẩm | - Đã đăng nhập<br>- cart: 2 sản phẩm (AirPods Pro 2 6000000 + Keychron Q1 4000000), tổng 10000000<br>- Bấm Tiến hành thanh toán → Xác nhận | "Thanh toán thành công!"; đơn mới tổng 10000000; giỏ trống | "Thanh toán thành công!"; đơn mới tổng 10000000; giỏ trống | Pass |
+| FR20-B02 | BD01 — cart 1 sản phẩm | - Đã đăng nhập<br>- cart: 1 sản phẩm "Bàn phím cơ Keychron Q1", tổng 4000000<br>- Bấm Tiến hành thanh toán -> Xác nhận | "Thanh toán thành công!"; đơn mới tổng 4000000; giỏ trống | "Thanh toán thành công!"; đơn mới tổng 4000000; giỏ trống | Pass |
+| FR20-B03 | BD01 — cart 2 sản phẩm | - Đã đăng nhập<br>- cart: 2 sản phẩm (AirPods Pro 2 6000000 + Keychron Q1 4000000), tổng 10000000<br>- Bấm Tiến hành thanh toán -> Xác nhận | "Thanh toán thành công!"; đơn mới tổng 10000000; giỏ trống | "Thanh toán thành công!"; đơn mới tổng 10000000; giỏ trống | Pass |
 | FR20-B04 | BD02 — quantity 0 | - Đã đăng nhập; giỏ có "Bàn phím cơ Keychron Q1"<br>- quantity: "0"<br>- Mở Giỏ | Không nhận 0; số lượng giữ 1; tổng 4000000 | Không nhận 0; số lượng giữ 1; tổng 4000000 | Pass |
 | FR20-B05 | BD02 — quantity 1 | - Đã đăng nhập; giỏ có "Bàn phím cơ Keychron Q1"<br>- quantity: "1"<br>- Mở Giỏ | Thành tiền 4000000; tổng 4000000 | Số lượng tự nhảy lên thành 2; thành tiền 8000000; tổng 8000000 | Fail |
 | FR20-B06 | BD02 — quantity 2 | - Đã đăng nhập; giỏ có "Bàn phím cơ Keychron Q1"<br>- quantity: "2"<br>- Mở Giỏ | Thành tiền 8000000; tổng 8000000 | Số lượng tự nhảy lên thành 3; thành tiền 12000000, tổng 12000000 | Fail |
@@ -317,17 +317,24 @@ Nhóm: 03\
 
 ## 7. Bug Report
 
-### 7.1 BUG-01 - FR-04: Regex số điện thoại sai — từ chối số hợp lệ và chấp nhận số không bắt đầu bằng 0
+| Bug ID | Title | FR | GitHub Issue |
+| --- | --- | --- | --- |
+| BUG-01 | Regex số điện thoại sai - từ chối số hợp lệ và chấp nhận số không bắt đầu bằng 0 | FR-04 | [[BUG-01 - FR-04]](https://github.com/naaul1/eshop-sut-2627/issues/25) |
+| BUG-02 | Chấp nhận Họ Tên chỉ gồm khoảng trắng | FR-04 | [[BUG-02 - FR-04]](https://github.com/naaul1/eshop-sut-2627/issues/26) |
+| BUG-03 | Ô tổng tiền thanh toán cho phép chỉnh sửa trực tiếp | FR-08 | [[BUG-03 - FR-08]](https://github.com/naaul1/eshop-sut-2627/issues/27)  |
+| BUG-04 | Backend tin `total_amount` từ client, không tính lại từ giỏ/`items` | FR-08 | [[BUG-04 - FR-08]](https://github.com/naaul1/eshop-sut-2627/issues/28)  |
+| BUG-05 | Chấp nhận tên danh mục rỗng hoặc chỉ gồm khoảng trắng | FR-14 | [[BUG-05 - FR-14]](https://github.com/naaul1/eshop-sut-2627/issues/29)  |
+| BUG-06 | Ô số lượng trong giỏ mobile tự cộng thêm 1 | FR-20 | [[BUG-06 - FR-20]](https://github.com/naaul1/eshop-sut-2627/issues/30)  |
+
+### 7.1 BUG-01 - FR-04: Regex số điện thoại sai - từ chối số hợp lệ và chấp nhận số không bắt đầu bằng 0
 
 | Item | Value |
 | --- | --- |
 | FR reference | FR-04 |
 | Spec reference | README.md — FR-04: "Số điện thoại hợp lệ: bắt đầu bằng số `0`, từ 10–11 chữ số." |
-| Severity | High |
 | Environment | Frontend Web (React + Vite), Chrome; Backend Node/Express `http://localhost:3000` |
 | Preconditions | Đã đăng nhập `test@eshop.com`; mở trang Hồ sơ |
-| Root cause | `frontend-web/src/pages/Profile.jsx:43` dùng `/^[1-9][0-9]{8,9}$/` — bắt đầu bằng 1–9 và chỉ 9–10 chữ số |
-| GitHub Issue | _TODO_ |
+| GitHub Issue | [[BUG-01 - FR-04]](https://github.com/naaul1/eshop-sut-2627/issues/25) |
 
 **Steps to reproduce**
 
@@ -340,15 +347,12 @@ Nhóm: 03\
 
 **Expected result**
 
-Bước 2, 3: cập nhật thành công. Bước 4: báo "Số điện thoại không hợp lệ", không cập nhật.
+Bước 2, 3: cập nhật thành công.\
+Bước 4: báo "Số điện thoại không hợp lệ", không cập nhật.
 
 **Actual result**
 
-Bước 2, 3: báo "Số điện thoại không hợp lệ". Bước 4: "Cập nhật thành công!" và số điện thoại sai được lưu.
-
-**Screenshot**
-
-_TODO: thêm ảnh màn hình (FR04-D01, FR04-D06, FR04-B02, FR04-B03)._
+Bước 2, 3: báo "Số điện thoại không hợp lệ".\ Bước 4: "Cập nhật thành công!" và số điện thoại sai được lưu.
 
 ### 7.2 BUG-02 - FR-04: Chấp nhận Họ Tên chỉ gồm khoảng trắng
 
@@ -356,11 +360,9 @@ _TODO: thêm ảnh màn hình (FR04-D01, FR04-D06, FR04-B02, FR04-B03)._
 | --- | --- |
 | FR reference | FR-04 |
 | Spec reference | README.md — FR-04: Họ Tên là trường bắt buộc khi cập nhật hồ sơ; FR-01: Họ Tên bắt buộc |
-| Severity | Medium |
 | Environment | Frontend Web (React + Vite), Chrome; Backend Node/Express `http://localhost:3000` |
 | Preconditions | Đã đăng nhập `test@eshop.com`; mở trang Hồ sơ |
-| Root cause | `frontend-web/src/pages/Profile.jsx:126-133` chỉ dùng `required` (chặn chuỗi rỗng) nhưng không trim; `backend/server.js:118` không kiểm tra `name` |
-| GitHub Issue | _TODO_ |
+| GitHub Issue | [[BUG-02 - FR-04]](https://github.com/naaul1/eshop-sut-2627/issues/26) |
 
 **Steps to reproduce**
 
@@ -378,9 +380,6 @@ Báo "Họ Tên không được để trống"; hồ sơ giữ nguyên tên cũ.
 
 "Cập nhật thành công!"; hồ sơ lưu tên chỉ gồm khoảng trắng.
 
-**Screenshot**
-
-_TODO: thêm ảnh màn hình (FR04-D12)._
 
 ### 7.3 BUG-03 - FR-08: Ô tổng tiền thanh toán cho phép chỉnh sửa trực tiếp
 
@@ -388,17 +387,15 @@ _TODO: thêm ảnh màn hình (FR04-D12)._
 | --- | --- |
 | FR reference | FR-08 |
 | Spec reference | README.md — FR-08: "Tổng tiền thanh toán được tính tự động từ giỏ hàng và không cho phép người dùng chỉnh sửa trực tiếp." |
-| Severity | High |
 | Environment | Frontend Web (React + Vite), Chrome; Backend Node/Express `http://localhost:3000` |
 | Preconditions | Đã đăng nhập; giỏ có 2 sản phẩm (AirPods Pro 2 + Keychron Q1), tổng 10.000.000 ₫ |
-| Root cause | `frontend-web/src/pages/Checkout.jsx:93-97` — input tổng tiền gắn với state `editableTotal` và có `onChange` |
-| GitHub Issue | _TODO_ |
+| GitHub Issue | [[BUG-03 - FR-08]](https://github.com/naaul1/eshop-sut-2627/issues/27) |
 
 **Steps to reproduce**
 
 | Step | Action | Input |
 | --- | --- | --- |
-| 1 | Vào Giỏ hàng → Tiến hành thanh toán | — |
+| 1 | Vào Giỏ hàng -> Tiến hành thanh toán | — |
 | 2 | Nhấn vào ô "Tổng tiền thanh toán (VND)" và sửa thành 1, bấm Xác Nhận Thanh Toán | `1` |
 | 3 | Lặp lại với các giá trị 0, -100000, 20000000 | `0`, `-100000`, `20000000` |
 
@@ -410,29 +407,23 @@ _TODO: thêm ảnh màn hình (FR04-D12)._
 
 Ô tổng tiền sửa được; đơn hàng được tạo với đúng giá trị đã sửa (1 ₫, 0 ₫, -100.000 ₫, 20.000.000 ₫).
 
-**Screenshot**
-
-_TODO: thêm ảnh màn hình (FR08-D04, FR08-D05, FR08-D06, FR08-D07, FR08-D09, FR08-D12)._
-
 ### 7.4 BUG-04 - FR-08: Backend tin `total_amount` từ client, không tính lại từ giỏ/`items`
 
 | Item | Value |
 | --- | --- |
 | FR reference | FR-08 |
 | Spec reference | README.md — FR-08: "Backend phải tự tính lại tổng tiền; không chấp nhận giá trị `total_amount` do client gửi lên." |
-| Severity | Critical |
 | Environment | Frontend Web (React + Vite), Chrome; Backend Node/Express `http://localhost:3000` |
 | Preconditions | Đã đăng nhập; giỏ có 2 sản phẩm: AirPods Pro 2 (6.000.000 ₫) + Keychron Q1 (4.000.000 ₫), tổng 10.000.000 ₫ |
-| Root cause | `backend/server.js:297-310` chỉ đọc `total_amount` và `shipping_address`, bỏ qua `items`; DB không có bảng `order_items` |
-| GitHub Issue | _TODO_ |
+| GitHub Issue | [[BUG-04 - FR-08]](https://github.com/naaul1/eshop-sut-2627/issues/28) |
 
 **Steps to reproduce**
 
 | Step | Action | Input |
 | --- | --- | --- |
-| 1 | Vào Checkout, bật proxy để sửa request `POST /api/checkout` | — |
+| 1 | Vào Checkout, mở DevTools -> Network, chuột phải request `POST /api/checkout` -> **Edit and Resend as fetch** | — |
 | 2 | Tăng `quantity` của Keychron Q1 từ 1 lên 2 trong `items`, giữ nguyên `total_amount` | `total_amount: 10000000` |
-| 3 | Bấm Xác Nhận Thanh Toán, mở Lịch sử đơn hàng | — |
+| 3 | Gửi request đã sửa trong DevTools, mở Lịch sử đơn hàng | — |
 
 **Expected result**
 
@@ -442,21 +433,15 @@ _TODO: thêm ảnh màn hình (FR08-D04, FR08-D05, FR08-D06, FR08-D07, FR08-D09,
 
 Đơn mới được tạo với tổng 10.000.000 ₫; `items` bị bỏ qua hoàn toàn. Sửa trực tiếp `total_amount` thành 1/0/-100000 cũng tạo đơn với đúng giá trị đó.
 
-**Screenshot**
-
-_TODO: thêm ảnh màn hình (FR08-D14, FR08-D04, FR08-D05, FR08-D06)._
-
 ### 7.5 BUG-05 - FR-14: Chấp nhận tên danh mục rỗng hoặc chỉ gồm khoảng trắng
 
 | Item | Value |
 | --- | --- |
 | FR reference | FR-14 |
 | Spec reference | README.md — FR-14: "Tên danh mục là bắt buộc, không được để trống." |
-| Severity | Medium |
 | Environment | Web Admin (React + Vite) `http://localhost:5174`; Backend Node/Express `http://localhost:3000` |
 | Preconditions | Đã đăng nhập admin; mở tab Quản lý Danh mục |
-| Root cause | `frontend-admin/src/App.jsx:145` không kiểm tra `categoryName`; `backend/server.js:249-255` không validate `name` |
-| GitHub Issue | _TODO_ |
+| GitHub Issue | [[BUG-05 - FR-14]](https://github.com/naaul1/eshop-sut-2627/issues/29)  |
 
 **Steps to reproduce**
 
@@ -474,21 +459,15 @@ Form báo "Tên danh mục là bắt buộc"; không thêm danh mục.
 
 Danh mục mới được thêm với tên rỗng/" " và xuất hiện trong bảng.
 
-**Screenshot**
-
-_TODO: thêm ảnh màn hình (FR14-D02, FR14-D03, FR14-B01)._
-
 ### 7.6 BUG-06 - FR-20: Ô số lượng trong giỏ mobile tự cộng thêm 1
 
 | Item | Value |
 | --- | --- |
 | FR reference | FR-20 |
 | Spec reference | README.md — FR-06: "Số lượng (chỉ nhận số nguyên dương, tối thiểu là 1)"; FR-20: mobile phải có đầy đủ chức năng Giỏ hàng/Thanh toán |
-| Severity | High |
 | Environment | Expo Go (Android); Backend Node/Express `http://10.0.104.86:3000` |
 | Preconditions | Đã đăng nhập; giỏ có "Bàn phím cơ Keychron Q1" (4.000.000 ₫) |
-| Root cause | `frontend-mobile/App.js:620` dùng `parsed + 1` thay vì `parsed` |
-| GitHub Issue | _TODO_ |
+| GitHub Issue | [[BUG-06 - FR-20]](https://github.com/naaul1/eshop-sut-2627/issues/30)  |
 
 **Steps to reproduce**
 
@@ -500,15 +479,11 @@ _TODO: thêm ảnh màn hình (FR14-D02, FR14-D03, FR14-B01)._
 
 **Expected result**
 
-Số lượng đúng bằng giá trị nhập: 1 → thành tiền 4.000.000 ₫; 2 → thành tiền 8.000.000 ₫.
+Số lượng đúng bằng giá trị nhập: 1 -> thành tiền 4.000.000 ₫; 2 -> thành tiền 8.000.000 ₫.
 
 **Actual result**
 
-Nhập 1 → số lượng thành 2, thành tiền 8.000.000 ₫; nhập 2 → số lượng thành 3, thành tiền 12.000.000 ₫.
-
-**Screenshot**
-
-_TODO: thêm ảnh màn hình (FR20-B05, FR20-B06)._
+Nhập 1 -> số lượng thành 2, thành tiền 8.000.000 ₫; nhập 2 -> số lượng thành 3, thành tiền 12.000.000 ₫.
 
 ## Appendix - AI Audit Report
 

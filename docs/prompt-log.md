@@ -89,3 +89,28 @@
   - 2 boundary: FR20-BD01, FR20-BD02; 6 test case FR20-B01..B06.
   Giữ nguyên cột; `Actual result`/`Pass / Fail` để trống; không thực thi test.
 - Human review: pending — student to mark accepted / corrected
+
+
+## [2026-10-21] (agent clock) — OpenCode (DeepSeek V4.1 Flash Free)
+- Prompt: |
+  trong feature thanh toán, cart array và items array khác nhau như thế nào
+- Output: |
+  Giải thích sự khác nhau giữa `cart` (React state phía mobile, `App.js:62`), `items` (payload `POST /api/checkout`, `App.js:391`) và `userCarts` phía server (`server.js:284-295`):
+  `cart` là dữ liệu UI; `items` là tập con của `cart` được gửi lên (mobile bỏ phần tử cuối khi giỏ >1); backend bỏ qua `items`, chỉ dùng `total_amount`; không sửa file, không chạy test.
+- Human review: pending — student to mark accepted / corrected
+
+
+## [2026-10-21] (agent clock) — OpenCode (DeepSeek V4.1 Flash Free)
+- Prompt: |
+  write the bugs i've found myself into the "bug report" section of @docs/report.md
+- Output: |
+  Điền mục Bug Report (§7.1–7.6) trong `docs/report.md` với 6 bug từ các case Fail:
+  - BUG-01 FR-04: regex số điện thoại sai (từ chối số hợp lệ bắt đầu 0, nhận số không bắt đầu 0).
+  - BUG-02 FR-04: nhận Họ Tên toàn khoảng trắng.
+  - BUG-03 FR-08: ô tổng tiền thanh toán sửa được.
+  - BUG-04 FR-08: backend tin `total_amount` client, không tính lại từ giỏ/`items`.
+  - BUG-05 FR-14: nhận tên danh mục rỗng/toàn khoảng trắng.
+  - BUG-06 FR-20: ô số lượng mobile tự cộng thêm 1.
+  Mỗi bug có FR/spec/severity/environment/preconditions/steps/expected/actual/root cause; screenshot và GitHub Issue để `_TODO_`.
+  Không ghi 3 case token (FR04-D03, FR08-D03, FR14-D04) do test method sửa localStorage không cập nhật React state; không chạy test.
+- Human review: pending — student to mark accepted / corrected

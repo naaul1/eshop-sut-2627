@@ -235,7 +235,7 @@ Nhóm: 03\
 | --- | --- | --- | --- | --- | --- |
 | FR14-B01 | BD01 — name 0 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: ""<br>- Bấm Thêm mới | Form báo "Tên danh mục là bắt buộc"; không thêm | Vẫn thêm danh mục được bình thường | Fail |
 | FR14-B02 | BD01 — name 1 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: "A"<br>- Bấm Thêm mới | Danh mục "A" xuất hiện trong bảng | Danh mục "A" xuất hiện trong bảng | Pass |
-| FR14-B03 | BD01 — name 2 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: "AB"<br>- Bấm Thêm mới | Danh mục "AB" xuất hiện trong bảng |  | Chưa thực thi |
+| FR14-B03 | BD01 — name 2 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: "AB"<br>- Bấm Thêm mới | Danh mục "AB" xuất hiện trong bảng | Danh mục "AB" xuất hiện trong bảng | Pass |
 
 ## 5. Feature D - FR-20: Mobile Application
 
@@ -485,6 +485,13 @@ Số lượng đúng bằng giá trị nhập: 1 -> thành tiền 4.000.000 ₫;
 
 Nhập 1 -> số lượng thành 2, thành tiền 8.000.000 ₫; nhập 2 -> số lượng thành 3, thành tiền 12.000.000 ₫.
 
-## Appendix - AI Audit Report
+## Appendix A
+
+
+### AI Audit repot
 
 See [`[AI-02] - FIT@HCMUS - AI Audit Report_Vn.md`](<[AI-02] - FIT@HCMUS - AI Audit Report_Vn>).
+
+### AI Critique
+
+See [`AICritique.md`](AICritique.md)

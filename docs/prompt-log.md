@@ -96,3 +96,11 @@
   - BUG-06 FR-20: ô số lượng mobile tự cộng thêm 1.
   Mỗi bug có FR/spec/severity/environment/preconditions/steps/expected/actual/root cause; screenshot và GitHub Issue để `_TODO_`.
   Không ghi 3 case token (FR04-D03, FR08-D03, FR14-D04) do test method sửa localStorage không cập nhật React state; không chạy test.
+
+
+## [2026-10-21 04:35:22] — OpenCode (DeepSeek V4.1 Flash Free)
+- Prompt: |
+  viết ai critique vào @docs/AICritique.md dựa trên yêu cầu của @req.md và nội dung thực hiện trong @docs/report.md
+- Output: |
+  Tạo `docs/AICritique.md` (bản đầu 280 từ; bản cuối sau chỉnh sửa còn 275 từ) theo req.md §10: G01, G02, G03, BUG-04/proxy, token + React state; nêu nguyên nhân và bài học. Không thực thi test.
+- Human review: pending — student to mark accepted / corrected

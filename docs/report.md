@@ -90,10 +90,10 @@ Nhóm: 03\
 
 | Test case ID | Objective | Inputs | Expected output | Actual result | Pass / Fail |
 | --- | --- | --- | --- | --- | --- |
-| FR04-B01 | BD01 — phone 9 chữ số | - Đã đăng nhập; mở Hồ sơ<br>- phone: "091234567"<br>- Bấm Cập nhật | Toast "Số điện thoại không hợp lệ"; phone giữ nguyên | Toast "Số điện thoại không hợp lệ" | Fail |
+| FR04-B01 | BD01 — phone 9 chữ số | - Đã đăng nhập; mở Hồ sơ<br>- phone: "091234567"<br>- Bấm Cập nhật | Toast "Số điện thoại không hợp lệ"; phone giữ nguyên | Toast "Số điện thoại không hợp lệ" | Pass |
 | FR04-B02 | BD01 — phone 10 chữ số | - Đã đăng nhập; mở Hồ sơ<br>- phone: "0912345678"<br>- Bấm Cập nhật | Toast "Cập nhật thành công!"; phone mới hiển thị | Toast "Số điện thoại không hợp lệ" | Fail |
 | FR04-B03 | BD01 — phone 11 chữ số | - Đã đăng nhập; mở Hồ sơ<br>- phone: "09123456789"<br>- Bấm Cập nhật | Toast "Cập nhật thành công!"; phone mới hiển thị | Toast "Số điện thoại không hợp lệ" | Fail |
-| FR04-B04 | BD01 — phone 12 chữ số | - Đã đăng nhập; mở Hồ sơ<br>- phone: "091234567890"<br>- Bấm Cập nhật | Toast "Số điện thoại không hợp lệ"; phone giữ nguyên | Toast "Số điện thoại không hợp lệ" | Fail |
+| FR04-B04 | BD01 — phone 12 chữ số | - Đã đăng nhập; mở Hồ sơ<br>- phone: "091234567890"<br>- Bấm Cập nhật | Toast "Số điện thoại không hợp lệ"; phone giữ nguyên | Toast "Số điện thoại không hợp lệ" | Pass |
 | FR04-B05 | BD02 — name 0 ký tự | - Đã đăng nhập; mở Hồ sơ<br>- name: ""<br>- phone hợp lệ<br>- Bấm Cập nhật | Form bắt buộc điền tên; name giữ nguyên | Form hiện "Please fill out this field"; name giữ nguyên | Pass |
 | FR04-B06 | BD02 — name 1 ký tự | - Đã đăng nhập; mở Hồ sơ<br>- name: "A"<br>- phone hợp lệ<br>- Bấm Cập nhật | Toast "Cập nhật thành công!" | Toast "Cập nhật thành công!" | Pass |
 | FR04-B07 | BD02 — name 2 ký tự | - Đã đăng nhập; mở Hồ sơ<br>- name: "AB"<br>- phone hợp lệ<br>- Bấm Cập nhật | Toast "Cập nhật thành công!" | Toast "Cập nhật thành công!" | Pass |
@@ -140,7 +140,7 @@ Nhóm: 03\
 | FR08-D04 | N5 — order_total = 1 | - Đã đăng nhập; cart 10000000<br>- Sửa ô tổng tiền thành 1<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly | Người dùng chỉnh sửa được, và đơn hàng bị tính giá 1đ | Fail |
 | FR08-D05 | N5 — order_total = 0 | - Đã đăng nhập; cart 10000000<br>- Sửa ô tổng tiền thành 0<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly | Người dùng chỉnh sửa được, và đơn hàng bị tính giá 0đ | Fail |
 | FR08-D06 | N5 — order_total âm | - Đã đăng nhập; cart 10000000<br>- Sửa ô tổng tiền thành -100000<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly | Người dùng chỉnh sửa được, và đơn hàng bị tính giá -100000đ | Fail |
-| FR08-D07 | N5 — order_total > thực tế | - Đã đăng nhập; cart 10000000<br>- Sửa ô tổng tiền thành 20000000<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly |  | Người dùng chỉnh sửa được, và đơn hàng bị tính giá 20000000đ | Fail |
+| FR08-D07 | N5 — order_total > thực tế | - Đã đăng nhập; cart 10000000<br>- Sửa ô tổng tiền thành 20000000<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền readonly | Người dùng chỉnh sửa được, và đơn hàng bị tính giá 20000000đ | Fail |
 | FR08-D08 | N5 — order_total không phải số | - Đã đăng nhập; cart 10000000<br>- Sửa ô tổng tiền thành "abc"<br>- Bấm Xác Nhận Thanh Toán | Ô tổng tiền không nhận chữ | Ô tổng tiền không nhận chữ | Pass |
 | FR08-D09 | P3 — total_amount trống | - Đã đăng nhập; cart 10000000<br>- Xóa trắng ô tổng tiền<br>- Bấm Xác Nhận Thanh Toán | Không thanh toán được hoặc đơn vẫn 10000000 do server tính | Ô tổng tiền hiện 0 và thanh toán vẫn bị tính 0đ | Fail |
 | FR08-D10 | N3 — giỏ rỗng | - Đã đăng nhập<br>- cart: 0 sản phẩm<br>- Mở trang Thanh toán | Hiển thị giỏ trống; không có nút thanh toán/không tạo đơn | Hiển thị giỏ trống; không có nút thanh toán/không tạo đơn | Pass |
@@ -235,7 +235,7 @@ Nhóm: 03\
 | --- | --- | --- | --- | --- | --- |
 | FR14-B01 | BD01 — name 0 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: ""<br>- Bấm Thêm mới | Form báo "Tên danh mục là bắt buộc"; không thêm | Vẫn thêm danh mục được bình thường | Fail |
 | FR14-B02 | BD01 — name 1 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: "A"<br>- Bấm Thêm mới | Danh mục "A" xuất hiện trong bảng | Danh mục "A" xuất hiện trong bảng | Pass |
-| FR14-B03 | BD01 — name 2 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: "AB"<br>- Bấm Thêm mới | Danh mục "AB" xuất hiện trong bảng |  |  |
+| FR14-B03 | BD01 — name 2 ký tự | - Đăng nhập admin; mở Quản lý Danh mục<br>- name: "AB"<br>- Bấm Thêm mới | Danh mục "AB" xuất hiện trong bảng |  | Chưa thực thi |
 
 ## 5. Feature D - FR-20: Mobile Application
 

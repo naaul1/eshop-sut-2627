@@ -71,7 +71,7 @@
 **b. Danh sách Test Cases**
     Xem file: [fr03-bva](FR-03_boundary_test_cases.xlsx)
 
-### 2.1.4. Điểm AI bỏ sót
+### 2.1.4. Điểm AI làm sai
     AI đã bỏ qua trường hợp OTP được nhập đúng định dạng nhưng không khớp với mã do hệ thống sinh ra. Bên cạnh đó, AI chỉ kiểm tra 2/7 ký tự đặc biệt trong yêu cầu của mật khẩu (@, $, !, %, *, ?, &). Lý do AI bỏ sót các trường hợp trên có thể do thiếu sót trong skill được sử dụng để sinh test cases khi chỉ tập trung phân miền giá trị theo kiểu dữ liệu và định dạng mà không yêu cầu kiểm tra tính hợp lệ của dữ liệu.
 
 ### 2.1.5. Kết quả kiểm thử
@@ -127,13 +127,23 @@ Tại bước Checkout, người dùng có thể nhập mã giảm giá. Hệ th
 **c. Danh sách Test Cases**
     Xem file: [fr09-domain-testing](FR-09_domain_test_cases.xlsx)
 
-### 2.1.3. Áp dụng Boundary Value Analysis
+### 2.2.3. Áp dụng Boundary Value Analysis
 **a. Xác định các giá trị biên và thiết kế giá trị kiểm thử tại biên**
+| Tên biến | Biên cần kiểm thử | Các điểm biên |
+|---|---|---|
+| code | Độ dài yêu cầu | 5, 6, 7 chữ số |
+| Giá trị đơn hàng | Giá trị đơn hàng tối thiểu áp dụng voucher | min, min-1, min+1 |
+| Thời gian áp dụng | Thời gian hết hạn voucher | bằng expired_at, ngay trước expired_at, ngay sau expired_at |
+| Số lần áp dụng voucher | Giới hạn áp dụng voucher mỗi người | max, max-1, max+1 |
 
 **b. Danh sách Test Cases**
+    Xem file: [fr09-bva](FR-09_boundary_test_cases.xlsx)
 
-### 2.1.4. Điểm AI bỏ sót
-   
+### 2.2.4. Điểm AI làm sai
+    AI đã đưa vào các test cases không thể thực hiện test trên web client. Nguyên nhân là do prompt không ghi rõ chức năng này trên web client dành cho khách mua hàng.
 
-### 2.1.5. Kết quả kiểm thử
+### 2.2.5. Kết quả kiểm thử
 **Các lỗi tìm được** (chi tiết trong file BUG-REPORT.md)**:**
+- ER-FR09-01: Áp dụng sai công thức giảm giá.
+- ER-FR09-02: Chương trình không kiểm tra người dùng đã đăng nhập và có JWT hợp lệ khi áp dụng coupon.
+- ER-FR09-03: Coupon bị từ chối áp dụng tại đúng ngưỡng min của giá đơn hàng.

@@ -26,18 +26,20 @@ Chi tiết lỗi:
 - Dữ liệu đầu vào:
 {
     "code": "SAVE10",
-    "total_amount": "500000"
+    "total_amount": "30000000"
 }
-(áp dụng giảm giá 10% cho đơn 500.000 đ)
+(áp dụng giảm giá 10% cho đơn 30.000.000 đ)
 - Dữ liệu đầu ra:
 {
-    "discount_amount": -4500000, 
-    "final_amount": 5000000
+    "discount_amount": -270000000, 
+    "final_amount": 300000000
 }
-(giá tiền sau giảm giá là 5.000.000 đ)
-- Mô tả lỗi: Chương trình áp dụng sai công thức giảm giá theo %
-- Screenshot: ![alt text](bug-report/er-fr09-01.png)
+(giá tiền sau giảm giá là 300.000.000 đ)
+- Mô tả lỗi: Chương trình áp dụng sai công thức giảm giá theo phần trăm
+Screenshot: ![alt text](bug-report/er-fr09-01.png)
 
 **[ER-FR09-02]** *Chương trình không kiểm tra người dùng đã đăng nhập và có JWT hợp lệ khi áp dụng coupon*
 Screenshot: ![alt text](bug-report/er-fr09-02.png)
 
+**[ER-FR09-03]** *Coupon bị từ chối áp dụng tại đúng ngưỡng min của giá đơn hàng*
+Screenshot: ![alt text](bug-report/er-fr09-03.png)

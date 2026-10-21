@@ -23,7 +23,7 @@
 * [x] Không paste nguyên si tài liệu có bản quyền lên AI.  
 * [x] Không paste code công ty / code open-source giới hạn license.  
 * [] Đã ghi mọi prompt + phản hồi AI vào prompt_log.md có timestamp. 
-(Các prompt đã ghi trong file [AI-05]([AI-05]-FIT@HCMUS-AI_Privacy_Checklist_Vn.md))
+(Các prompt đã ghi trong file [AI-05]([AI-05]-FIT@HCMUS-AI_Privacy_Checklist_Vn.md) thay vì prompt_log.md)
 
 ## **3. Trước khi nộp bài**
 

@@ -44,8 +44,16 @@ Screenshot: ![alt text](bug-report/er-fr09-02.png)
 **[ER-FR09-03]** *Coupon bị từ chối áp dụng tại đúng ngưỡng min của giá đơn hàng*
 Screenshot: ![alt text](bug-report/er-fr09-03.png)
 
-**[ER-FR17-01]** *`discount_value` nhận giá trị âm*
+**[ER-FR17-01]** *`discount_value` nhận giá trị 0 hoặc âm*
 Screenshot: ![alt text](bug-report/er-fr17-01.png)
 
-**[ER-FR17-02]** *`min_order_amount` nhận giá trị âm*
-Screenshot: ![alt text](bug-report/er-fr17-02.png)
+**[ER-FR17-02]** *`min_order_amount` nhận giá trị âm hoặc rỗng*
+- Khi nhận giá trị âm: UI hiển thị giá trị âm
+- Khi nhận giá trị rỗng: UI hiển thị giá trị rỗng
+Screenshot: ![alt text](bug-report/er-fr17-02-1.png) ![alt text](bug-report/er-fr17-02-2.png)
+
+**[ER-FR17-03]** *`max_uses_per_user` nhận giá trị rỗng*
+- Khi nhận giá trị rỗng, UI hiển thì giới hạn sử dụng là 1
+Screenshot:
+- Giá trị nhập vào: ![alt text](bug-report/er-fr17-03-1.png)
+- Giá trị hiển thị: ![alt text](bug-report/er-fr17-03-2.png)

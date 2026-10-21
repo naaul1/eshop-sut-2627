@@ -172,3 +172,27 @@ Tại bước Checkout, người dùng có thể nhập mã giảm giá. Hệ th
     Xem file: [fr17-domain-testing](FR-17_domain_test_cases.xlsx)
 
 ### 2.3.3. Áp dụng Boundary Value Analysis
+**a. Xác định các giá trị biên và thiết kế giá trị kiểm thử tại biên**
+| Tên biến | Kiểu dữ liệu | Miền hợp lệ | Miền không hợp lệ | Các biên cần kiểm thử |
+|---|---|---|---|---|
+| Quyền truy cập admin | Phiên/UI state | Admin đăng nhập hợp lệ, mở được màn coupon | Chưa đăng nhập; user không phải admin; phiên/token không hợp lệ | Chuyển trạng thái được cấp/không được cấp quyền |
+| `code` | Chuỗi | Không rỗng; mã chưa tồn tại; UI chuyển input thành chữ hoa | Rỗng; mã trùng; whitespace/độ dài/charset chưa có cận trong spec | Cận rỗng và duy nhất; không có cận độ dài |
+| `type` | Enum | `percent`; `fixed` | Giá trị ngoài enum không tạo được qua select chuẩn; rỗng/thiếu chưa có thao tác UI tương ứng | Từng phần tử enum; không có thứ tự để lập min/max |
+| `discount_value` | Số | Số dương, `> 0` | `<= 0`; rỗng; độ chính xác/giới hạn trên chưa rõ | Theo giả định bước 1: `0`, `1`, `2` |
+| `expired_at` | Ngày từ input date | Có ngày được chọn | Rỗng; ngày quá khứ chưa rõ là hợp lệ hay không | Cận rỗng/có giá trị; cận thời gian bị chặn |
+| `min_order_amount` | Số tiền | `>= 0` | `< 0`; rỗng/step/độ chính xác chưa rõ | Theo giả định bước 1: `-1`, `0`, `1` |
+| `max_uses_per_user` | Số lần | `>= 1` | `< 1`; rỗng; số thực/giới hạn trên chưa rõ | Theo giả định bước 1: `0`, `1`, `2` |
+| Danh sách coupon | Dữ liệu UI | Coupon tạo thành công xuất hiện với các trường tương ứng | Không tải/không hiển thị/sai trường | Trạng thái trước và sau Create/Refresh |
+| Xóa coupon | Thao tác UI | Nút Xóa loại bỏ coupon khỏi danh sách | Không có nút; xóa thất bại nhưng UI vẫn hiển thị thành công; coupon quay lại sau refresh | Trạng thái tồn tại trước/sau thao tác |
+
+**b. Danh sách Test Cases**
+    Xem file: [fr17-bva](FR-17_boundary_test_cases.xlsx)
+
+### 2.3.4. Điểm AI làm sai
+    Khi tạo test case áp dụng kỹ thuật domain testing, AI đã bỏ qua các lớp sau: dữ liệu nhập vào không phải số nguyên, dữ liệu nhập vào không phải số.
+
+### 2.3.5. Kết quả kiểm thử
+**Các lỗi tìm được** (chi tiết trong file BUG-REPORT.md)**:**
+- ER-FR17-01: Áp dụng sai công thức giảm giá.
+- ER-FR17-02: Áp dụng sai công thức giảm giá.
+- ER-FR17-03: Áp dụng sai công thức giảm giá.

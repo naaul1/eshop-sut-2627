@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-const API_URL = "http://192.168.10.13:3000/api"; // IP LAN để chạy được trên iOS/Android và thiết bị thật
+const API_URL = "http://10.18.135.195:3000/api"; // IP LAN để chạy được trên iOS/Android và thiết bị thật
 
 const formatMoney = (value) => `${Number(value).toLocaleString()} ₫`;
 
@@ -997,6 +997,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     backgroundColor: "#2563eb",
+    marginTop: 20,
   },
   brand: { fontSize: 20, fontWeight: "bold", color: "#fff" },
   navLinks: { flexDirection: "row", alignItems: "center", gap: 12 },

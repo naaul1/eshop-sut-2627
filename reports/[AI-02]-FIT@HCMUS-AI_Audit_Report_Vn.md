@@ -62,10 +62,6 @@ Tổng hợp verdict từ Mục 3 và điền vào bảng dưới.
 
 Viết 80–150 chữ mô tả pattern quan sát được. AI mạnh ở đâu? AI sai ở đâu? Khuyến nghị của bạn cho việc dùng AI trong loại công việc này?
 
-## **6. Mandatory Disclosure (dán nguyên văn)**
-
-
-
 ## **Chữ ký**
 
 |Họ tên sinh viên (in hoa):|VÕ THIỆN NHÂN|

@@ -1,0 +1,89 @@
+commit f3020bc4ad8b9d7fec2d6440d1754c6ff928e240
+Author: 23120066 <nhanthvo810909@gmail.com>
+Date:   Wed Oct 21 10:31:59 2026 +0700
+
+    fr-20: mobile
+
+commit 60fa345663d1d67e9430ec3fc9c061027baba063
+Author: 23120066 <nhanthvo810909@gmail.com>
+Date:   Wed Oct 21 09:30:10 2026 +0700
+
+    bva - FR-17
+
+commit 069d9141e21ebf17f50563455071759aebcd5c44
+Author: 23120066 <nhanthvo810909@gmail.com>
+Date:   Wed Oct 21 08:20:56 2026 +0700
+
+    domain testing - FR-17
+
+commit 78174eefa97fac3aec0087be270986d6401a063f
+Author: 23120066 <nhanthvo810909@gmail.com>
+Date:   Wed Oct 21 00:49:49 2026 +0700
+
+    bva - FR-09
+
+commit 1423ab21545a6889f4ee16483dacdfb3f0ff6abb
+Author: 23120066 <nhanthvo810909@gmail.com>
+Date:   Wed Oct 21 00:31:13 2026 +0700
+
+    domain testing - FR-09
+
+commit ec10060e1e6a3a8afd002f7c98cc7b6dac2c4856
+Author: 23120066 <nhanthvo810909@gmail.com>
+Date:   Tue Oct 20 22:44:34 2026 +0700
+
+    boundary value analysis - FR-03
+
+commit 7c9ee118990636d4afd382c43f8f17f41d53a2eb
+Author: 23120066 <nhanthvo810909@gmail.com>
+Date:   Mon Oct 19 23:20:01 2026 +0700
+
+    domain testing - FR-03
+
+commit 7efbe301e80c9ab687a30affa3dc8ed36c1902ee
+Author: 23120066 <nhanthvo810909@gmail.com>
+Date:   Fri Oct 16 12:59:04 2026 +0700
+
+    tách branch
+
+commit 938485298067dee739cc0536427788c491e2a418
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Fri Oct 2 23:55:42 2026 +0700
+
+    update: Fix info mismatch and typo in Proposal.md
+
+commit 66434891deec44d250e22c4cfe599224335331ab
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Fri Oct 2 23:46:02 2026 +0700
+
+    update: More tool to compare. Added Procedure section.
+
+commit d6ae6b685f8448a97111b1a33ca28eebb3b0203c
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Fri Oct 2 23:06:57 2026 +0700
+
+    update: Thêm phần definition và keywords trong Proposal.md
+
+commit 4184ee5373e7a7a57e335564c12a7a29f3bdcff0
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Sun Sep 27 19:15:13 2026 +0700
+
+    update: add content to Proposal.md
+
+commit 23010376ae472d7a1b3dd75143c60f974d4119f7
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Sun Sep 27 18:13:46 2026 +0700
+
+    add: Proposal.md
+
+commit 85af3ba875c88283615e22cb108f13e2fccaf0e9
+Author: ttbhanh-hcmus <ttbhanh@hcmus.edu.vn>
+Date:   Fri May 15 08:30:35 2026 +0700
+
+    first upload
+
+commit 2f9bf2bab45855abf211377a5d5eba10031649e3
+Author: Hanh Tran <ttbhanh@fit.hcmus.edu.vn>
+Date:   Fri May 15 08:27:44 2026 +0700
+
+    Initial commit

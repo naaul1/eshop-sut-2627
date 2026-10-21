@@ -228,3 +228,9 @@ Sử dụng kết quả do AI sinh ở mục 2.1, *xem mục 2.1.4*
 
 # 4. AI Critique
     Khi thực hiện Domain Testing và Boundary Value Analysis, AI đã bỏ qua một số test cases và sinh ra một số test cases không thể thực hiện được trên client. Cụ thể, ở FR-03 AI đã bỏ qua các trường hợp OTP đúng định dạng nhưng không khớp với OTP được tạo ra và các trường hợp kiểm tra từng ký tự đặc biệt cần sử dụng trong mật khẩu. Nguyên nhân là do khi thực hiện FR-03, skill được sử dụng tập trung vào phân tích định dạng dữ liệu mà chưa kiểm tra tính hợp lệ của dữ liệu. Ở FR-09, AI đã sinh ra các test cases không thể thực hiện trên client, nguyên nhân là do trong prompt không xác định rõ môi trường thực hiện test. Ở FR-17, AI đã bỏ sót các trường hợp dữ liệu nhập vào ở các trường kiểu số là số thực hoặc không phải số. Từ các trường hợp trên, cần rút ra nguyên tắc khi làm việc với AI rằng cần đảm bảo các skill được sử dụng được mô tả chặt chẽ và phù hợp với tác vụ kiểm thử, luôn luôn xác minh các test cases do AI đưa ra và cần kiểm tra kỹ để xác định các miền dữ liệu mà AI có thể bỏ sót.
+
+# 5. AI Audit Report
+    Xem file: reports/[AI-02]-FIT@HCMUS-AI_Audit_Report_Vn.md
+
+# 6. Mandatory Disclosure
+    Các file FR-03_boundary_test_cases.xlsx, FR-03_domain_test_cases.xlsx, FR-09_boundary_test_cases.xlsx, FR-09_domain_test_cases.xlsx, FR-17_boundary_test_cases.xlsx, FR-17_domain_test_cases.xlsx được sinh phiên bản đầu bởi Github Copilot; tôi đã rà soát và chỉnh sửa 1 số dữ liệu đầu vào, bổ sung các test cases TC-FR03-38, TCB-FR03-30 đến TCB-FR03-34,  TC-FR17-29 đến TC-FR17-34, miền không hợp lệ cho OTP: sai OTP; REPORT.md, README.md và BUG-REPORT.md do tôi tự viết. AI Audit Report chi tiết đính kèm ở Phụ lục A. Tôi cam đoan không dùng AI để sinh bất kỳ artifact nào thuộc danh mục bị cấm.

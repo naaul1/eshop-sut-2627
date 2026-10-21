@@ -12,7 +12,7 @@
 
 ## 1. Definition
 
-Web Automation Testing là kiểm thử tự động giao diện và luồng nghiệp vụ web bằng script/tool thay cho thao tác thủ công lặp lại. Mục tiêu là để tăng tốc độ test, bao phủ cross-browser, tích hợp CI/CD.
+Web Automation Testing là kiểm thử tự động giao diện và luồng nghiệp vụ web bằng script/tool thay cho thao tác thủ công lặp lại. Mục tiêu là để tăng tốc độ test, bao phủ cross-browser, tích hợp CI/CD,...
 
 Web Automation Testing nên được thực hiện khi:
 - regression test, smoke test
@@ -22,8 +22,8 @@ Web Automation Testing nên được thực hiện khi:
 
 và không nên thực hiện khi:
 - tính năng còn prototype và sẽ thay đổi liên tục
-- test dùng vài lần
-- những thứ khó automate (captcha, OTP, ...)
+- test chỉ dùng vài lần
+- những thứ khó automate (captcha, OTP,...)
 
 
 ## 2. Keywords
@@ -38,9 +38,17 @@ và không nên thực hiện khi:
 | 6 | Test Environment | Môi trường chạy kiểm thử gồm trình duyệt, hệ điều hành, cấu hình mạng và hạ tầng thực thi, tách biệt với môi trường thật |
 | 7 | POM (Page Object Model) | Là cách gói mỗi trang web thành một bản vẽ riêng, ghi sẵn nút nào ở đâu và bấm ra sao. Test chỉ cần gọi bản vẽ đó, khi giao diện đổi thì sửa một chỗ thay vì sửa hết mọi test |
 | 8 | Browser Context | Phiên trình duyệt cách ly độc lập (cookie, storage riêng), cho phép chạy nhiều vai trò song song không lẫn session |
+| 9 | Test Configuration (Project) | Một cấu hình chạy: quy định bộ test sẽ chạy trên trình duyệt, kích thước màn hình và môi trường nào. Một lệnh chạy có thể lặp lại toàn bộ test qua nhiều cấu hình để bao phủ cross-browser (trong Playwright gọi là Project) |
+| 10 | Headed / Headless | Hai chế độ chạy trình duyệt: hiện giao diện để quan sát khi demo/debug, hoặc chạy ngầm không giao diện để chạy nhanh trên CI |
+| 11 | Slow-motion (slowMo) | Tùy chọn chèn độ trễ giữa các thao tác để mắt người theo kịp khi demo |
+| 12 | Retrying Assertion | Assertion tự thử lại nhiều lần đến khi hết timeout thay vì kết luận ngay ở lần kiểm tra đầu tiên, giúp test bớt chập chờn khi trang tải chậm |
+| 13 | Data-driven Testing | Một flow test chạy lặp với bảng dữ liệu nhiều dòng, mỗi dòng là một case |
+| 14 | Fixture | Tool dùng chung do phần mềm cấp hoặc tự viết, có thể tự dựng môi trường/dữ liệu trước và tự dọn sau mỗi test (ví dụ trang trắng `page`, client gọi API `request`) |
+| 15 | Network Intercept | Kỹ thuật chặn và chỉnh sửa request/response API giữa frontend và backend để kiểm thử logic và bảo mật mà không cần sửa server (trong Playwright dùng `page.route`) |
+| 16 | State Machine | Mô hình trạng thái và các chuyển đổi cho phép của một đối tượng (ví dụ đơn hàng chỉ được đi `pending -> confirmed -> shipping -> delivered`), test phải phủ cả đường đúng và đường cấm |
+
 
 ## 3. Procedure
-
 
 1. Phân tích cái gì cần test tự động
 Chọn việc lặp lại nhiều, ít thay đổi (Login, Search, Cart, Checkout, Admin CRUD, ...). Chức năng mới bắt đầu làm lần đầu thì test tay trước.
@@ -49,6 +57,7 @@ Chọn việc lặp lại nhiều, ít thay đổi (Login, Search, Cart, Checkou
 4. Viết script: Viết từng bước: mở trang -> tìm nút bằng Locator -> bấm/nhập -> chờ trang load -> kiểm tra đúng sai bằng assertion.
 5. Chạy script và bảo cáo: Chạy thử local để sửa lỗi, rồi chuyển sang chạy ngầm, chạy nhiều trình duyệt song song. Fail thì xem screenshot và log để biết và sửa.
 6. Bảo trì: Giao diện đổi thì phải sửa lại test, không cần viết mới mà thông qua sửa locator và POM.
+
 
 # II. Tool short-list
 
@@ -83,8 +92,64 @@ Chọn việc lặp lại nhiều, ít thay đổi (Login, Search, Cart, Checkou
 - Cộng đồng Node.js lớn, Discord sôi nổi, tài liệu hiện đại ít lẫn doc cũ như Selenium 2/3, có MCP hỗ trợ AI Agent, phù hợp định hướng AI-augmented của môn học.
 
 
-# III. AI Disclosure
+# III. Demo script
+
+## Chuẩn bị
+
+Chạy đủ 3 tiến trình cho web automation testing: backend :3000, web :5173, admin :5174, seed database.
+
+Playwright đặt ở root của repo, config 1 project Chromium cho demo (trước hết bỏ qua Firefox và Webkit).
+
+Quay video chạy test dự phòng và chụp sẵn report phòng trường hợp bất trắc.
+
+
+## Kịch bản #1: Smoke test (User)
+
+**Mục đích:** chứng minh automation chạy được trên SUT thật.
+
+**Flow:**
+1. Mở `http://localhost:5173/login`, nhập Email `test@eshop.com`, Mật khẩu `Test1234!`, bấm Đăng nhập (FR-02: login hợp lệ vào được home).
+2. Tại trang chủ, kiểm tra mỗi sản phẩm hiển thị đủ ảnh (có `alt`), tên, giá đơn vị ₫ (FR-05).
+3. Nhập từ khóa vào ô tìm kiếm, kiểm tra kết quả lọc đúng và từ khóa chứa HTML bị escape (FR-05).
+4. Mở 1 sản phẩm, để số lượng = 1, bấm Thêm vào giỏ, kiểm tra có toast/badge phản hồi (FR-06 + FR-24).
+5. Mở giỏ hàng, kiểm tra badge số lượng = 1, đúng tên sản phẩm, đúng đơn giá và thành tiền (FR-07).
+
+**Kỹ thuật Playwright:** chạy headed + `slowMo` để khán giả thấy trình duyệt tự bấm; locator ưu tiên `getByRole`/`getByPlaceholder`; assertion tự retry.
+
+
+## Kịch bản #2: End-to-end (User + Admin)
+
+**Mục đích:** demo flow phức tạp nhất, chạm 6 FR, trình bày tính năng nhiều context context và intercept của Playwright.
+
+**Flow:**
+1. Context User: đăng nhập, thêm 2 sản phẩm vào giỏ, sang checkout nhập coupon `SAVE10`, kiểm tra giảm đúng 10% theo công thức `percent` (FR-07 + FR-08 + FR-09 C1/C2/C3).
+2. Bật intercept API checkout, sửa `total_amount` gửi lên thấp hơn thực tế -> assert backend tự tính lại, đơn tạo ra vẫn đúng tổng (FR-08: không tin client).
+3. Context Admin (chạy song song, session riêng): duyệt đơn `pending -> confirmed -> shipping -> delivered` đúng State Machine (FR-10 + FR-18).
+4. Quay lại User thử hủy đơn đang `shipping` -> assert bị từ chối, vì User chỉ được hủy ở `pending`/`confirmed` (FR-10).
+5. Admin mở Dashboard, kiểm tra doanh thu đã cộng đơn vừa `delivered` (FR-13: chỉ cộng đơn delivered).
+
+**Kỹ thuật Playwright:** 2 Browser Context song song; `page.route` intercept; assert cả UI lẫn response API.
+
+
+## Kịch bản #3: Ma trận coupon 5 điều kiện (data-driven)
+
+**Mục đích:** thể hiện rằng test thủ công rất mất thời gian, còn automate thì nhanh và đơn giản hơn nhiều.
+
+**Flow:** cùng 1 flow checkout, chạy lặp với bảng dữ liệu (FR-09 C1–C5):
+1. `SAVE10` trên đơn >= 300.000₫ -> giảm 10% (pass).
+2. `EXPIRED` -> bị từ chối vì hết hạn (C2).
+3. Mã không tồn tại -> bị từ chối (C1).
+4. `BIGBUY` trên đơn < 500.000₫ -> bị từ chối vì dưới ngưỡng (C3).
+5. Dùng `SAVE10` lần 2 cùng user -> bị từ chối vì quá số lần/người (C5).
+6. Chưa đăng nhập mà gõ thẳng URL `/checkout` (`page.goto`) -> assert bị đá về `/login`, vì thiếu JWT hợp lệ (C4).
+
+**Kỹ thuật Playwright:** data-driven - mảng test data + vòng lặp `test()`; dùng `request` fixture gọi API setup giỏ hàng cho nhanh thay vì click tay từng lần.
+
+
+# IV. AI Disclosure
+
 Sử dụng Muse Spark 1.3 để tra cứu các từ khoá (đã tìm hiểu và xác nhận thủ công), cũng như giải thích về quy trình test tự động.
+Sử dụng Muse Spark 1.3 để kiểm tra, góp ý, cũng như gợi ý ra Kịch bản test #3. Đã đối chiếu với các FR trong `README.md`.
 Sử dụng Gemini Pro để tìm hiểu các phần Learning curve, AI capabilities và Community của các phần mềm kiểm thử.
 Đã cross-check các thông tin về các phần mềm trên bằng Claude Sonnet 5 Medium.
 Đã fact check thủ công các criteria, chỉnh sửa phần ngôn ngữ hỗ trợ.

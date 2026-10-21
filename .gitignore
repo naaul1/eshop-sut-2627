@@ -1,1 +1,32 @@
 .vscode
+# Dependencies
+node_modules/
+
+# Build outputs (Vite)
+dist/
+build/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Playwright artifacts
+playwright-report/
+test-results/
+blob-report/
+
+# Expo / React Native
+.expo/
+
+# SQLite (local seed DB, regenerate with `node database.js`)
+*.sqlite
+*.sqlite-journal
+
+# OS
+.DS_Store
+Thumbs.db

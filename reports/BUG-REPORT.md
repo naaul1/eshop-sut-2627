@@ -1,3 +1,6 @@
+**Các bug sau đã được báo cáo trên tab Issues thuộc repo của nhóm trên GitHub**
+Link tab Issues: https://github.com/naaul1/eshop-sut-2627/issues
+
 **[ER-FR03-01]** *Chương trình sinh và nhận mã OTP gồm 4 chữ số thay vì 6.*
 - Screenshot: ![alt text](bug-report/er-fr03-01.png)
 
@@ -57,3 +60,15 @@ Screenshot: ![alt text](bug-report/er-fr17-02-1.png) ![alt text](bug-report/er-f
 Screenshot:
 - Giá trị nhập vào: ![alt text](bug-report/er-fr17-03-1.png)
 - Giá trị hiển thị: ![alt text](bug-report/er-fr17-03-2.png)
+
+**[ER-FR20-01]** *OTP không hiển thị trên môi trường demo*
+Screenshot: ![alt text](bug-report/er-fr20-01.png)
+
+**[ER-FR20-02]** *Kiểm tra sai điều kiện mật khẩu*
+Tương tự ER-FR03-02
+
+**[ER-FR20-03]** *Không có trường Xác nhận mật khẩu mới*
+Screenshot: ![alt text](bug-report/er-fr20-01.png)
+
+**[ER-FR20-04]** *Không có chỉ báo số bước, không có nút Quay về đăng nhập*
+Screenshot: ![alt text](bug-report/er-fr20-04.png)

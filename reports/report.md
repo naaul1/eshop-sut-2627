@@ -76,10 +76,10 @@
 
 ### 2.1.5. Kết quả kiểm thử
 **Các lỗi tìm được** (chi tiết trong file BUG-REPORT.md)**:**
-- ER-FR03-01: Chương trình sinh và nhận mã OTP gồm 4 chữ số thay vì 6.
-- ER-FR03-02: Chương trình chấp nhận sai điều kiện mật khẩu mới.
-- ER-FR03-03: Giao diện không có nút Quay lại đăng nhập và chỉ báo số bước.
-- ER-FR03-04: Giao diện đổi mật khẩu thiếu trường Xác nhận mật khẩu mới.
+- `ER-FR03-01`: Chương trình sinh và nhận mã OTP gồm 4 chữ số thay vì 6.
+- `ER-FR03-02`: Chương trình chấp nhận sai điều kiện mật khẩu mới.
+- `ER-FR03-03`: Giao diện không có nút Quay lại đăng nhập và chỉ báo số bước.
+- `ER-FR03-04`: Giao diện đổi mật khẩu thiếu trường Xác nhận mật khẩu mới.
 
 ## 2.2. FR-09 - Mã giảm giá (Coupon)
 
@@ -144,9 +144,9 @@ Tại bước Checkout, người dùng có thể nhập mã giảm giá. Hệ th
 
 ### 2.2.5. Kết quả kiểm thử
 **Các lỗi tìm được** (chi tiết trong file BUG-REPORT.md)**:**
-- ER-FR09-01: Áp dụng sai công thức giảm giá.
-- ER-FR09-02: Chương trình không kiểm tra người dùng đã đăng nhập và có JWT hợp lệ khi áp dụng coupon.
-- ER-FR09-03: Coupon bị từ chối áp dụng tại đúng ngưỡng min của giá đơn hàng.
+- `ER-FR09-01`: Áp dụng sai công thức giảm giá.
+- `ER-FR09-02`: Chương trình không kiểm tra người dùng đã đăng nhập và có JWT hợp lệ khi áp dụng coupon.
+- `ER-FR09-03`: Coupon bị từ chối áp dụng tại đúng ngưỡng min của giá đơn hàng.
 
 ## 2.3. FR-17 - Quản lý Mã Giảm Giá (Coupon CRUD)
 
@@ -193,6 +193,38 @@ Tại bước Checkout, người dùng có thể nhập mã giảm giá. Hệ th
 
 ### 2.3.5. Kết quả kiểm thử
 **Các lỗi tìm được** (chi tiết trong file BUG-REPORT.md)**:**
-- ER-FR17-01: Áp dụng sai công thức giảm giá.
-- ER-FR17-02: Áp dụng sai công thức giảm giá.
-- ER-FR17-03: Áp dụng sai công thức giảm giá.
+- `ER-FR17-01`: Áp dụng sai công thức giảm giá.
+- `ER-FR17-02`: Áp dụng sai công thức giảm giá.
+- `ER-FR17-03`: Áp dụng sai công thức giảm giá.
+
+## 2.4. FR-20 - Mobile (Kiểm thử FR-03)
+
+## 2.4.1. Đặc tả
+*Tương tự 2.1.1*
+
+## 2.4.2. Áp dụng Domain Testing
+*Tương tự 2.1.2*
+- Test cases: [fr20-domain-testing](FR-20-03_domain_test_cases.xlsx)
+
+## 2.4.3. Áp dụng Boundary Value Analysis
+*Tương tự 2.1.3*
+- Test cases: [fr20-bva](FR-20-03_boundary_test_cases.xlsx)
+
+### 2.3.4. Điểm AI làm sai
+Sử dụng kết quả do AI sinh ở mục 2.1, *xem mục 2.1.4*
+
+## 2.4.5. Kết quả kiểm thử
+**Các lỗi tìm được** (chi tiết trong file BUG-REPORT.md)**:**
+- `ER-FR20-01`: OTP không hiển thị trên môi trường demo.
+- `ER-FR20-02`: Kiểm tra sai điều kiện mật khẩu.
+- `ER-FR20-03`: Không có trường Xác nhận mật khẩu mới.
+- `ER-FR20-04`: Không có chỉ báo số bước, không có nút Quay về đăng nhập.
+
+# 3. Agent Skill
+**Các skill đã xây dựng và sử dụng:**
+- `ai-audit-log`: sử dụng để tự động ghi lại AI audit trong quá trình làm việc. Path: [ai-audit-log](../.agents/skills/ai-audit-log)
+- `domain-testing`: sử dụng để tạo test cases sử dụng kỹ thuật Domain Testing. Path: [domain-testing](../.agents/skills/domain-testing)
+- `boundary-testing`: sử dụng để tạo test cases sử dụng kỹ thuật Boundary Value Analysis. Path: [boundary-testing](../.agents/skills/boundary-testing)
+
+# 4. AI Critique
+    Khi thực hiện Domain Testing và Boundary Value Analysis, AI đã bỏ qua một số test cases và sinh ra một số test cases không thể thực hiện được trên client. Cụ thể, ở FR-03 AI đã bỏ qua các trường hợp OTP đúng định dạng nhưng không khớp với OTP được tạo ra và các trường hợp kiểm tra từng ký tự đặc biệt cần sử dụng trong mật khẩu. Nguyên nhân là do khi thực hiện FR-03, skill được sử dụng tập trung vào phân tích định dạng dữ liệu mà chưa kiểm tra tính hợp lệ của dữ liệu. Ở FR-09, AI đã sinh ra các test cases không thể thực hiện trên client, nguyên nhân là do trong prompt không xác định rõ môi trường thực hiện test. Ở FR-17, AI đã bỏ sót các trường hợp dữ liệu nhập vào ở các trường kiểu số là số thực hoặc không phải số. Từ các trường hợp trên, cần rút ra nguyên tắc khi làm việc với AI rằng cần đảm bảo các skill được sử dụng được mô tả chặt chẽ và phù hợp với tác vụ kiểm thử, luôn luôn xác minh các test cases do AI đưa ra và cần kiểm tra kỹ để xác định các miền dữ liệu mà AI có thể bỏ sót.

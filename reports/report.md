@@ -147,3 +147,28 @@ Tại bước Checkout, người dùng có thể nhập mã giảm giá. Hệ th
 - ER-FR09-01: Áp dụng sai công thức giảm giá.
 - ER-FR09-02: Chương trình không kiểm tra người dùng đã đăng nhập và có JWT hợp lệ khi áp dụng coupon.
 - ER-FR09-03: Coupon bị từ chối áp dụng tại đúng ngưỡng min của giá đơn hàng.
+
+## 2.3. FR-17 - Quản lý Mã Giảm Giá (Coupon CRUD)
+
+### 2.3.1. Đặc tả
+- Admin có thể Thêm / Xem / Xóa mã giảm giá.
+- Các trường bắt buộc: `code` (duy nhất), `type` (percent/fixed), `discount_value` (dương), `expired_at`, `min_order_amount` (>= 0), `max_uses_per_user` (>= 1).
+
+### 2.3.2. Áp dụng Domain Testing
+| Tên biến | Kiểu dữ liệu | Miền hợp lệ | Miền không hợp lệ |
+|---|---|---|---|
+| `code` | Chuỗi | Không rỗng, nhập trên form; sau khi nhập UI chuẩn hóa thành chữ hoa; chưa tồn tại khi tạo | Rỗng/thiếu; chỉ whitespace; mã đã tồn tại |
+| `type` | Enum select | `percent`; `fixed` | Không có lựa chọn khác trên UI |
+| `discount_value` | Số trên input number | Số dương (`> 0`) | Rỗng; 0; số âm; sai định dạng số |
+| `expired_at` | Ngày trên input date | Có ngày được nhập | Rỗng/thiếu |
+| `min_order_amount` | Số tiền trên input number | Số `>= 0`, UI mặc định 0 | Rỗng nếu field bị bỏ trống và backend không nhận mặc định; số âm; sai định dạng số |
+| `max_uses_per_user` | Số lần trên input number | Số nguyên `>= 1`; UI đặt `min="1"` | Rỗng; 0; số âm; số thực/chuỗi sai kiểu nếu UI cho nhập |
+| Xem danh sách coupon | Dữ liệu hiển thị | Coupon đã tạo xuất hiện với mã, loại, giá trị, ngưỡng, hạn, giới hạn/người | Không tải được danh sách; coupon không hiển thị hoặc hiển thị sai trường |
+| Xóa coupon | Thao tác và trạng thái | Nút Xóa loại bỏ coupon khỏi danh sách sau thao tác thành công | Không có nút; xóa không thành công nhưng UI báo thành công; coupon vẫn còn sau refresh |
+
+**b. Kết hợp và chọn giá trị đại diện** (như mục 2.1.2)
+
+**c. Danh sách Test Cases**
+    Xem file: [fr17-domain-testing](FR-17_domain_test_cases.xlsx)
+
+### 2.3.3. Áp dụng Boundary Value Analysis

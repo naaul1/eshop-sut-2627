@@ -43,3 +43,9 @@ Screenshot: ![alt text](bug-report/er-fr09-02.png)
 
 **[ER-FR09-03]** *Coupon bị từ chối áp dụng tại đúng ngưỡng min của giá đơn hàng*
 Screenshot: ![alt text](bug-report/er-fr09-03.png)
+
+**[ER-FR17-01]** *`discount_value` nhận giá trị âm*
+Screenshot: ![alt text](bug-report/er-fr17-01.png)
+
+**[ER-FR17-02]** *`min_order_amount` nhận giá trị âm*
+Screenshot: ![alt text](bug-report/er-fr17-02.png)

@@ -5,23 +5,34 @@
  * on purpose; never quarantined with test.fail().
  */
 import { test, expect, Page, APIRequestContext } from '@playwright/test';
-import { loginViaAPI, seedAuthToken } from '../support/auth';
+import { loginViaAPI, registerViaAPI, seedAuthToken } from '../support/auth';
 import { applyApiThrottle } from '../support/throttle';
 import { CheckoutPage } from '../pages/CheckoutPage';
 
 const API = 'http://localhost:3000';
 const PRODUCT = 'iPhone 15 Pro Max';
 const PRICE = 30000000;
-const SHARED_USER = { email: 'test@eshop.com', password: 'Test1234!' };
+const PASSWORD = 'Test1234!';
 
 test.beforeEach(async ({ page }) => {
   const delay = Number(process.env.THROTTLE_MS || 0);
   if (delay > 0) await applyApiThrottle(page, delay);
 });
 
-/** Login via API, seed the JWT, and return { token, user }. */
+/**
+ * Register + log in a throwaway user. Never the shared `test@eshop.com`
+ * account: the SUT locks it (~180 s) after failed logins, so the auth specs
+ * can leave it locked and break every valid-login test (AGENTS.md).
+ */
+async function createUser(request: APIRequestContext): Promise<{ token: string; user: { id: number } }> {
+  const email = `checkout-${Date.now()}-${Math.floor(Math.random() * 1e6)}@example.com`;
+  await registerViaAPI(request, { name: 'Checkout User', email, password: PASSWORD });
+  return loginViaAPI(request, { email, password: PASSWORD });
+}
+
+/** Register + log in a throwaway user, then seed the JWT for the UI. */
 async function loginAndSeed(page: Page, request: APIRequestContext): Promise<{ token: string; user: { id: number } }> {
-  const { token, user } = await loginViaAPI(request, SHARED_USER);
+  const { token, user } = await createUser(request);
   await seedAuthToken(page, token);
   return { token, user };
 }
@@ -40,7 +51,7 @@ async function addProductAndOpenCheckout(page: Page): Promise<void> {
 }
 
 test.describe('FR-08 checkout — behavior', () => {
-  test('happy path: user places an order that the backend stores correctly', async ({
+  test('Test 1: User places an order that the backend stores correctly (happy path)', async ({
     page,
     request,
   }) => {
@@ -69,7 +80,7 @@ test.describe('FR-08 checkout — behavior', () => {
     expect(created.user_id).toBe(user.id);
   });
 
-  test('checkout shows the cart line and the cart total before confirming', async ({
+  test('Test 2: Checkout shows the cart line and the cart total before confirming', async ({
     page,
     request,
   }) => {
@@ -90,7 +101,7 @@ test.describe('FR-08 checkout — behavior', () => {
 // Spec-conformance findings (FIND-C1..C5) — left red on purpose, same error
 // policy as every other test: no test.fail(), no quarantine.
 
-test('FIND-C1 / FR-08 spec: the total amount must not be editable by the user', async ({ page }) => {
+test('Test 3: The total amount must not be editable by the user', async ({ page }) => {
   // actual: a normal <input type="number"> that the user can change
   const checkout = new CheckoutPage(page);
   await checkout.goto();
@@ -98,7 +109,7 @@ test('FIND-C1 / FR-08 spec: the total amount must not be editable by the user', 
   await expect.soft(checkout.totalInput.isEditable()).resolves.toBe(false);
 });
 
-test('FIND-C2 / FR-08 spec: unauthenticated visitor must be sent from /checkout to /login', async ({
+test('Test 4: Unauthenticated visitor must be sent from /checkout to /login', async ({
   page,
 }) => {
   // actual: /checkout renders for anonymous users
@@ -106,7 +117,7 @@ test('FIND-C2 / FR-08 spec: unauthenticated visitor must be sent from /checkout 
   await expect.soft(page).toHaveURL(/\/login/);
 });
 
-test('FIND-C3 / FR-08 spec: the cart must be cleared after a successful checkout', async ({
+test('Test 5: The cart must be cleared after a successful checkout', async ({
   page,
   request,
 }) => {
@@ -124,9 +135,9 @@ test('FIND-C3 / FR-08 spec: the cart must be cleared after a successful checkout
   await expect.soft(page.getByText('Giỏ hàng của bạn đang trống')).toBeVisible();
 });
 
-test('FIND-C4 / FR-08 spec: backend must ignore a client-sent total_amount', async ({ request }) => {
+test('Test 6: Backend must ignore a client-sent total_amount', async ({ request }) => {
   // actual: /api/checkout stores whatever the client sends
-  const { token } = await loginViaAPI(request, SHARED_USER);
+  const { token } = await createUser(request);
   const res = await request.post(`${API}/api/checkout`, {
     headers: { Authorization: `Bearer ${token}` },
     data: {
@@ -140,7 +151,7 @@ test('FIND-C4 / FR-08 spec: backend must ignore a client-sent total_amount', asy
   await expect.soft(order.total_amount).not.toBe(1);
 });
 
-test('FIND-C5 / FR-21 conformance: the checkout page must have exactly one <h1>', async ({
+test('Test 7: The checkout page must have exactly one <h1>', async ({
   page,
 }) => {
   // actual: 0 <h1> (the page title is an <h2>)

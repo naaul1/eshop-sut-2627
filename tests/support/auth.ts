@@ -16,6 +16,11 @@ interface AuthResponse {
   user: { id: number };
 }
 
+interface RegisterResponse {
+  message: string;
+  id: number;
+}
+
 /** Log in through the API and return { token, user }. Faster and more stable than the UI. */
 export async function loginViaAPI(request: APIRequestContext, { email, password }: Credentials): Promise<AuthResponse> {
   const res = await request.post(`${API}/api/login`, { data: { email, password } });
@@ -24,7 +29,7 @@ export async function loginViaAPI(request: APIRequestContext, { email, password 
 }
 
 /** Register a throwaway user through the API. Used to avoid locking shared accounts. */
-export async function registerViaAPI(request: APIRequestContext, { name = 'Probe User', email, password }: RegisterData): Promise<AuthResponse> {
+export async function registerViaAPI(request: APIRequestContext, { name = 'Probe User', email, password }: RegisterData): Promise<RegisterResponse> {
   const res = await request.post(`${API}/api/register`, { data: { name, email, password } });
   if (!res.ok()) throw new Error(`API register failed: ${res.status()} ${await res.text()}`);
   return res.json();

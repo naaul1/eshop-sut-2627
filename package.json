@@ -1,14 +1,34 @@
 {
-  "dependencies": {
-    "playwright": "^1.64.1"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.64.1",
-    "@types/node": "^26.6.5"
+  "name": "eshop-sut-2627",
+  "version": "1.0.0",
+  "description": "> **Phạm vi tài liệu**: Mô tả **yêu cầu nghiệp vụ đúng** của hệ thống EShop.\r > Sinh viên sử dụng tài liệu này làm cơ sở thiết kế test case, sau đó kiểm thử hệ thống thực để tìm ra các điểm triển khai không tuân thủ đặc tả.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
   },
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed --workers=1",
     "report": "playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naaul1/eshop-sut-2627.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/naaul1/eshop-sut-2627/issues"
+  },
+  "homepage": "https://github.com/naaul1/eshop-sut-2627#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }

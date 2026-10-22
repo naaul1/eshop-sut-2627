@@ -7,7 +7,7 @@
 
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
-import { applyApiThrottle } from '../support/throttle.js';
+import { applyApiThrottle } from '../support/throttle';
 
 const EMAIL: string = 'test@eshop.com';
 const PASSWORD: string = 'Test1234!';

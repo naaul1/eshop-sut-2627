@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
-import { applyApiThrottle } from '../support/throttle.js';
+import { applyApiThrottle } from '../support/throttle';
 
 test.beforeEach(async ({ page }) => {
     const delay = Number(process.env.THROTTLE_MS || 0);

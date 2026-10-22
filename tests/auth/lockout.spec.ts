@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
-import { applyApiThrottle } from '../support/throttle.js';
+import { applyApiThrottle } from '../support/throttle';
 
 const VALID_EMAIL = 'test@eshop.com';
 const VALID_PASSWORD = 'Test1234!';

@@ -1,7 +1,7 @@
-import { test, expect } from '@playwright/test';
-import { loginViaAPI, seedAuthToken } from '../support/auth.js';
-import { applyApiThrottle } from '../support/throttle.js';
-import { CheckoutPage } from '../pages/CheckoutPage.js';
+import { test, expect, Page, APIRequestContext } from '@playwright/test';
+import { loginViaAPI, seedAuthToken } from '../support/auth';
+import { applyApiThrottle } from '../support/throttle';
+import { CheckoutPage } from '../pages/CheckoutPage';
 
 const API = 'http://localhost:3000';
 const PRODUCT = 'iPhone 15 Pro Max';
@@ -14,14 +14,14 @@ test.beforeEach(async ({ page }) => {
 });
 
 /** Login via API, seed the JWT, and return { token, user }. */
-async function loginAndSeed(page, request) {
+async function loginAndSeed(page: Page, request: APIRequestContext): Promise<{ token: string; user: { id: number } }> {
   const { token, user } = await loginViaAPI(request, SHARED_USER);
   await seedAuthToken(page, token);
   return { token, user };
 }
 
 /** Cart lives in React memory: build it with UI clicks and navigate in-app only. */
-async function addProductAndOpenCheckout(page) {
+async function addProductAndOpenCheckout(page: Page): Promise<void> {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   // Mandatory guard: clicking checkout before /api/users/me resolves redirects to /login.
   await expect(page.getByRole('link', { name: /Chào/ })).toBeVisible();
@@ -43,7 +43,7 @@ test.describe('FR-08 checkout — behavior', () => {
 
     // State-delta pattern: robust against orders created by teammates on the shared SUT.
     const before = await (await request.get(`${API}/api/orders/my-orders`, api)).json();
-    const beforeIds = new Set(before.map((o) => o.id));
+    const beforeIds = new Set(before.map((o: { id: number }) => o.id));
 
     await addProductAndOpenCheckout(page);
 
@@ -56,7 +56,7 @@ test.describe('FR-08 checkout — behavior', () => {
     await expect(checkout.successHeading).toBeVisible();
 
     const after = await (await request.get(`${API}/api/orders/my-orders`, api)).json();
-    const created = after.find((o) => !beforeIds.has(o.id));
+    const created = after.find((o: { id: number }) => !beforeIds.has(o.id));
     expect(created, 'a new order must be visible in /api/orders/my-orders').toBeTruthy();
     expect(created.status).toBe('pending');
     expect(created.total_amount).toBe(PRICE);

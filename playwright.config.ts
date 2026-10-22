@@ -19,7 +19,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   /* Timeout for each test */
   timeout: 60_000,                 // per test
-  expect: { timeout: 5_000 },   
+  expect: { timeout: 5_000 },
   /* Retry on CI only */
   retries: 0, //process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
@@ -32,7 +32,7 @@ export default defineConfig({
     baseURL: 'http://localhost:5173',
     locale: 'vi-VN',               // makes toLocaleString() deterministic: 6.000.000
     timezoneId: 'Asia/Ho_Chi_Minh',
-    headless: false,
+    headless: true,                // headless by default, unless test:headed
     trace: 'retain-on-failure',    // evidence for flake investigations
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

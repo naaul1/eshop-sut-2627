@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "Node16",
+    "moduleResolution": "node16",
     "ignoreDeprecations": "6.0",
     "strict": true,
     "esModuleInterop": true,
@@ -10,7 +10,6 @@
   },
   "include": [
     "playwright.config.ts",
-    "tests/**/*.ts",
-    "tests/**/*.js"
-, "tests/support/auth.js"  ]
+    "tests/**/*.ts"
+  ]
 }

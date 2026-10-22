@@ -120,7 +120,7 @@ All three shares are equal in effort (~6–8 h). Pick any one, then replace `☐
 | :-- | :-- | :-- | :-- |
 | **A — Platform & Auth** | ☐ open | M1 Playwright scaffold + login spec; FR-02 login/lockout tests; M3 metrics for `tests/auth` | `package.json`, `package-lock.json`, `playwright.config.js`, `tests/support/**`, `tests/pages/LoginPage.js`, `tests/auth/**` |
 | **B — Cart** | ☐ open | FR-07 add-to-cart tests (catalog, product detail, cart); M3 metrics for `tests/cart` | `tests/pages/HomePage.js`, `tests/pages/ProductDetailPage.js`, `tests/pages/CartPage.js`, `tests/cart/**` |
-| **C — Checkout** | ☐ open | FR-08 checkout tests (UI + order API); M3 metrics for `tests/checkout` | `tests/pages/CheckoutPage.js`, `tests/checkout/**` |
+| **C — Checkout** | Luan | FR-08 checkout tests (UI + order API); M3 metrics for `tests/checkout` | `tests/pages/CheckoutPage.js`, `tests/checkout/**` |
 
 You will learn — **A:** setup/config/POM/codegen/trace viewer · **B:** locators/assertions/test isolation · **C:** API testing with `request`, token seeding, races.
 
@@ -133,11 +133,11 @@ The shared contracts in **§4.2–§4.8 are frozen**: Share A implements them; B
 ```
 <repo-root>/
 ├── package.json                       # NEW: root Playwright project (Share A)
-├── playwright.config.js               # NEW (Share A)
+├── playwright.config.js               # Share A
 ├── tests/
 │   ├── support/
-│   │   ├── auth.js                    # NEW (Share A)
-│   │   └── throttle.js                # NEW (Share A)
+│   │   ├── auth.js                    # Share A (temporarily done)
+│   │   └── throttle.js                # Share A (temporarily done)
 │   ├── pages/
 │   │   ├── LoginPage.js               # Share A
 │   │   ├── HomePage.js                # Share B

@@ -1,3 +1,5 @@
+import { APIRequest } from "@playwright/test";
+
 const API = 'http://localhost:3000';
 
 /** Log in through the API and return { token, user }. Faster and more stable than the UI. */

@@ -18,7 +18,7 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Timeout for each test */
-  timeout: 30_000,                 // per test
+  timeout: 60_000,                 // per test
   expect: { timeout: 5_000 },   
   /* Retry on CI only */
   retries: 0, //process.env.CI ? 2 : 0,

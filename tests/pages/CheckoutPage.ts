@@ -10,6 +10,7 @@ export class CheckoutPage {
 
     constructor(page: Page) {
         this.page = page;
+
         this.itemLines = page.locator('ul.list-disc li');
         this.totalInput = page.locator('input[type="number"]');
         this.summaryTotal = page.getByText('Tổng thanh toán:').last();

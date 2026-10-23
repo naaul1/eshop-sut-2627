@@ -14,7 +14,7 @@
   - [2. Keywords](#2-keywords)
   - [3. Quy trình thực hiện](#3-quy-trình-thực-hiện)
   - [4. Khảo sát các công cụ](#4-khảo-sát-các-công-cụ)
-    - [Ứng cử viên](#ứng-cử-viên)
+    - [Danh sách](#danh-sách)
     - [Ma trận so sánh](#ma-trận-so-sánh)
     - [Lựa chọn](#lựa-chọn)
 - [III. Nội dung demo](#iii-nội-dung-demo)
@@ -24,11 +24,10 @@
     - [Config và API quan trọng](#config-và-api-quan-trọng)
     - [Kịch bản demo](#kịch-bản-demo)
       - [Chuẩn bị](#chuẩn-bị)
-      - [Coverage E2E hiện có](#coverage-e2e-hiện-có)
+      - [Coverage E2E](#coverage-e2e)
       - [Kịch bản #1: Xem sản phẩm và thêm vào giỏ](#kịch-bản-1-xem-sản-phẩm-và-thêm-vào-giỏ)
       - [Kịch bản #2: Mua hàng và xử lý đơn](#kịch-bản-2-mua-hàng-và-xử-lý-đơn)
       - [Hướng mở rộng](#hướng-mở-rộng)
-  - [2. WebDriverIO](#2-webdriverio)
 - [IV. AI Disclosure](#iv-ai-disclosure)
 - [V. Tài liệu tham khảo](#v-tài-liệu-tham-khảo)
 
@@ -59,7 +58,7 @@ Web Automation Testing là kiểm thử tự động giao diện và luồng ngh
 Web Automation Testing nên được thực hiện khi:
 - regression test, smoke test
 - cần chạy nhiều môi trường/trình duyệt
-- chạy những test tốn công (như nhập dữ liệu)
+- chạy, nhữcũng như test tốn công và nhập dữ liệu)
 - cần phối hợp với CI  
 
 và không nên thực hiện khi:
@@ -100,7 +99,7 @@ Chọn việc lặp lại nhiều, ít thay đổi (Login, Search, Cart, Checkou
 
 ### 4. Khảo sát các công cụ
 
-#### Ứng cử viên
+#### Danh sách
 
 **Traditional tool:** Playwright, Selenium 4, Cypress, WebdriverIO.
 
@@ -126,7 +125,7 @@ Chọn việc lặp lại nhiều, ít thay đổi (Login, Search, Cart, Checkou
 **WebdriverIO**
 - Miễn phí, mã nguồn mở, chạy trên Node.js nên đồng nhất với stack React + Vite của EShop, chỉ cần giỏi JS/TS là đủ.
 - Cấu hình nhẹ hơn Selenium 4, hỗ trợ sẵn WebDriver + BiDi/CDP với plugin phong phú, dễ viết test chéo Web + Admin và intercept API kiểm thử bảo mật.
-- Cộng đồng Node.js lớn, Discord sôi nổi, tài liệu hiện đại ít lẫn doc cũ như Selenium 2/3, có MCP hỗ trợ AI Agent, phù hợp định hướng AI-augmented của môn học.
+- Cộng đồng Node.js lớn, Discord sôi nổi, tài liệu hiện, đcũng như ít lẫn doc và Selenium 2/3, có MCP hỗ trợ AI Agent, phù hợp định hướng AI-augmented của môn học.
 
 ## III. Nội dung demo
 
@@ -187,13 +186,15 @@ npx playwright install --list
 
 **Chạy SUT và chạy test**
 
-Playwright cần ứng dụng đang chạy. Với EShop, mở các process:
+Playwright cần ứng dụng đang chạy. Với EShop, cần mở các process:
 
 | Process | URL |
 |---|---|
 | Backend API | `http://localhost:3000` |
 | Frontend Web | `http://localhost:5173` |
 | Web Admin    | `http://localhost:5174` |
+
+Tuy nhiên, `webServer` của Playwright (sẽ được đề cập ở [Config](#Config-và-API-quan-trọng)) đã tự khởi động cả ba server trên và tự dùng lại nếu server đã chạy. Do đó không cần mở server thủ công khi test.
 
 Các lệnh thường dùng:
 
@@ -213,9 +214,9 @@ Lần chạy đầu nên dùng `npm run test:headed` để chắc chắn browser
 
 Playwright được điều khiển qua hai lớp: file `playwright.config.ts` quy định môi trường chạy, và API trong file test quy định cách tương tác với trang cùng cách kiểm tra kết quả. Phần dưới trình bày các thiết lập và API quan trọng, kèm cách chúng được dùng trong repo EShop.
 
-**Thiết lập trong `playwright.config.ts`**
+**Config trong `playwright.config.ts`**
 
-| Thiết lập | Giá trị trong repo | Tác dụng |
+| Config | Giá trị trong repo | Tác dụng |
 |---|---|---|
 | `testDir` | `./tests` | Thư mục chứa test; mọi file `*.spec.ts` bên trong được thu thập. |
 | `timeout`, `expect.timeout` | `60_000`, `5_000` | Thời gian tối đa cho một test và cho một assertion tự retry, tính bằng mili giây. |
@@ -228,7 +229,7 @@ Playwright được điều khiển qua hai lớp: file `playwright.config.ts` q
 | `use.trace`, `use.screenshot`, `use.video` | `retain-on-failure`, `only-on-failure`, `retain-on-failure` | Thu thập bằng chứng khi test fail để điều tra. |
 | `launchOptions.slowMo` | `1000` | Chèn 1 giây trước mỗi thao tác, phục vụ demo. |
 | `projects` | `chromium` | Chỉ chạy trên Chromium với profile `Desktop Chrome`. |
-| `webServer` | backend, frontend | Tự khởi động hai tiến trình và chờ URL sẵn sàng trước khi chạy test. |
+| `webServer` | backend, frontend-web, frontend-admin | Tự khởi động ba tiến trình và chờ URL sẵn sàng trước khi chạy test. |
 
 **API và fixture**
 
@@ -274,8 +275,8 @@ test('Login (happy path)', async ({ page }) => {
 
 ##### Chuẩn bị
 
-- Chạy backend :3000, web :5173 và admin :5174; backend tự seed database khi khởi động.
 - Chạy Playwright trên Chromium, tuần tự với `workers: 1`.
+- `webServer` tự mở các server backend :3000, web :5173, admin :5174. Nếu backend được khởi động mới, database tự seed; nếu server đã chạy, Playwright dùng lại.
 - Các test cần đăng nhập dùng user riêng; `sc02` dùng thêm phiên admin seed với mật khẩu đúng.
 
 ##### Coverage E2E
@@ -366,13 +367,21 @@ Phần này chưa triển khai. Có thể dùng lại luồng checkout và chạ
 
 # IV. AI Disclosure
 
-Sử dụng Muse Spark 1.3 để tra cứu các từ khoá (đã tìm hiểu và xác nhận thủ công), cũng như giải thích về quy trình test tự động.
-Sử dụng Muse Spark 1.3 để kiểm tra, góp ý, cũng như gợi ý hướng mở rộng kiểm thử coupon. Đã đối chiếu với các FR trong `README.md`.
+Sử dụng Muse Spark 1.3 để tra cứu các từ khoá (đã tìm hiểu và xác, nhcũng như thủ công), và giải thích về quy trình test tự động.
+
+Sử dụng Muse Spark 1.3 để kiểm, trcũng như góp ý, và gợi ý hướng mở rộng kiểm thử coupon. Đã đối chiếu với các FR trong `README.md`.
+
 Sử dụng Gemini Pro để tìm hiểu các phần Learning curve, AI capabilities và Community của các phần mềm kiểm thử.
+
 Đã cross-check các thông tin về các phần mềm trên bằng Claude Sonnet 5 Medium.
+
 Đã fact check thủ công các criteria, chỉnh sửa phần ngôn ngữ hỗ trợ.
+
 Có sử dụng GitHub Copilot để đánh giá mức độ phù hợp của EShop đối với các phần mềm.
+
+Phần lớn test case cũng được viết dưới sự hỗ trợ và đánh giá của AI agent. Các thành viên đã rà soát, cũng như sửa các lỗi và bất đồng nhất trong các test nói trên.
 
 # V. Tài liệu tham khảo
 
-[1]. [](https://youtu.be/jydYq7oAtD8)
+[1]. [freeCodeCamp.org & Beau Carnes - "Software Testing Course – Playwright, E2E, and AI Agents"](https://youtu.be/jydYq7oAtD8)
+[2]. [Playwright API documentation](https://playwright.dev/docs/api/class-playwright)

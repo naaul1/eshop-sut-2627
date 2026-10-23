@@ -48,7 +48,6 @@ Giảng viên lý thuyết: Lâm Quang Vũ
 
 Giảng viên thực hành: Trương Phước Lộc 
 
-
 ## II. Nội dung lý thuyết
 
 ### 1. Định nghĩa

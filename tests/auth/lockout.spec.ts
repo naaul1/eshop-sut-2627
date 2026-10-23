@@ -1,15 +1,23 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { applyApiThrottle } from '../support/throttle';
+import { registerViaAPI } from '../support/auth';
+import { request } from 'https';
 
-const VALID_EMAIL = 'test@eshop.com';
-const VALID_PASSWORD = 'Test1234!';
-const INVALID_PASSWORD = 'InvalidPassword123!';
+let VALID_EMAIL: string;
+const VALID_PASSWORD = 'ValidPassword123!';
+const INVALID_PASSWORD = 'InvalidPassword';
 
 test.beforeEach(async ({ page }) => {
     const delay = Number(process.env.THROTTLE_MS || 0);
     if (delay > 0) await applyApiThrottle(page, delay)
     else await applyApiThrottle(page, 300);
+});
+
+test.beforeEach(async ({ request }) => {
+    const timestamp = Date.now();
+    VALID_EMAIL = `test${timestamp}@eshop.com`;
+    await registerViaAPI(request, { email: VALID_EMAIL, password: VALID_PASSWORD, name: 'Test User' });
 });
 
 test('Test 1: Lockout after 3 failed login attempts', async ({ page }) => {

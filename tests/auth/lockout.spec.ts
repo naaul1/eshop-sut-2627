@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { registerViaAPI } from '../support/auth';
 import { applyApiThrottle } from '../support/throttle';
-import { registerViaAPI } from '../support/auth';
 import { request } from 'https';
 
 let VALID_EMAIL: string;
@@ -21,7 +20,7 @@ test.beforeEach(async ({ request }) => {
     await registerViaAPI(request, { email: VALID_EMAIL, password: VALID_PASSWORD, name: 'Test User' });
 });
 
-test('Test 1: Lockout after 3 failed login attempts', async ({ page }) => {
+test('Test 1: Lockout after 3 failed login attempts', async ({ page, request }) => {
     const loginPage = new LoginPage(page);
     const email = `lockout-attempts-${Date.now()}-${Math.floor(Math.random() * 1e6)}@example.com`;
 

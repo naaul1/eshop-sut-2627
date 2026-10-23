@@ -32,11 +32,11 @@ export default defineConfig({
     baseURL: 'http://localhost:5173',
     locale: 'vi-VN',               // makes toLocaleString() deterministic: 6.000.000
     timezoneId: 'Asia/Ho_Chi_Minh',
-    headless: true,                // headless by default, unless test:headed
+    headless: false,                // headless by default, unless test:headed
     trace: 'retain-on-failure',    // evidence for flake investigations
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    launchOptions: { slowMo: 1000 },//umber(process.env.SLOWMO || 0) },
+    launchOptions: { slowMo: 3000 },//umber(process.env.SLOWMO || 0) },
   },
 
   /* Configure projects for major browsers */

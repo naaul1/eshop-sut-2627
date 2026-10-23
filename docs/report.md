@@ -106,10 +106,141 @@ Chọn việc lặp lại nhiều, ít thay đổi (Login, Search, Cart, Checkou
 
 #### Giới thiệu
 
+Playwright là framework kiểm thử tự động end-to-end (E2E) mã nguồn mở do Microsoft phát triển, phát hành theo giấy phép Apache 2.0. Công cụ điều khiển ba nhân trình duyệt Chromium, Firefox và WebKit qua một API duy nhất, hỗ trợ TypeScript/JavaScript, Python, Java và .NET. Gói `@playwright/test` là test runner chính thức, quản lý vòng đời test, fixture, assertion, reporter và chế độ chạy song song. Phiên bản đang dùng trong repo là 1.64.1.
 
+Trong vòng đời phát triển phần mềm, Playwright nằm ở tầng kiểm thử E2E và giao diện của test pyramid. Unit test kiểm tra từng hàm, integration test kiểm tra sự phối hợp giữa các module, còn Playwright kiểm tra một luồng nghiệp vụ hoàn chỉnh trên trình duyệt thật, giao diện thật và backend thật. Vì vậy công cụ này phù hợp với regression test, smoke test, kiểm thử cross-browser và chạy tự động trong CI/CD. Playwright bổ sung cho unit test chứ không thay thế.
+
+Với EShop, Playwright được chọn làm công cụ chính vì hệ thống là ứng dụng web React + Vite giao tiếp với backend Express qua API. Các luồng cần kiểm thử trải qua nhiều vai trò User và Admin, cần nhiều phiên đăng nhập độc lập và có tình huống phải can thiệp vào dữ liệu gửi lên server. Browser context, network interception và chế độ chạy headed của Playwright đáp ứng trực tiếp các yêu cầu này. Cấu hình trong repo chỉ khai báo một project Chromium để tập trung vào luồng nghiệp vụ thay vì cross-browser.
 
 #### Cách cài đặt
 
+**Yêu cầu môi trường**
+
+- Node.js 20 trở lên, khuyến nghị bản LTS. npm đi kèm Node.js.
+- Các lệnh chạy từ thư mục gốc của repo.
+
+**Cài đặt**
+
+Cách 1: Tạo mới dự án bằng wizard:
+
+```bash
+npm init playwright@latest
+```
+
+Wizard hỏi lần lượt: 
+- Fùng TypeScript hay JavaScript
+- Đặt test trong thư mục nào (mặc định `tests/`)
+- Có thêm GitHub Actions workflow hay không
+- Và có cài nhân trình duyệt ngay hay không (nếu chọn có, wizard sẽ tải Chromium, Firefox và Webkit). 
+ 
+Sau khi chạy, nó tạo `playwright.config.ts`, thư mục test mẫu, thêm các script chạy test vào `package.json` và có thể tải browser về máy. Repo EShop đã có sẵn phần scaffold nên không cần chạy lại bước này.
+
+Cách 2, phù hợp với repo hiện tại:
+
+```bash
+npm install
+npx playwright install chromium
+```
+Giải thích:
+
+- `npm install` cài các dependency đã khai báo trong `package.json`, gồm `@playwright/test` và `@types/node`.
+- `npx playwright install chromium` tải nhân trình duyệt Chromium. Nếu bỏ tên browser, Playwright tải cả Chromium, Firefox và WebKit.
+
+**Nhân trình duyệt (browser core) từ `npx playwright install`**
+
+Playwright không điều khiển trình duyệt có sẵn của hệ điều hành. Mỗi phiên bản Playwright đi kèm một bản build trình duyệt đã được vá và ghim phiên bản, sau đó tải về thư mục cache.
+
+Cách làm này giúp test chạy giống nhau trên máy cá nhân, máy đồng đội và CI vì tất cả dùng đúng một bản Chromium. Khi nâng cấp Playwright, cần chạy lại `npx playwright install chromium` để tải bản browser tương ứng. Kiểm tra phiên bản và danh sách browser đã cài:
+
+```bash
+npx playwright --version
+npx playwright install --list
+```
+
+**Chạy SUT và chạy test**
+
+Playwright cần ứng dụng đang chạy. Với EShop, mở các process:
+
+| Process | URL |
+|---|---|
+| Backend API | `http://localhost:3000` |
+| Frontend Web | `http://localhost:5173` |
+| Web Admin    | `http://localhost:5174` |
+
+Các lệnh thường dùng:
+
+```bash
+npm test                                         # chạy toàn bộ test
+npx playwright test tests/auth                   # chạy một nhóm test
+npx playwright test tests/scenario/sc01.spec.ts  # chạy một file
+npm run test:headed                              # hiện trình duyệt
+# Hoặc npx playwright test --headed   
+       
+npm run report                                   # mở báo cáo HTML
+```
+
+Lần chạy đầu nên dùng `npm run test:headed` để chắc chắn browser mở được và ứng dụng truy cập đúng địa chỉ. Khi test fail, Playwright lưu trace, screenshot và video vào `test-results`, đồng thời tạo báo cáo HTML trong `playwright-report`.
+
+#### Config và API quan trọng
+
+Playwright được điều khiển qua hai lớp: file `playwright.config.ts` quy định môi trường chạy, và API trong file test quy định cách tương tác với trang cùng cách kiểm tra kết quả. Phần dưới trình bày các thiết lập và API quan trọng, kèm cách chúng được dùng trong repo EShop.
+
+**Thiết lập trong `playwright.config.ts`**
+
+| Thiết lập | Giá trị trong repo | Tác dụng |
+|---|---|---|
+| `testDir` | `./tests` | Thư mục chứa test; mọi file `*.spec.ts` bên trong được thu thập. |
+| `timeout`, `expect.timeout` | `60_000`, `5_000` | Thời gian tối đa cho một test và cho một assertion tự retry, tính bằng mili giây. |
+| `retries` | `0` | Không chạy lại test fail; flakiness phải hiện ra thay vì bị che. |
+| `workers` | `1` | Chạy tuần tự một worker để tránh tranh chấp dữ liệu dùng chung. |
+| `reporter` | `list`, `html` | In kết quả ra terminal và tạo báo cáo HTML, không tự mở. |
+| `use.baseURL` | `http://localhost:5173` | Ghép vào đường dẫn tương đối, ví dụ `page.goto('/login')`. |
+| `use.locale`, `use.timezoneId` | `vi-VN`, `Asia/Ho_Chi_Minh` | Cố định định dạng số, tiền tệ và múi giờ để test không phụ thuộc máy chạy. |
+| `use.headless` | `true` | Chạy ngầm mặc định; `--headed` ghi đè khi cần quan sát. |
+| `use.trace`, `use.screenshot`, `use.video` | `retain-on-failure`, `only-on-failure`, `retain-on-failure` | Thu thập bằng chứng khi test fail để điều tra. |
+| `launchOptions.slowMo` | `1000` | Chèn 1 giây trước mỗi thao tác, phục vụ demo. |
+| `projects` | `chromium` | Chỉ chạy trên Chromium với profile `Desktop Chrome`. |
+| `webServer` | backend, frontend | Tự khởi động hai tiến trình và chờ URL sẵn sàng trước khi chạy test. |
+
+**API và fixture**
+
+| API / fixture | Công dụng | Cách dùng trong repo |
+|---|---|---|
+| `test`, `expect` | Khai báo test và assertion. | Có trong mọi file spec. |
+| `page` | Đại diện một tab trình duyệt, nơi tạo locator và thực hiện thao tác. | Tham số `{ page }` trong test. |
+| `context`, `browser` | Context là phiên cách ly có cookie và localStorage riêng; browser dùng để tạo thêm context độc lập. | Kịch bản 2 tạo context User và Admin từ cùng browser. |
+| `request` | Client HTTP gọi API trực tiếp, không qua UI. | `tests/support/auth.ts` đăng nhập và đăng ký qua API. |
+| `test.step`, `test.beforeEach` | Chia test thành các bước có tên; chạy phần chuẩn bị trước mỗi test. | `tests/scenario/sc01.spec.ts` và hook gắn throttle API. |
+| `getByRole`, `getByPlaceholder`, `locator` | Tìm phần tử theo vai trò, placeholder hoặc CSS/DOM. | Tìm nút `Tìm`, ô `Tìm kiếm...`, input trong form. |
+| Web-first assertion | `toBeVisible`, `toHaveURL`, `toHaveText`, `toHaveCount`, tự retry đến hết timeout. | Kiểm tra URL, giá, số dòng trong giỏ hàng. |
+| `expect.soft` | Ghi nhận nhiều lỗi trong cùng một test thay vì dừng ở lỗi đầu. | Kiểm tra từng sản phẩm, từng dòng giỏ hàng. |
+| `page.goto` | Mở URL; dùng `waitUntil: 'domcontentloaded'` để không chờ ảnh ngoài. | `LoginPage.goto` và các test điều hướng. |
+| `page.addInitScript` | Chèn script trước khi trang tải. | `seedAuthToken` ghi JWT vào localStorage. |
+| `page.route` | Chặn request/response để thêm delay hoặc sửa dữ liệu. | `tests/support/throttle.ts`; kịch bản 2 dùng để sửa `total_amount`. |
+| POM | Đóng gói locator và thao tác của một trang vào class. | `tests/pages/LoginPage.ts`, `tests/pages/CheckoutPage.ts`. |
+
+**Ví dụ cách dùng**
+
+```ts
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage';
+
+test('Login (happy path)', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.login('test@eshop.com', 'Test1234!');
+  await expect(page).toHaveURL('/');
+});
+```
+
+Đoạn code trên cho thấy cách các thành phần phối hợp: fixture `page` được truyền vào test, POM đóng gói thao tác, `baseURL` rút gọn đường dẫn, và assertion tự retry để chờ điều hướng hoàn tất.
+
+**Cấu trúc folder**
+
+- `tests/pages`: class POM, mỗi method tương ứng một thao tác người dùng; assertion đặt trong spec.
+- `tests/support/auth.ts`: đăng nhập và đăng ký qua API, sau đó seed JWT bằng `addInitScript` để không phải thao tác form mỗi test.
+- `tests/support/throttle.ts`: dùng `page.route` thêm delay cho mọi request `/api/**`, phục vụ đo flakiness.
+- `tests/auth`, `tests/checkout`, `tests/scenario`: các file spec thực tế.
 
 
 #### Kịch bản demo
@@ -163,20 +294,6 @@ Quay video chạy test dự phòng và chụp sẵn report phòng trường hợ
 **Kỹ thuật Playwright:** data-driven - mảng test data + vòng lặp `test()`; dùng `request` fixture gọi API setup giỏ hàng cho nhanh thay vì click tay từng lần.
 
 ### 2. WebDriverIO
-
-#### Giới thiệu
-
-
-
-#### Cách cài đặt
-
-
-
-#### Kịch bản demo
-
-##### Chuẩn bị**
-
-
 
 # IV. AI Disclosure
 

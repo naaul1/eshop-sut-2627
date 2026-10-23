@@ -63,5 +63,11 @@ export default defineConfig({
       url: 'http://localhost:5173',
       reuseExistingServer: !process.env.CI,
     },
+    {
+      command: 'npm run dev -- --host 127.0.0.1 --port 5174',
+      cwd: './frontend-admin',
+      url: 'http://localhost:5174',
+      reuseExistingServer: !process.env.CI,
+    },
   ],
 });

@@ -7,9 +7,9 @@
 
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
+import { registerViaAPI } from '../support/auth';
 import { applyApiThrottle } from '../support/throttle';
 
-const EMAIL: string = 'test@eshop.com';
 const PASSWORD: string = 'Test1234!';
 
 test.beforeEach(async ({ page }) => {
@@ -18,14 +18,20 @@ test.beforeEach(async ({ page }) => {
     else await applyApiThrottle(page, 300);
 });
 
-test('Test Scenario 1: Smoke Test', async ({ page }) => {
+test('Test Scenario 1: Smoke Test', async ({ page, request }) => {
+    const email = `scenario-smoke-${Date.now()}-${Math.floor(Math.random() * 1e6)}@example.com`;
+
+    await test.step('Create a throwaway user via API', async () => {
+        await registerViaAPI(request, { name: 'Scenario Smoke User', email, password: PASSWORD });
+    });
+
     await test.step('Navigate to the login page', async () => {
         await page.goto('http://localhost:5173/login', { waitUntil: 'domcontentloaded' });
     });
 
     await test.step('Fill email input', async () => {
         const emailInput = page.locator('form input').nth(0);
-        await emailInput.fill(EMAIL);
+        await emailInput.fill(email);
     });
 
     await test.step('Fill password input', async () => {
@@ -179,20 +185,21 @@ test('Test Scenario 1: Smoke Test', async ({ page }) => {
             page,
             'Product detail page must be displayed',
         ).toHaveURL(/\/product\/\d+$/);
+        await expect(page.getByRole('button', { name: 'Thêm vào giỏ hàng', exact: true })).toBeVisible();
     });
     
     await test.step('Verify that add to cart function is working with correct information', async () => {
         const quantityInput = page.locator('input[type="number"]');
-        const addToCartButton = page.locator('button', { hasText: 'Thêm vào giỏ' });
-        const cartButton = page.locator('a', { hasText: 'Giỏ hàng' });
-        const productTitle = await page.locator('h1').textContent();
-        const productPrice = await page.locator('p').nth(0).textContent();
+        const addToCartButton = page.getByRole('button', { name: 'Thêm vào giỏ hàng', exact: true });
+        const cartButton = page.getByRole('link', { name: 'Giỏ hàng', exact: true });
+        const productTitle = await page.locator('main h1').textContent();
+        const productPrice = await page.locator('main p').first().textContent();
 
         await quantityInput.fill('1');
         await addToCartButton.click();
+        await addToCartButton.click();
         await cartButton.click();
 
-        await page.goto('http://localhost:5173/cart', { waitUntil: 'domcontentloaded' });
         await expect(
             page,
             'Cart page must be displayed',

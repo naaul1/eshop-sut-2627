@@ -11,8 +11,6 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const isHeaded = process.argv.includes('--headed');
-
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
@@ -25,7 +23,7 @@ export default defineConfig({
   /* Retry on CI only */
   retries: 0, //process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: isHeaded ? 1 : undefined, // process.env.CI ? 1 : undefined,
+  workers: 1, // process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [['list'], ['html', { open: 'never' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -64,7 +62,7 @@ export default defineConfig({
       reuseExistingServer: !process.env.CI,
     },
     {
-      command: 'npm run dev -- --host 127.0.0.1 --port 5174',
+      command: 'npm run dev',
       cwd: './frontend-admin',
       url: 'http://localhost:5174',
       reuseExistingServer: !process.env.CI,

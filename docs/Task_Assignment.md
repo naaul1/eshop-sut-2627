@@ -99,8 +99,8 @@ export class LoginPage {
 ## 7. Share-Specific Specs (Summary)
 
 ### Share A — Auth (`tests/auth/`)
-- `login.spec.ts`: happy path (shared user), wrong password (throwaway user) + login-form conformance (type=email/password, button name, h1 count) — findings left red
-- `lockout.spec.ts`: lock-within-3-attempts behavior test + FR-02 conformance (should not lock on the 2nd failure) — finding left red
+- `login.spec.ts`: happy path and wrong password, each on a separate throwaway user + login-form conformance (type=email/password, button name, h1 count) — findings left red
+- `lockout.spec.ts`: lock-within-3-attempts behavior test + FR-02 conformance (should not lock on the 2nd failure) — each test uses its own throwaway user; finding left red
 
 ### Share B — Cart (`tests/cart/`)
 - `add-to-cart.spec.ts`: add from catalog (1 item), add 2 items, product-detail path (click add **twice**) + conformance (merge rows, total label, +/- controls, remove dialog, button labels, empty state, badge, `alt` text) — findings left red

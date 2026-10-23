@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
+import { registerViaAPI } from '../support/auth';
 import { applyApiThrottle } from '../support/throttle';
 
 test.beforeEach(async ({ page }) => {
@@ -8,15 +9,21 @@ test.beforeEach(async ({ page }) => {
     else await applyApiThrottle(page, 300);
 });
 
-test('Test 1: Login (happy path)', async ({ page }) => {
+test('Test 1: Login (happy path)', async ({ page, request }) => {
     const loginPage = new LoginPage(page);
+    const email = `login-valid-${Date.now()}-${Math.floor(Math.random() * 1e6)}@example.com`;
+    const password = 'Test1234!';
+
+    await test.step('Create a throwaway user via API', async () => {
+        await registerViaAPI(request, { name: 'Login Happy Path User', email, password });
+    });
 
     await test.step('Open the login page', async () => {
         await loginPage.goto();
     });
 
     await test.step('Enter valid credentials and submit the form', async () => {
-        await loginPage.login('test@eshop.com', 'Test1234!');
+        await loginPage.login(email, password);
     });
 
     await test.step('Verify that login succeeds', async () => {
@@ -41,15 +48,21 @@ test('Test 2: Login with invalid email', async ({ page }) => {
     });
 });
 
-test('Test 3: Login with invalid password', async ({ page }) => {
+test('Test 3: Login with invalid password', async ({ page, request }) => {
     const loginPage = new LoginPage(page);
+    const email = `login-invalid-${Date.now()}-${Math.floor(Math.random() * 1e6)}@example.com`;
+    const password = 'Test1234!';
+
+    await test.step('Create a throwaway user via API', async () => {
+        await registerViaAPI(request, { name: 'Login Invalid Password User', email, password });
+    });
 
     await test.step('Open the login page', async () => {
         await loginPage.goto();
     });
 
     await test.step('Enter valid email and invalid password and submit the form', async () => {
-        await loginPage.login('test@eshop.com', 'InvalidPassword123!');
+        await loginPage.login(email, 'InvalidPassword123!');
     });
 
     await test.step('Verify that login fails with an error message', async () => {
@@ -57,7 +70,7 @@ test('Test 3: Login with invalid password', async ({ page }) => {
     });
 });
 
-test('Test 4: Password field should be masked', async ({ page }) => {
+test('Test 4: FIND-A1 Password field should be masked', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await test.step('Open the login page', async () => {
         await loginPage.goto();
@@ -69,7 +82,7 @@ test('Test 4: Password field should be masked', async ({ page }) => {
     });
 });
 
-test('Test 5: Checkout without login', async ({ page }) => {
+test('Test 5: FIND-C2 Checkout without login', async ({ page }) => {
     await test.step('Open the home page', async () => {
         await page.goto('/');
     });

@@ -50,11 +50,10 @@ async function addProductAndOpenCheckout(page: Page): Promise<void> {
   await expect(page).toHaveURL(/\/checkout$/);
 }
 
-test.describe('FR-08 checkout — behavior', () => {
-  test('Test 1: User places an order that the backend stores correctly (happy path)', async ({
+test('Test 1: User places an order that the backend stores correctly (happy path)', async ({
     page,
     request,
-  }) => {
+}) => {
     const { token, user } = await loginAndSeed(page, request);
     const api = { headers: { Authorization: `Bearer ${token}` } };
 
@@ -78,12 +77,12 @@ test.describe('FR-08 checkout — behavior', () => {
     expect(created.status).toBe('pending');
     expect(created.total_amount).toBe(PRICE);
     expect(created.user_id).toBe(user.id);
-  });
+});
 
-  test('Test 2: Checkout shows the cart line and the cart total before confirming', async ({
+test('Test 2: Checkout shows the cart line and the cart total before confirming', async ({
     page,
     request,
-  }) => {
+}) => {
     await loginAndSeed(page, request);
     await addProductAndOpenCheckout(page);
 
@@ -95,13 +94,12 @@ test.describe('FR-08 checkout — behavior', () => {
     await expect(checkout.totalInput).toHaveValue(String(PRICE));
     await expect(checkout.summaryTotal).toContainText('30.000.000 ₫');
     await expect(checkout.confirmButton).toBeVisible();
-  });
 });
 
 // Spec-conformance findings (FIND-C1..C5) — left red on purpose, same error
 // policy as every other test: no test.fail(), no quarantine.
 
-test('Test 3: The total amount must not be editable by the user', async ({ page }) => {
+test('Test 3: FIND-C1 The total amount must not be editable by the user', async ({ page }) => {
   // actual: a normal <input type="number"> that the user can change
   const checkout = new CheckoutPage(page);
   await checkout.goto();
@@ -109,7 +107,7 @@ test('Test 3: The total amount must not be editable by the user', async ({ page 
   await expect.soft(checkout.totalInput.isEditable()).resolves.toBe(false);
 });
 
-test('Test 4: Unauthenticated visitor must be sent from /checkout to /login', async ({
+test('Test 4: FIND-C2 Unauthenticated visitor must be sent from /checkout to /login', async ({
   page,
 }) => {
   // actual: /checkout renders for anonymous users
@@ -117,7 +115,7 @@ test('Test 4: Unauthenticated visitor must be sent from /checkout to /login', as
   await expect.soft(page).toHaveURL(/\/login/);
 });
 
-test('Test 5: The cart must be cleared after a successful checkout', async ({
+test('Test 5: FIND-C3 The cart must be cleared after a successful checkout', async ({
   page,
   request,
 }) => {
@@ -135,7 +133,7 @@ test('Test 5: The cart must be cleared after a successful checkout', async ({
   await expect.soft(page.getByText('Giỏ hàng của bạn đang trống')).toBeVisible();
 });
 
-test('Test 6: Backend must ignore a client-sent total_amount', async ({ request }) => {
+test('Test 6: FIND-C4 Backend must ignore a client-sent total_amount', async ({ request }) => {
   // actual: /api/checkout stores whatever the client sends
   const { token } = await createUser(request);
   const res = await request.post(`${API}/api/checkout`, {
@@ -151,7 +149,7 @@ test('Test 6: Backend must ignore a client-sent total_amount', async ({ request 
   await expect.soft(order.total_amount).not.toBe(1);
 });
 
-test('Test 7: The checkout page must have exactly one <h1>', async ({
+test('Test 7: FIND-C5 The checkout page must have exactly one <h1>', async ({
   page,
 }) => {
   // actual: 0 <h1> (the page title is an <h2>)

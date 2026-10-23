@@ -170,7 +170,7 @@ Playwright cần ứng dụng đang chạy. Với EShop, mở các process:
 Các lệnh thường dùng:
 
 ```bash
-npm test                                         # chạy toàn bộ test
+npm test                                         # chạy toàn bộ test (mặc định headless)
 npx playwright test tests/auth                   # chạy một nhóm test
 npx playwright test tests/scenario/sc01.spec.ts  # chạy một file
 npm run test:headed                              # hiện trình duyệt
@@ -242,46 +242,131 @@ test('Login (happy path)', async ({ page }) => {
 - `tests/support/throttle.ts`: dùng `page.route` thêm delay cho mọi request `/api/**`, phục vụ đo flakiness.
 - `tests/auth`, `tests/checkout`, `tests/scenario`: các file spec thực tế.
 
-
 #### Kịch bản demo
 
-##### Chuẩn bị**
+##### Chuẩn bị
 
 Chạy đủ 3 tiến trình cho web automation testing: backend :3000, web :5173, admin :5174, seed database.
 
 Playwright đặt ở root của repo, config 1 project Chromium cho demo (trước hết bỏ qua Firefox và Webkit).
 
-Quay video chạy test dự phòng và chụp sẵn report phòng trường hợp bất trắc.
+##### Coverage E2E hiện có
 
-##### Kịch bản #1: Smoke test (User)**
+Bảng dưới tổng hợp 25 test E2E trong ba nhóm auth, cart và checkout, lấy kết quả từ artifact của lần chạy full suite gần nhất trên Chromium. Trong đó có 9 test Pass và 16 test Fail.
 
-**Mục đích:** chứng minh automation chạy được trên SUT thật.
+Quy ước: `Pass` là test khớp đặc tả; `Fail` là finding của SUT, được giữ đỏ có chủ đích, không dùng `test.fail()` hay skip. Hai test scenario được trình bày riêng ở Kịch bản #1 và #2.
 
-**Flow:**
-1. Mở `http://localhost:5173/login`, nhập Email `test@eshop.com`, Mật khẩu `Test1234!`, bấm Đăng nhập (FR-02: login hợp lệ vào được home).
-2. Tại trang chủ, kiểm tra mỗi sản phẩm hiển thị đủ ảnh (có `alt`), tên, giá đơn vị ₫ (FR-05).
-3. Nhập từ khóa vào ô tìm kiếm, kiểm tra kết quả lọc đúng và từ khóa chứa HTML bị escape (FR-05).
-4. Mở 1 sản phẩm, để số lượng = 1, bấm Thêm vào giỏ, kiểm tra có toast/badge phản hồi (FR-06 + FR-24).
-5. Mở giỏ hàng, kiểm tra badge số lượng = 1, đúng tên sản phẩm, đúng đơn giá và thành tiền (FR-07).
+| Nhóm | Test case | FR | Kết quả | Ghi chú |
+|---|---|---|---|---|
+| Auth, `login.spec.ts` | Test 1: Login (happy path) | FR-02 | Pass | Đăng nhập hợp lệ vào được trang chủ. |
+| Auth, `login.spec.ts` | Test 2: Login with invalid email | FR-02 | Pass | Hiển thị lỗi khi email sai. |
+| Auth, `login.spec.ts` | Test 3: Login with invalid password | FR-02 | Pass | Hiển thị lỗi khi mật khẩu sai. |
+| Auth, `login.spec.ts` | Test 4: FIND-A1 Password field should be masked | FR-22 | Fail | FIND-A1: SUT dùng `type="text"` thay vì `type="password"`. |
+| Auth, `login.spec.ts` | Test 5: FIND-C2 Checkout without login | FR-08 | Fail | FIND-C2: SUT vẫn mở `/checkout` khi chưa đăng nhập; trùng với Checkout Test 4. |
+| Auth, `lockout.spec.ts` | Test 1: Lockout after 3 failed login attempts | FR-02 | Pass | Pass vì test chỉ assert có lỗi; hành vi khóa sớm được bắt ở Test 3 (FIND-A3). |
+| Auth, `lockout.spec.ts` | Test 2: FIND-A2 Lockout duration and reset | FR-02 | Fail | FIND-A2: SUT khóa 180 giây thay vì 30 giây. |
+| Auth, `lockout.spec.ts` | Test 3: FIND-A3 Login succeeds with in 3 retries | FR-02 | Fail | FIND-A3: SUT khóa ngay sau lần sai thứ 2. |
+| Cart, `add-to-cart.spec.ts` | Test 1: Add one product to the cart from the catalog | FR-07 | Pass | Thêm một sản phẩm từ catalog. |
+| Cart, `add-to-cart.spec.ts` | Test 2: Add two different products to the cart | FR-07 | Pass | Hai sản phẩm khác nhau nằm ở hai dòng. |
+| Cart, `add-to-cart.spec.ts` | Test 3: Add a product from its detail page | FR-06, FR-07 | Pass | Thêm từ trang chi tiết với số lượng 2. |
+| Cart, `add-to-cart.spec.ts` | Test 4: FIND-B1 adding the same product twice merges into one row | FR-07 | Fail | FIND-B1: SUT tạo hai dòng thay vì gộp. |
+| Cart, `add-to-cart.spec.ts` | Test 5: FIND-B2 cart quantity controls update quantity and total | FR-07 | Fail | FIND-B2: thiếu nút tăng và giảm số lượng. |
+| Cart, `add-to-cart.spec.ts` | Test 6: FIND-B3 removing a product requires confirmation | FR-07, FR-24 | Fail | FIND-B3: xóa không có hộp thoại xác nhận. |
+| Cart, `add-to-cart.spec.ts` | Test 7: FIND-B4 cart total and continue-shopping labels match the specification | FR-07 | Fail | FIND-B4: sai nhãn tổng tiền và nút mua tiếp. |
+| Cart, `add-to-cart.spec.ts` | Test 8: FIND-B5 empty cart includes an illustration and message | FR-07, FR-24 | Fail | FIND-B5: giỏ trống chỉ có chữ, thiếu minh họa. |
+| Cart, `add-to-cart.spec.ts` | Test 9: FIND-B6 the cart navigation link shows the item-count badge | FR-23, FR-24 | Fail | FIND-B6: không có badge số lượng. |
+| Cart, `add-to-cart.spec.ts` | Test 10: FIND-B7 catalog product images have descriptive alt text | FR-05, FR-24 | Fail | FIND-B7: ảnh catalog có `alt` rỗng. |
+| Checkout, `checkout.spec.ts` | Test 1: User places an order that the backend stores correctly (happy path) | FR-08 | Pass | Đơn mới có status `pending`, đúng tổng và đúng user. |
+| Checkout, `checkout.spec.ts` | Test 2: Checkout shows the cart line and the cart total before confirming | FR-08 | Pass | Hiển thị đúng dòng sản phẩm và tổng tiền. |
+| Checkout, `checkout.spec.ts` | Test 3: FIND-C1 The total amount must not be editable by the user | FR-08 | Fail | FIND-C1: ô tổng tiền cho phép chỉnh sửa. |
+| Checkout, `checkout.spec.ts` | Test 4: FIND-C2 Unauthenticated visitor must be sent from /checkout to /login | FR-08 | Fail | FIND-C2: khách chưa đăng nhập vẫn vào được `/checkout`. |
+| Checkout, `checkout.spec.ts` | Test 5: FIND-C3 The cart must be cleared after a successful checkout | FR-08 | Fail | FIND-C3: giỏ không được xóa sau khi đặt hàng. |
+| Checkout, `checkout.spec.ts` | Test 6: FIND-C4 Backend must ignore a client-sent total_amount | FR-08 | Fail | FIND-C4: backend lưu `total_amount` do client gửi. |
+| Checkout, `checkout.spec.ts` | Test 7: FIND-C5 The checkout page must have exactly one h1 | FR-21 | Fail | FIND-C5: trang checkout không có thẻ `h1`. |
 
-**Kỹ thuật Playwright:** chạy headed + `slowMo` để khán giả thấy trình duyệt tự bấm; locator ưu tiên `getByRole`/`getByPlaceholder`; assertion tự retry.
+Các finding trong bảng được đánh mã theo nhóm: FIND-A1 đến FIND-A3 cho auth, FIND-B1 đến FIND-B7 cho cart, FIND-C1 đến FIND-C5 cho checkout. Auth Test 5 và Checkout Test 4 cùng mô tả một lỗi, nên FIND-C2 được dùng cho cả hai.
+
+Lưu ý: trước đây Auth Test 3 và các test lockout dùng sai mật khẩu trên tài khoản dùng chung `test@eshop.com`, nên có thể khóa tài khoản trong 180 giây và làm `sc01` fail nếu chạy sau. Sau khi tách dữ liệu, mỗi test auth và `sc01` tự đăng ký một user riêng qua API; không test nào còn dùng `test@eshop.com`. Chỉ `sc02` dùng tài khoản admin seed với mật khẩu đúng.
+
+Hai test scenario còn lại: `sc01` fail với 4 nhóm soft assertion nhưng đã chạy hết flow, `sc02` fail với 8 soft assertion. Tính cả hai scenario, full suite có 27 test: 9 pass và 18 fail.
+
+##### Kịch bản #1: Smoke test (User)
+
+**Mục đích:** chứng minh automation chạy được trên SUT thật, đồng thời kiểm tra các thành phần cơ bản của catalog, tìm kiếm, chi tiết sản phẩm và giỏ hàng.
+
+**File:** `tests/scenario/sc01.spec.ts`
+
+**Chuẩn bị:** `beforeEach` gắn `applyApiThrottle(page, 300)` cho mọi request `/api/**` để mô phỏng mạng chậm. Test tạo một user mới bằng `registerViaAPI` với email dạng `scenario-smoke-<timestamp>-<random>@example.com` và mật khẩu `Test1234!`, sau đó dùng chính email/password này để đăng nhập UI. Test không dùng tài khoản seed `test@eshop.com` để tránh phụ thuộc trạng thái lockout.
+
+**Flow theo đúng thứ tự `test.step`:**
+1. `Create a throwaway user via API`: đăng ký user riêng qua API.
+2. `Navigate to the login page`: mở `http://localhost:5173/login` với `waitUntil: 'domcontentloaded'`.
+3. `Fill email input`: nhập email của user vừa tạo vào input đầu tiên của form.
+4. `Fill password input`: nhập `Test1234!` vào input thứ hai của form.
+5. `Click the submit button`: bấm `form button[type="submit"]`.
+6. `Verify that the user is redirected to the home page`: assert URL `http://localhost:5173/` (FR-02).
+7. `Verify that the page have only 1 h1 element`: assert số lượng thẻ `h1` bằng 1 (FR-21).
+8. `Verify each product card is displayed with the correct information`: với mỗi card, assert ảnh visible, `src` khác rỗng, `alt` khác rỗng, tên khác rỗng, giá khác rỗng, giá chứa ký hiệu tiền tệ (FR-05).
+9. `Search products by name`: nhập `iPhone`, bấm `Tìm`; assert có ít nhất một card, tổng số card lớn hơn 0, mọi card chứa `iPhone` không phân biệt hoa thường (FR-05).
+10. `Verify that HTML search input is escaped`: nhập chuỗi XSS chứa thẻ `img` và thuộc tính `onerror`; assert dòng kết quả hiển thị đúng chuỗi đã nhập, không render `img` hoặc `script` (FR-05).
+11. `Clear search results for the next test`: xóa ô tìm kiếm, bấm `Tìm`, chờ card đầu tiên xuất hiện.
+12. `Verify that product have a "Xem chi tiết" button`: mỗi card có link `Xem chi tiết`.
+13. Bấm link `Xem chi tiết` của card đầu tiên.
+14. `Verify that the product detail page is displayed`: assert URL khớp `/product/\d+` và chờ nút `Thêm vào giỏ hàng` của trang chi tiết xuất hiện (FR-06).
+15. `Verify that add to cart function is working with correct information`: đặt số lượng 1, bấm `Thêm vào giỏ` hai lần (SUT bỏ qua lần đầu), bấm link `Giỏ hàng` trên header, không dùng `page.goto` để giữ giỏ trong bộ nhớ React; assert URL `/cart`, đúng 1 dòng, tên và đơn giá khớp trang chi tiết, số lượng bằng 1, thành tiền khớp đơn giá (FR-06, FR-07).
+
+**Lưu ý:** SUT bỏ qua lần bấm `Thêm vào giỏ` đầu tiên và giỏ hàng chỉ nằm trong bộ nhớ React, nên test chủ động bấm hai lần và điều hướng bằng link nội bộ. Đây là cách test thích nghi với hành vi SUT, không phải thay đổi kỳ vọng nghiệp vụ.
+
+**Kết quả lần chạy gần nhất:** Fail, nhưng test đã chạy hết flow (không còn bị chặn ở bước đăng nhập). Các lỗi đều là soft assertion:
+- Bước 7: trang chủ có 2 thẻ `<h1>` thay vì 1 (FR-05, FR-21).
+- Bước 8: 5 ảnh sản phẩm có `alt=""`; giá hiển thị `VND` thay vì `₫` (FR-05, FR-21, FR-24; phần `alt` trùng FIND-B7).
+- Bước 10: từ khóa HTML không được escape; vùng kết quả render thẻ `<img>` và không hiển thị nguyên văn keyword (FR-05).
+- Bước 15: các assertion giỏ hàng pass; test không còn lỗi do lockout hay do `page.goto('/cart')`.
+
+**Kỹ thuật Playwright:** chạy headed + `slowMo` để khán giả theo dõi; `test.beforeEach` gắn throttle API bằng `page.route`; chia bước bằng `test.step`; `request` fixture + `registerViaAPI` để tạo user riêng; dùng `expect.soft` để gom lỗi; locator cấu trúc `form input`, `form button[type="submit"]`; `page.goto` với `domcontentloaded`.
 
 ##### Kịch bản #2: End-to-end (User + Admin)
 
-**Mục đích:** demo flow phức tạp nhất, chạm 6 FR, trình bày tính năng nhiều context context và intercept của Playwright.
+**Mục đích:** demo flow phức tạp nhất, chạm 6 FR, trình bày hai Browser Context độc lập, intercept API và vòng đời đơn hàng.
 
-**Flow:**
-1. Context User: đăng nhập, thêm 2 sản phẩm vào giỏ, sang checkout nhập coupon `SAVE10`, kiểm tra giảm đúng 10% theo công thức `percent` (FR-07 + FR-08 + FR-09 C1/C2/C3).
-2. Bật intercept API checkout, sửa `total_amount` gửi lên thấp hơn thực tế -> assert backend tự tính lại, đơn tạo ra vẫn đúng tổng (FR-08: không tin client).
-3. Context Admin (chạy song song, session riêng): duyệt đơn `pending -> confirmed -> shipping -> delivered` đúng State Machine (FR-10 + FR-18).
-4. Quay lại User thử hủy đơn đang `shipping` -> assert bị từ chối, vì User chỉ được hủy ở `pending`/`confirmed` (FR-10).
-5. Admin mở Dashboard, kiểm tra doanh thu đã cộng đơn vừa `delivered` (FR-13: chỉ cộng đơn delivered).
+**File:** `tests/scenario/sc02.spec.ts`
 
-**Kỹ thuật Playwright:** 2 Browser Context song song; `page.route` intercept; assert cả UI lẫn response API.
+**Chuẩn bị:**
+- `test.setTimeout(120_000)`.
+- Tạo `userContext` và `userPage`; sau đó gọi `loginAdmin(browser)` để tạo admin context, mở `http://localhost:5174`, chờ `/api/admin/orders`, đăng nhập `admin@eshop.com` / `Admin123!`, assert heading `Dashboard` và đọc `revenueBefore`.
+- `revenueBefore` được tính bằng tổng `total_amount * 2` của các đơn `delivered` theo cách test đang làm.
+- Tạo user mới qua API bằng `registerViaAPI` và `loginViaAPI`, sau đó seed JWT vào `userPage` bằng `seedAuthToken`.
+- Dữ liệu: `iPhone 15 Pro Max` giá 30.000.000 đồng và `Tai nghe AirPods Pro 2` giá 6.000.000 đồng; tổng 36.000.000 đồng; coupon `SAVE10` kỳ vọng còn 32.400.000 đồng.
+
+**Flow theo đúng thứ tự test:**
+1. User mở trang chủ, assert link `Chào` visible; thêm lần lượt `iPhone 15 Pro Max` và `Tai nghe AirPods Pro 2` vào giỏ.
+2. Mở giỏ hàng, bấm `Tiến hành thanh toán`; assert URL `/checkout`; assert danh sách `ul.list-disc li` có 2 dòng.
+3. Nhập `SAVE10`, bấm `Áp dụng`; assert thông báo `Áp dụng thành công`; soft assert `Thành tiền:` chứa 32.400.000 (FR-07, FR-08, FR-09).
+4. Gắn `page.route('**/api/checkout')`: đọc payload, lưu `clientTotal`, thay `total_amount` bằng 1 rồi gọi `route.continue`.
+5. Bấm `Xác Nhận Thanh Toán`; chờ response `POST /api/checkout`; assert response OK; lấy `orderId`; assert heading `Thanh toán thành công!`.
+6. Gọi `GET /api/orders/{orderId}`; soft assert `clientTotal` bằng 32.400.000; `savedOrder.total_amount` bằng 32.400.000 và khác 1 (FR-08).
+7. Admin reload, chờ `/api/admin/orders`; mở `Đơn hàng`; tìm dòng `#orderId`; assert `Chờ xác nhận`; bấm `Xác nhận`; assert `Đã xác nhận`; bấm `Giao hàng`; assert `Đang giao` (FR-10, FR-18).
+8. User bấm `Quay lại trang chủ`, mở link `Chào`; assert heading `Lịch sử đơn hàng`; tìm đơn; assert `Đang giao`.
+9. User bấm `Hủy đơn`; bắt dialog; soft assert message khớp `/Lỗi/`; soft assert đơn vẫn `Đang giao` (FR-10).
+10. Admin reload, chờ `/api/admin/orders`; mở `Đơn hàng`; tìm đơn; assert `Đã hủy`; soft assert nút `Đánh dấu Đã giao` có count 0; sau đó bấm nút này; assert `Đã giao`.
+11. Admin mở `Dashboard`; đọc `revenueAfter`; soft assert `revenueAfter - revenueBefore` bằng 32.400.000 (FR-13).
+12. `finally`: đóng `userContext` và `admin.context`.
+
+**Kết quả lần chạy gần nhất:** Fail với 8 soft assertion (gom thành 6 nhóm lỗi), nhưng các bước chính vẫn chạy hết:
+- `SAVE10`: UI hiển thị `Thành tiền: 360.000.000` thay vì 32.400.000.
+- `clientTotal`: client gửi 360.000.000 thay vì 32.400.000.
+- `savedOrder.total_amount`: backend lưu 1 thay vì 32.400.000.
+- Hủy đơn đang giao: dialog báo `Hủy đơn thành công!`, đơn chuyển `Đã hủy`.
+- Đơn `Đã hủy` vẫn có nút `Đánh dấu Đã giao`; bấm vào chuyển được sang `Đã giao`.
+- Doanh thu Dashboard tăng 2 thay vì 32.400.000.
+
+**Kỹ thuật Playwright:** `browser.newContext` cho hai phiên độc lập; `request` fixture để tạo user và đọc order; `seedAuthToken`; `page.route` và `route.continue` để intercept; `waitForResponse`; `expect.soft` để gom finding; xử lý dialog bằng `page.once('dialog')`.
 
 ##### Kịch bản #3: Ma trận coupon 5 điều kiện (data-driven)
 
 **Mục đích:** thể hiện rằng test thủ công rất mất thời gian, còn automate thì nhanh và đơn giản hơn nhiều.
+
+**File: Chưa thực hiện**
 
 **Flow:** cùng 1 flow checkout, chạy lặp với bảng dữ liệu (FR-09 C1–C5):
 1. `SAVE10` trên đơn >= 300.000₫ -> giảm 10% (pass).
@@ -303,3 +388,7 @@ Sử dụng Gemini Pro để tìm hiểu các phần Learning curve, AI capabili
 Đã cross-check các thông tin về các phần mềm trên bằng Claude Sonnet 5 Medium.
 Đã fact check thủ công các criteria, chỉnh sửa phần ngôn ngữ hỗ trợ.
 Có sử dụng GitHub Copilot để đánh giá mức độ phù hợp của EShop đối với các phần mềm.
+
+# V. Tài liệu tham khảo
+
+[1]. [](https://youtu.be/jydYq7oAtD8)

@@ -28,8 +28,7 @@
       - [Kịch bản #1: Xem sản phẩm và thêm vào giỏ](#kịch-bản-1-xem-sản-phẩm-và-thêm-vào-giỏ)
       - [Kịch bản #2: Mua hàng và xử lý đơn](#kịch-bản-2-mua-hàng-và-xử-lý-đơn)
       - [Hướng mở rộng](#hướng-mở-rộng)
-- [IV. AI Disclosure](#iv-ai-disclosure)
-- [V. Tài liệu tham khảo](#v-tài-liệu-tham-khảo)
+- [IV. Tài liệu tham khảo](#v-tài-liệu-tham-khảo)
 
 ## I. Thông tin chung
 
@@ -365,23 +364,7 @@ Toàn bộ test đã chạy: **27 test, 9 pass, 18 fail**.
 
 Phần này chưa triển khai. Có thể dùng lại luồng checkout và chạy với bảng dữ liệu coupon: `SAVE10` hợp lệ, mã hết hạn, mã không tồn tại, `BIGBUY` dưới ngưỡng, dùng `SAVE10` lần hai và checkout khi chưa đăng nhập. Mỗi dòng dữ liệu là một test, giúp kiểm tra nhiều trường hợp mà không lặp code.
 
-# IV. AI Disclosure
-
-Sử dụng Muse Spark 1.3 để tra cứu các từ khoá (đã tìm hiểu và xác, nhcũng như thủ công), và giải thích về quy trình test tự động.
-
-Sử dụng Muse Spark 1.3 để kiểm, trcũng như góp ý, và gợi ý hướng mở rộng kiểm thử coupon. Đã đối chiếu với các FR trong `README.md`.
-
-Sử dụng Gemini Pro để tìm hiểu các phần Learning curve, AI capabilities và Community của các phần mềm kiểm thử.
-
-Đã cross-check các thông tin về các phần mềm trên bằng Claude Sonnet 5 Medium.
-
-Đã fact check thủ công các criteria, chỉnh sửa phần ngôn ngữ hỗ trợ.
-
-Có sử dụng GitHub Copilot để đánh giá mức độ phù hợp của EShop đối với các phần mềm.
-
-Phần lớn test case cũng được viết dưới sự hỗ trợ và đánh giá của AI agent. Các thành viên đã rà soát, cũng như sửa các lỗi và bất đồng nhất trong các test nói trên.
-
-# V. Tài liệu tham khảo
+# IV. Tài liệu tham khảo
 
 [1]. [freeCodeCamp.org & Beau Carnes - "Software Testing Course – Playwright, E2E, and AI Agents"](https://youtu.be/jydYq7oAtD8)
 [2]. [Playwright API documentation](https://playwright.dev/docs/api/class-playwright)

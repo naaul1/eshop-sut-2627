@@ -57,7 +57,7 @@ Web Automation Testing là kiểm thử tự động giao diện và luồng ngh
 Web Automation Testing nên được thực hiện khi:
 - regression test, smoke test
 - cần chạy nhiều môi trường/trình duyệt
-- chạy, nhữcũng như test tốn công và nhập dữ liệu)
+- chạy những test lặp lại, cũng như test tốn công và nhập dữ liệu
 - cần phối hợp với CI  
 
 và không nên thực hiện khi:
@@ -154,7 +154,7 @@ npm init playwright@latest
 ```
 
 Wizard hỏi lần lượt: 
-- Fùng TypeScript hay JavaScript
+- Dùng TypeScript hay JavaScript
 - Đặt test trong thư mục nào (mặc định `tests/`)
 - Có thêm GitHub Actions workflow hay không
 - Và có cài nhân trình duyệt ngay hay không (nếu chọn có, wizard sẽ tải Chromium, Firefox và Webkit). 
@@ -314,7 +314,7 @@ Mã finding: `FIND-A1`...`A3` cho auth, `B1`...`B7` cho cart, `C1`...`C5` cho ch
 
 Các test auth, checkout và `sc01` dùng user riêng khi cần đăng nhập; `sc02` dùng user riêng cùng phiên admin seed, chỉ đăng nhập với mật khẩu đúng.
 
-Ngoài bảng, `sc01` fail ở 4 nhóm lỗi giao diện/tìm kiếm, `sc02` fail ở 6 nhóm lỗi coupon, tổng tiền, hủy đơn và doanh thu. Hai scenario này được trình bày kĩ hơn ở phần dưới.
+Ngoài bảng, `sc01` fail ở 4 nhóm lỗi giao diện/tìm kiếm và ở tính năng add to cart từ màn hình chi tiết sản phẩm, `sc02` fail ở 6 nhóm lỗi coupon, tổng tiền, hủy đơn và doanh thu. Hai scenario này được trình bày kĩ hơn ở phần dưới.
 
 Toàn bộ test đã chạy: **27 test, 9 pass, 18 fail**.
 
@@ -331,11 +331,12 @@ Toàn bộ test đã chạy: **27 test, 9 pass, 18 fail**.
 6. Mở chi tiết sản phẩm đầu tiên, thêm 1 sản phẩm vào giỏ (bấm hai lần theo hành vi SUT).
 7. Mở giỏ bằng link trên header; kiểm tra đúng 1 dòng, đúng tên, giá, số lượng và thành tiền.
 
-**Kết quả:** Fail, nhưng test chạy hết flow. Các lỗi:
+**Kết quả:** Fail, test không chạy hết flow. Các lỗi:
 - Trang chủ có 2 tiêu đề chính (`h1`) thay vì 1.
 - Ảnh sản phẩm không có mô tả.
 - Giá dùng `VND` thay vì `₫`.
 - Ô tìm kiếm hiển thị HTML thay vì văn bản thường, nên thẻ `<img>` được render.
+- Sản phẩm không được thêm vào giỏ hàng sau khi nhấn nút Thêm vào giỏ hàng ở màn hình Chi tiết sản phẩm.
 
 ##### Kịch bản #2: Mua hàng và xử lý đơn
 

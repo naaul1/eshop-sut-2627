@@ -19,7 +19,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   /* Timeout for each test */
   timeout: 60_000,                 // per test
-  expect: { timeout: 5_000 },
+  expect: { timeout: 3_000 },
   /* Retry on CI only */
   retries: 0, //process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */

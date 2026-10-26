@@ -10,7 +10,8 @@
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed --workers=1",
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "wdio": "wdio run ./wdio.conf.ts"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,13 @@
   "homepage": "https://github.com/naaul1/eshop-sut-2627#readme",
   "devDependencies": {
     "@playwright/test": "^1.64.1",
-    "@types/node": "^26.6.5"
+    "@types/node": "^26.6.5",
+    "@wdio/cli": "^10.1.0",
+    "@wdio/globals": "^10.1.0",
+    "@wdio/local-runner": "^10.1.0",
+    "@wdio/mocha-framework": "^10.1.0",
+    "@wdio/spec-reporter": "^10.1.0",
+    "expect-webdriverio": "^8.0.0"
   },
   "dependencies": {
     "dotenv": "^17.4.2"

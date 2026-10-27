@@ -27,6 +27,7 @@
       - [Coverage E2E](#coverage-e2e)
       - [Kịch bản #1: Xem sản phẩm và thêm vào giỏ](#kịch-bản-1-xem-sản-phẩm-và-thêm-vào-giỏ)
       - [Kịch bản #2: Mua hàng và xử lý đơn](#kịch-bản-2-mua-hàng-và-xử-lý-đơn)
+      - [Kịch bản #3: Ma trận coupon](#kịch-bản-3-ma-trận-coupon)
       - [Hướng mở rộng](#hướng-mở-rộng)
   - [2. WebdriverIO](#2-webdriverio)
     - [Giới thiệu](#giới-thiệu-1)
@@ -326,6 +327,8 @@ Ngoài bảng trên, `sc01` fail ở 4 nhóm lỗi giao diện/tìm kiếm và �
 
 Toàn bộ test đã chạy: **27 test, 9 pass, 18 fail**.
 
+Sau lần tổng hợp trên, Scenario 3 được bổ sung thành spec Playwright riêng gồm 6 test. Kết quả chạy spec này được ghi riêng bên dưới, không cộng vào thống kê 27 test ở trên.
+
 ##### Kịch bản #1: Xem sản phẩm và thêm vào giỏ
 
 **Mục đích:** kiểm tra luồng cơ bản của người mua trên SUT thật: đăng nhập, xem catalog, tìm kiếm, xem chi tiết và thêm vào giỏ.
@@ -369,9 +372,25 @@ Toàn bộ test đã chạy: **27 test, 9 pass, 18 fail**.
 - Đơn `Đã hủy` vẫn có nút `Đánh dấu Đã giao` và chuyển được sang `Đã giao`.
 - Doanh thu dashboard tăng 2 ₫ thay vì 32.400.000 ₫.
 
+##### Kịch bản #3: Ma trận coupon
+
+**Mục đích:** kiểm tra các điều kiện coupon theo FR-09 và xác minh người chưa đăng nhập không thể truy cập bước checkout.
+
+**Chuẩn bị:** mỗi test có user riêng được đăng ký và đăng nhập qua API, sau đó seed JWT vào trình duyệt. Các case coupon tạo giỏ bằng cách thêm iPhone 15 Pro Max (30.000.000 ₫) và AirPods Pro 2 (6.000.000 ₫) qua giao diện. Case giới hạn lượt sử dụng giữ cùng user, hoàn tất checkout lần đầu rồi áp mã lại.
+
+**Các bước và kết quả:**
+1. Áp `SAVE10` trên giỏ 36.000.000 ₫; kỳ vọng tổng còn 32.400.000 ₫. **Fail:** UI hiển thị 360.000.000 ₫.
+2. Áp mã `EXPIRED`; kiểm tra thông báo hết hạn. **Pass.**
+3. Áp mã không tồn tại; kiểm tra thông báo bị từ chối. **Pass.**
+4. Chỉnh tổng đơn thành 400.000 ₫ rồi áp `BIGBUY`; kiểm tra thông báo chưa đạt ngưỡng 500.000 ₫. **Pass.**
+5. Hoàn tất checkout với `SAVE10`, tạo giỏ mới cho cùng user rồi áp mã lần hai; kiểm tra bị từ chối do hết lượt. **Pass.**
+6. Truy cập `/checkout` khi chưa đăng nhập; kỳ vọng chuyển về `/login`. **Fail:** trang vẫn ở `/checkout`.
+
+**Kết quả chạy:** 6 test, 4 pass và 2 fail. Do Chromium đi kèm Playwright không khởi chạy được trên máy kiểm thử (`spawn UNKNOWN`), spec được chạy bằng Chrome cài trên máy qua cấu hình tạm; hai lỗi nghiệp vụ trên vẫn được giữ fail. Cấu hình tạm không thuộc thay đổi của dự án.
+
 ##### Hướng mở rộng
 
-Phần này chưa triển khai. Có thể dùng lại luồng checkout và chạy với bảng dữ liệu coupon: `SAVE10` hợp lệ, mã hết hạn, mã không tồn tại, `BIGBUY` dưới ngưỡng, dùng `SAVE10` lần hai và checkout khi chưa đăng nhập. Mỗi dòng dữ liệu là một test, giúp kiểm tra nhiều trường hợp mà không lặp code.
+Có thể bổ sung trường hợp tổng đơn đúng bằng ngưỡng tối thiểu và coupon bị vô hiệu hóa.
 
 ### 2. WebdriverIO
 
@@ -493,3 +512,5 @@ Có thể tách checkout, coupon và order lifecycle thành page object/helper d
 
 [1]. [freeCodeCamp.org & Beau Carnes - "Software Testing Course – Playwright, E2E, and AI Agents"](https://youtu.be/jydYq7oAtD8)
 [2]. [Playwright API documentation](https://playwright.dev/docs/api/class-playwright)
+[3]. [WebdriverIO v10 API documentation](https://webdriver.io/docs/api/)
+[4]. [expect-webdriverio matchers documentation](https://webdriver.io/docs/api/expect-webdriverio/)

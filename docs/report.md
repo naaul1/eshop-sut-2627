@@ -36,6 +36,7 @@
       - [Chuẩn bị](#chuẩn-bị-1)
       - [Coverage E2E](#coverage-e2e-1)
       - [Kịch bản #2: Mua hàng và xử lý đơn](#kịch-bản-2-mua-hàng-và-xử-lý-đơn-1)
+      - [Kịch bản #3: Ma trận coupon](#kịch-bản-3-ma-trận-coupon)
       - [Hướng mở rộng](#hướng-mở-rộng-1)
 - [IV. Tài liệu tham khảo](#v-tài-liệu-tham-khảo)
 
@@ -379,7 +380,7 @@ Phần này chưa triển khai. Có thể dùng lại luồng checkout và chạ
 
 WebdriverIO là framework tự động hóa kiểm thử end-to-end cho ứng dụng web, mobile và desktop. Repo sử dụng WebdriverIO 10 cùng Mocha và `expect-webdriverio` để điều khiển Chrome, kiểm tra giao diện người dùng và xác minh kết quả từ API của EShop.
 
-Các file kiểm thử nằm trong `test/specs/` và tuân theo mẫu `*.e2e.ts`. WebdriverIO được dùng để viết lại Scenario 2 của Playwright, gồm checkout, coupon, xử lý trạng thái order và kiểm tra doanh thu.
+Các file kiểm thử nằm trong `test/specs/` và tuân theo mẫu `*.e2e.ts`. WebdriverIO triển khai Scenario 2 về checkout và xử lý đơn, cùng Scenario 3 về ma trận kiểm tra coupon.
 
 #### Cách cài đặt
 
@@ -467,8 +468,9 @@ it('Login (happy path)', async () => {
 | Nhóm | Spec | Nội dung | Kết quả |
 |---|---|---|---|
 | Scenario | `test/specs/sc02.e2e.ts` | Checkout, coupon, order lifecycle và revenue | Fail khi SUT vi phạm đặc tả |
+| Scenario | `test/specs/sc03.e2e.ts` | Ma trận coupon và chặn checkout khi chưa đăng nhập (6 test) | 4 pass, 2 fail; hai lỗi SUT |
 
-Assertion cứng dừng test tại điều kiện bắt buộc. Các kiểm tra tương đương `expect.soft` được gom bằng `softExpect` và báo toàn bộ lỗi khi test kết thúc.
+Scenario 2 gom các kiểm tra mềm bằng `softExpect`; Scenario 3 dùng assertion cứng để mỗi test báo kết quả độc lập.
 
 ##### Kịch bản #2: Mua hàng và xử lý đơn
 
@@ -485,11 +487,29 @@ Assertion cứng dừng test tại điều kiện bắt buộc. Các kiểm tra 
 
 **Kết quả:** test giữ trạng thái fail khi phát hiện lỗi SUT và gom các lỗi soft assertion để đối chiếu với Playwright.
 
+##### Kịch bản #3: Ma trận coupon
+
+**Mục đích:** kiểm tra các điều kiện áp dụng coupon theo FR-09 và xác minh route checkout yêu cầu đăng nhập.
+
+**Chuẩn bị:** mỗi case cần đăng nhập tạo một user riêng qua API, đăng nhập trên giao diện, thêm iPhone 15 Pro Max (30.000.000 ₫) và AirPods Pro 2 (6.000.000 ₫) vào giỏ, rồi mở checkout. Riêng case `BIGBUY`, tổng đơn được chỉnh thành 400.000 ₫ để kiểm tra ngưỡng tối thiểu 500.000 ₫. Case sử dụng lại `SAVE10` dùng cùng một user cho cả hai lần áp mã và hoàn tất checkout lần đầu để ghi nhận lượt dùng.
+
+**Các bước và kết quả:**
+1. Áp `SAVE10` cho giỏ 36.000.000 ₫; kỳ vọng tổng sau giảm 10% là 32.400.000 ₫. **Fail:** giao diện hiển thị 360.000.000 ₫.
+2. Áp mã `EXPIRED`; kiểm tra thông báo mã hết hạn. **Pass.**
+3. Áp mã không tồn tại; kiểm tra thông báo bị từ chối. **Pass.**
+4. Áp `BIGBUY` với tổng 400.000 ₫; kiểm tra thông báo chưa đạt ngưỡng. **Pass.**
+5. Hoàn tất checkout với `SAVE10`, sau đó áp lại mã bằng cùng user; kiểm tra lượt dùng vượt giới hạn bị từ chối. **Pass.**
+6. Xóa token và truy cập trực tiếp `/checkout`; kỳ vọng chuyển về `/login`. **Fail:** trình duyệt vẫn ở `/checkout`.
+
+**Kết quả chạy:** 6 test trên Chrome 155, gồm 4 pass và 2 fail. Hai test fail tương ứng với lỗi tính giảm giá `SAVE10` và thiếu kiểm soát đăng nhập ở route checkout. Kết quả được giữ fail để phản ánh hành vi SUT, không bỏ qua hoặc nới lỏng assertion.
+
 ##### Hướng mở rộng
 
-Có thể tách checkout, coupon và order lifecycle thành page object/helper dùng chung; đồng thời chạy thêm dữ liệu mã hợp lệ, mã hết hạn, mã không tồn tại và mã vượt giới hạn sử dụng.
+Có thể tách checkout và coupon thành page object/helper dùng chung; bổ sung kiểm tra trường hợp tổng đơn đúng bằng ngưỡng tối thiểu và coupon bị vô hiệu hóa.
 
 # IV. Tài liệu tham khảo
 
 [1]. [freeCodeCamp.org & Beau Carnes - "Software Testing Course – Playwright, E2E, and AI Agents"](https://youtu.be/jydYq7oAtD8)
 [2]. [Playwright API documentation](https://playwright.dev/docs/api/class-playwright)
+[3]. [WebdriverIO v10 API documentation](https://webdriver.io/docs/api/)
+[4]. [expect-webdriverio matchers documentation](https://webdriver.io/docs/api/expect-webdriverio/)

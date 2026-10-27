@@ -36,7 +36,7 @@ export default defineConfig({
     trace: 'retain-on-failure',    // evidence for flake investigations
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    launchOptions: { slowMo: 3000 },//umber(process.env.SLOWMO || 0) },
+    launchOptions: { slowMo: 100 },//umber(process.env.SLOWMO || 0) },
   },
 
   /* Configure projects for major browsers */

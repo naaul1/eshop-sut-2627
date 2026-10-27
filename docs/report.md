@@ -28,7 +28,6 @@
       - [Kịch bản #1: Xem sản phẩm và thêm vào giỏ](#kịch-bản-1-xem-sản-phẩm-và-thêm-vào-giỏ)
       - [Kịch bản #2: Mua hàng và xử lý đơn](#kịch-bản-2-mua-hàng-và-xử-lý-đơn)
       - [Kịch bản #3: Ma trận coupon](#kịch-bản-3-ma-trận-coupon)
-      - [Hướng mở rộng](#hướng-mở-rộng)
   - [2. WebdriverIO](#2-webdriverio)
     - [Giới thiệu](#giới-thiệu-1)
     - [Cách cài đặt](#cách-cài-đặt-1)
@@ -38,7 +37,6 @@
       - [Coverage E2E](#coverage-e2e-1)
       - [Kịch bản #2: Mua hàng và xử lý đơn](#kịch-bản-2-mua-hàng-và-xử-lý-đơn-1)
       - [Kịch bản #3: Ma trận coupon](#kịch-bản-3-ma-trận-coupon)
-      - [Hướng mở rộng](#hướng-mở-rộng-1)
 - [IV. Tài liệu tham khảo](#v-tài-liệu-tham-khảo)
 
 ## I. Thông tin chung
@@ -380,24 +378,22 @@ Sau lần tổng hợp trên, Scenario 3 được bổ sung thành spec Playwrig
 **Chuẩn bị:** mỗi test có user riêng được đăng ký và đăng nhập qua API, sau đó seed JWT vào trình duyệt. Các case coupon tạo giỏ bằng cách thêm iPhone 15 Pro Max (30.000.000 ₫) và AirPods Pro 2 (6.000.000 ₫) qua giao diện. Case giới hạn lượt sử dụng giữ cùng user, hoàn tất checkout lần đầu rồi áp mã lại.
 
 **Các bước và kết quả:**
-1. Áp `SAVE10` trên giỏ 36.000.000 ₫; kỳ vọng tổng còn 32.400.000 ₫. **Fail:** UI hiển thị 360.000.000 ₫.
+1. Áp `SAVE10` trên giỏ 36.000.000 ₫; kỳ vọng tổng còn 32.400.000 ₫. 
 2. Áp mã `EXPIRED`; kiểm tra thông báo hết hạn. **Pass.**
 3. Áp mã không tồn tại; kiểm tra thông báo bị từ chối. **Pass.**
 4. Chỉnh tổng đơn thành 400.000 ₫ rồi áp `BIGBUY`; kiểm tra thông báo chưa đạt ngưỡng 500.000 ₫. **Pass.**
 5. Hoàn tất checkout với `SAVE10`, tạo giỏ mới cho cùng user rồi áp mã lần hai; kiểm tra bị từ chối do hết lượt. **Pass.**
-6. Truy cập `/checkout` khi chưa đăng nhập; kỳ vọng chuyển về `/login`. **Fail:** trang vẫn ở `/checkout`.
+6. Truy cập `/checkout` khi chưa đăng nhập; kỳ vọng chuyển về `/login`.
 
-**Kết quả chạy:** 6 test, 4 pass và 2 fail. Do Chromium đi kèm Playwright không khởi chạy được trên máy kiểm thử (`spawn UNKNOWN`), spec được chạy bằng Chrome cài trên máy qua cấu hình tạm; hai lỗi nghiệp vụ trên vẫn được giữ fail. Cấu hình tạm không thuộc thay đổi của dự án.
-
-##### Hướng mở rộng
-
-Có thể bổ sung trường hợp tổng đơn đúng bằng ngưỡng tối thiểu và coupon bị vô hiệu hóa.
+**Kết quả chạy:** 6 test, 4 pass và 2 fail. Các lỗi
+- **1.** UI hiển thị 360.000.000 ₫ thay vì 32.400.000.
+- **6.** trang vẫn ở `/checkout`, không bị đẩy về login.
 
 ### 2. WebdriverIO
 
 #### Giới thiệu
 
-WebdriverIO là framework tự động hóa kiểm thử end-to-end cho ứng dụng web, mobile và desktop. Repo sử dụng WebdriverIO 10 cùng Mocha và `expect-webdriverio` để điều khiển Chrome, kiểm tra giao diện người dùng và xác minh kết quả từ API của EShop.
+WebdriverIO là thư viện tự động hóa kiểm thử end-to-end cho ứng dụng web, mobile và desktop. Repo sử dụng WebdriverIO 10 cùng framework Mocha và `expect-webdriverio` để điều khiển Chrome, kiểm tra giao diện người dùng và xác minh kết quả từ API của EShop.
 
 Các file kiểm thử nằm trong `test/specs/` và tuân theo mẫu `*.e2e.ts`. WebdriverIO triển khai Scenario 2 về checkout và xử lý đơn, cùng Scenario 3 về ma trận kiểm tra coupon.
 
@@ -425,10 +421,10 @@ cd ../frontend-admin && npm install
 cd backend && node server.js
 
 # Terminal 2
-cd frontend-web && npm run dev -- --port 5173
+cd frontend-web && npm run dev
 
 # Terminal 3
-cd frontend-admin && npm run dev -- --port 5174
+cd frontend-admin && npm run dev
 ```
 
 **Chạy test**
@@ -521,10 +517,6 @@ Scenario 2 gom các kiểm tra mềm bằng `softExpect`; Scenario 3 dùng asser
 6. Xóa token và truy cập trực tiếp `/checkout`; kỳ vọng chuyển về `/login`. **Fail:** trình duyệt vẫn ở `/checkout`.
 
 **Kết quả chạy:** 6 test trên Chrome 155, gồm 4 pass và 2 fail. Hai test fail tương ứng với lỗi tính giảm giá `SAVE10` và thiếu kiểm soát đăng nhập ở route checkout. Kết quả được giữ fail để phản ánh hành vi SUT, không bỏ qua hoặc nới lỏng assertion.
-
-##### Hướng mở rộng
-
-Có thể tách checkout và coupon thành page object/helper dùng chung; bổ sung kiểm tra trường hợp tổng đơn đúng bằng ngưỡng tối thiểu và coupon bị vô hiệu hóa.
 
 # IV. Tài liệu tham khảo
 

@@ -28,6 +28,15 @@
       - [Kịch bản #1: Xem sản phẩm và thêm vào giỏ](#kịch-bản-1-xem-sản-phẩm-và-thêm-vào-giỏ)
       - [Kịch bản #2: Mua hàng và xử lý đơn](#kịch-bản-2-mua-hàng-và-xử-lý-đơn)
       - [Hướng mở rộng](#hướng-mở-rộng)
+  - [2. WebdriverIO](#2-webdriverio)
+    - [Giới thiệu](#giới-thiệu-1)
+    - [Cách cài đặt](#cách-cài-đặt-1)
+    - [Config và API quan trọng](#config-và-api-quan-trọng-1)
+    - [Kịch bản demo](#kịch-bản-demo-1)
+      - [Chuẩn bị](#chuẩn-bị-1)
+      - [Coverage E2E](#coverage-e2e-1)
+      - [Kịch bản #2: Mua hàng và xử lý đơn](#kịch-bản-2-mua-hàng-và-xử-lý-đơn-1)
+      - [Hướng mở rộng](#hướng-mở-rộng-1)
 - [IV. Tài liệu tham khảo](#v-tài-liệu-tham-khảo)
 
 ## I. Thông tin chung
@@ -363,6 +372,122 @@ Toàn bộ test đã chạy: **27 test, 9 pass, 18 fail**.
 ##### Hướng mở rộng
 
 Phần này chưa triển khai. Có thể dùng lại luồng checkout và chạy với bảng dữ liệu coupon: `SAVE10` hợp lệ, mã hết hạn, mã không tồn tại, `BIGBUY` dưới ngưỡng, dùng `SAVE10` lần hai và checkout khi chưa đăng nhập. Mỗi dòng dữ liệu là một test, giúp kiểm tra nhiều trường hợp mà không lặp code.
+
+### 2. WebdriverIO
+
+#### Giới thiệu
+
+WebdriverIO là framework tự động hóa kiểm thử end-to-end cho ứng dụng web, mobile và desktop. Repo sử dụng WebdriverIO 10 cùng Mocha và `expect-webdriverio` để điều khiển Chrome, kiểm tra giao diện người dùng và xác minh kết quả từ API của EShop.
+
+Các file kiểm thử nằm trong `test/specs/` và tuân theo mẫu `*.e2e.ts`. WebdriverIO được dùng để viết lại Scenario 2 của Playwright, gồm checkout, coupon, xử lý trạng thái order và kiểm tra doanh thu.
+
+#### Cách cài đặt
+
+**Yêu cầu môi trường**
+
+- Node.js 20 trở lên và npm.
+- Chrome hoặc Chromium tương thích với ChromeDriver.
+- Backend, frontend-web và frontend-admin chạy lần lượt tại port `3000`, `5173`, `5174`.
+
+**Cài đặt**
+
+```bash
+npm install
+cd backend && npm install
+cd ../frontend-web && npm install
+cd ../frontend-admin && npm install
+```
+
+**Chạy SUT**
+
+```bash
+# Terminal 1
+cd backend && node server.js
+
+# Terminal 2
+cd frontend-web && npm run dev -- --port 5173
+
+# Terminal 3
+cd frontend-admin && npm run dev -- --port 5174
+```
+
+**Chạy test**
+
+```bash
+npm run wdio
+npx wdio run ./wdio.conf.ts --spec ./test/specs/sc02.e2e.ts
+```
+
+#### Config và API quan trọng
+
+| Config/API | Giá trị hoặc cách dùng | Tác dụng |
+|---|---|---|
+| `runner` | `local` | Chạy test trên máy hiện tại. |
+| `specs` | `./test/specs/**/*.e2e.ts` | Thu thập các spec WebdriverIO. |
+| `capabilities` | `browserName: 'chrome'` | Chạy test trên Chrome. |
+| `framework` | `mocha` | Cung cấp `describe` và `it`. |
+| `browser`, `$`, `$$` | API điều khiển session và element | Điều hướng, tìm và thao tác với UI. |
+| `expect-webdriverio` | `toBeDisplayed`, `toHaveText`, `toHaveUrl` | Assertion có auto-wait. |
+| `browser.execute` | Chạy JavaScript trong trang | Intercept `XMLHttpRequest` và kiểm tra local state. |
+| `fetch` | Gọi API trực tiếp | Tạo user và kiểm tra order/backend. |
+| `softExpect` | Helper tích lũy lỗi | Mô phỏng hành vi `expect.soft` của Playwright. |
+
+**Ví dụ cách dùng**
+
+```ts
+import { $, browser } from '@wdio/globals';
+import { expect } from 'expect-webdriverio';
+
+it('Login (happy path)', async () => {
+  await browser.url('http://localhost:5173/login');
+  await $('input[type="text"]').setValue('user@example.com');
+  await $('input[type="password"]').setValue('Test1234!');
+  await $('button=Sign In').click();
+  await expect($('a[href="/profile"]')).toBeDisplayed();
+});
+```
+
+**Cấu trúc folder**
+
+- `test/specs`: các spec WebdriverIO.
+- `test/pageobjects`: page object mẫu.
+- `wdio.conf.ts`: cấu hình runner, Chrome, Mocha và reporter.
+- `tsconfig.e2e.json`: cấu hình TypeScript cho test E2E.
+
+#### Kịch bản demo
+
+##### Chuẩn bị
+
+- Khởi động ba process tại port `3000`, `5173`, `5174`.
+- Test tạo user riêng qua API.
+- Admin sử dụng tài khoản seed `admin@eshop.com`.
+
+##### Coverage E2E
+
+| Nhóm | Spec | Nội dung | Kết quả |
+|---|---|---|---|
+| Scenario | `test/specs/sc02.e2e.ts` | Checkout, coupon, order lifecycle và revenue | Fail khi SUT vi phạm đặc tả |
+
+Assertion cứng dừng test tại điều kiện bắt buộc. Các kiểm tra tương đương `expect.soft` được gom bằng `softExpect` và báo toàn bộ lỗi khi test kết thúc.
+
+##### Kịch bản #2: Mua hàng và xử lý đơn
+
+**Mục đích:** chạy lại Scenario 2 của Playwright bằng WebdriverIO với cùng điều kiện kiểm tra.
+
+**Các bước:**
+1. User đăng nhập, thêm hai sản phẩm vào giỏ và mở checkout.
+2. Áp coupon `SAVE10`; kiểm tra tổng tiền.
+3. Intercept checkout để gửi `total_amount: 1`; kiểm tra client payload và tổng tiền backend.
+4. Admin xác nhận, giao đơn; user kiểm tra trạng thái `Đang giao`.
+5. User hủy đơn; kiểm tra lỗi và trạng thái không đổi.
+6. Admin kiểm tra trạng thái hủy và nút chuyển delivered.
+7. Kiểm tra doanh thu dashboard.
+
+**Kết quả:** test giữ trạng thái fail khi phát hiện lỗi SUT và gom các lỗi soft assertion để đối chiếu với Playwright.
+
+##### Hướng mở rộng
+
+Có thể tách checkout, coupon và order lifecycle thành page object/helper dùng chung; đồng thời chạy thêm dữ liệu mã hợp lệ, mã hết hạn, mã không tồn tại và mã vượt giới hạn sử dụng.
 
 # IV. Tài liệu tham khảo
 

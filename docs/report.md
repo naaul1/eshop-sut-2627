@@ -520,7 +520,7 @@ Scenario 2 gom các kiểm tra mềm bằng `softExpect`; Scenario 3 dùng asser
 
 # IV. Tài liệu tham khảo
 
-[1]. [freeCodeCamp.org & Beau Carnes - "Software Testing Course – Playwright, E2E, and AI Agents"](https://youtu.be/jydYq7oAtD8)
-[2]. [Playwright API documentation](https://playwright.dev/docs/api/class-playwright)
-[3]. [WebdriverIO v10 API documentation](https://webdriver.io/docs/api/)
+[1]. [freeCodeCamp.org & Beau Carnes - "Software Testing Course – Playwright, E2E, and AI Agents"](https://youtu.be/jydYq7oAtD8)\
+[2]. [Playwright API documentation](https://playwright.dev/docs/api/class-playwright)\
+[3]. [WebdriverIO v10 API documentation](https://webdriver.io/docs/api/)\
 [4]. [expect-webdriverio matchers documentation](https://webdriver.io/docs/api/expect-webdriverio/)

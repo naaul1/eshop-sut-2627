@@ -87,7 +87,6 @@ for (const couponCase of couponCases) {
     }
 
     await expect(page.locator('p').filter({ hasText: couponCase.expectedMessage })).toBeVisible();
-    await expect.
   });
 }
 

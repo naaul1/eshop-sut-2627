@@ -6,6 +6,12 @@
     "expectedTotal": 32400000
     },
     {
+    "name": "BIGBUY reduces an ineligible order by 50000",
+    "code": "BIGBUY",
+    "expectedMessage": "Áp dụng thành công",
+    "expectedTotal": 35950000
+    },
+    {
     "name": "EXPIRED is rejected",
     "code": "EXPIRED",
     "expectedMessage": "Mã giảm giá đã hết hạn"

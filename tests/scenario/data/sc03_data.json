@@ -1,0 +1,18 @@
+[
+    {
+    "name": "SAVE10 reduces an eligible order by 10%",
+    "code": "SAVE10",
+    "expectedMessage": "Áp dụng thành công",
+    "expectedTotal": 32400000
+    },
+    {
+    "name": "EXPIRED is rejected",
+    "code": "EXPIRED",
+    "expectedMessage": "Mã giảm giá đã hết hạn"
+    },
+    {
+    "name": "an unknown coupon is rejected",
+    "code": "NO_SUCH_COUPON",
+    "expectedMessage": "Mã giảm giá không tồn tại"
+    }
+]

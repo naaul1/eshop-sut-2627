@@ -5,7 +5,7 @@ import { HomePage } from '../pages/HomePage';
 
 const PASSWORD = 'Test1234!';
 const PRODUCTS = ['iPhone 15 Pro Max', 'Tai nghe AirPods Pro 2'];
-const EXPECTED_SAVE10_TOTAL = 32_400_000;
+//const EXPECTED_SAVE10_TOTAL = 32_400_000;
 
 test.beforeEach(async ({ page }) => {
   const delay = Number(process.env.THROTTLE_MS || 0);
@@ -43,6 +43,7 @@ async function applyCoupon(page: Page, code: string): Promise<void> {
   await page.getByRole('button', { name: 'Áp dụng' }).click();
 }
 
+/*
 const couponCases = [
   {
     name: 'SAVE10 reduces an eligible order by 10%',
@@ -61,6 +62,14 @@ const couponCases = [
     expectedMessage: /Mã giảm giá không tồn tại/,
   },
 ] as const;
+*/
+const data = require('./data/sc03_data.json');
+const couponCases = data as ReadonlyArray<{
+  name: string;
+  code: string;
+  expectedMessage: string;
+  expectedTotal?: number;
+}>;
 
 for (const couponCase of couponCases) {
   test(`Scenario 3: ${couponCase.name}`, async ({ page, request }) => {
@@ -78,6 +87,7 @@ for (const couponCase of couponCases) {
     }
 
     await expect(page.locator('p').filter({ hasText: couponCase.expectedMessage })).toBeVisible();
+    await expect.
   });
 }
 

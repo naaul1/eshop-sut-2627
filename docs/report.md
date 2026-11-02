@@ -99,10 +99,13 @@ và không nên thực hiện khi:
 1. Phân tích cái gì cần test tự động
 Chọn việc lặp lại nhiều, ít thay đổi (Login, Search, Cart, Checkout, Admin CRUD, ...). Chức năng mới bắt đầu làm lần đầu thì test tay trước.
 2. Chọn tool + framework: theo tiêu chí Proposal: phí, learning curve, EShop Fit, AI, community.
-3. Thiết kế framework: POM + cấu trúc tests/, quản lý data, quản lý secret/JWT.
-4. Viết script: Viết từng bước: mở trang -> tìm nút bằng Locator -> bấm/nhập -> chờ trang load -> kiểm tra đúng sai bằng assertion.
-5. Chạy script và bảo cáo: Chạy thử local để sửa lỗi, rồi chuyển sang chạy ngầm, chạy nhiều trình duyệt song song. Fail thì xem screenshot và log để biết và sửa.
-6. Bảo trì: Giao diện đổi thì phải sửa lại test, không cần viết mới mà thông qua sửa locator và POM.
+3. Thiết kế kịch bản test: Viết test case rõ ràng dựa vào yêu cầu, có thể áp dụng các kỹ thuật domain testing, boundary value analysis,...
+4. Thiết kế framework: POM + cấu trúc tests/, quản lý data, quản lý secret/JWT.
+5. Viết script: Viết từng bước: mở trang -> tìm nút bằng Locator -> bấm/nhập -> chờ trang load -> kiểm tra đúng sai bằng assertion.
+6. Thực thi test: Chạy script local để sửa lỗi, rồi chuyển sang chạy ngầm, chạy nhiều trình duyệt song song. Fail thì xem screenshot và log để biết và sửa.
+7. Báo cáo: Xem lại log, ảnh chụp, video, trace khi test fail -> Xác định và phân loại lỗi -> Báo cáo bug kèm bằng chứng và cách tái hiện -> Xuất báo cáo tổng hợp: tỷ lệ pass/fail, thời gian chạy, xu hướng.
+8. Tích hợp CI/CD: Cho test chạy tự động khi có pull request, khi merge hoặc theo lịch; Kết quả fail nên chặn deploy nếu là luồng quan trọng. 
+9. Bảo trì: Giao diện đổi thì phải sửa lại test, không cần viết mới mà thông qua sửa locator và POM.
 
 ### 4. Khảo sát các công cụ
 

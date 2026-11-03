@@ -50,6 +50,8 @@ Thành viên thực hiện:**
   - 23120064: Nguyễn Thiện Nhân	
   - 23120066: Võ Thiện Nhân
 
+GitHub Repo: https://github.com/naaul1/eshop-sut-2627
+
 ### Giảng viên hướng dẫn
 
 Giảng viên lý thuyết: Lâm Quang Vũ

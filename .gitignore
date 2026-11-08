@@ -8,6 +8,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# DB
+*.sqlite
+
 # Build output
 dist/
 dist-ssr/

@@ -51,25 +51,7 @@ Công cụ: OpenCode (DeepSeek V4.1 Flash).
 Prompt đã dùng:
 
 ```text
-Bạn là tester GUI. SUT là EShop Admin, React chạy tại http://localhost:5174.
-Phạm vi: Dashboard, Danh mục, Mã Giảm Giá, Đơn hàng.
-Hãy tạo 42 mục checklist GUI, chia theo 4 nhóm:
-- IA-01: General UI standards
-- IA-02: Forms
-- IA-03: Navigation
-- IA-04: Feedback / state
-
-Mỗi mục gồm: ID, IA, màn hình, điều cần kiểm tra, kết quả mong đợi, cách kiểm tra.
-Yêu cầu:
-- Đúng 42 mục, không trùng lặp.
-- Câu ngắn, kiểm tra được, có Passed/Failed rõ ràng.
-- Dashboard: 8 mục. Danh mục: 10 mục. Mã Giảm Giá: 12 mục. Đơn hàng: 12 mục.
-- Có mục về form, label, dấu *, lỗi trên nút submit.
-- Có mục về bảng, empty state, loading, lỗi mạng.
-- Có mục về navigation, tab active, keyboard, tab order.
-- Có mục về trạng thái đơn hàng và quy tắc chuyển trạng thái.
-- Có mục về accessibility, contrast, zoom, responsive, dark mode, RTL.
-- Không bịa FR. Nếu không chắc, ghi "cần kiểm tra".
+Với phạm vi: Dashboard, Danh mục, Mã Giảm Giá, Đơn hàng. Hãy tạo 42 mục checklist GUI, chia theo 4 nhóm như trong `README.md`. Mỗi mục gồm: ID, IA, màn hình, điều cần kiểm tra, kết quả mong đợi, cách kiểm tra. Không bịa FR. Nếu không chắc, hãy xác nhận lại với tôi.
 ```
 
 Bộ nháp AI sinh có các mục chung chung và một số mục ngoài phạm vi.
@@ -149,3 +131,107 @@ Trạng thái hiện tại:
 Hai việc này phải hoàn thành trước khi nộp.
 
 ## Task 2: Usability Evaluation
+
+### 2.1 Phạm vi và mục tiêu
+
+Task 2 đánh giá độ tiện dụng của hệ thống qua một luồng nghiệp vụ hoàn chỉnh.
+Phạm vi đánh giá chọn Flow B: Quản trị viên tạo sản phẩm, sửa sản phẩm, import CSV và xem Dashboard.
+Mục tiêu là tìm ra các điểm nghẽn tương tác, đánh giá độ rõ ràng của giao diện và mức độ tin cậy của số liệu báo cáo.
+Bài đánh giá được thực hiện với 1 phiên thử nghiệm pilot và 7 phiên thử nghiệm chính thức với người dùng thật.
+
+### 2.2 Kịch bản đánh giá
+
+Kịch bản được thiết kế theo hướng mục tiêu, không đưa ra chỉ dẫn từng bước.
+Nội dung giao cho người tham gia:
+
+> "Bạn là quản trị viên của cửa hàng EShop. Bạn hãy tạo một sản phẩm mới tên 'Bình giữ nhiệt' giá 250000 đ thuộc danh mục 'Phụ kiện'.
+> Sau đó, bạn đổi giá sản phẩm này thành 220000 đ.
+> Tiếp theo, bạn nhập danh sách sản phẩm từ file products.csv có sẵn trên Desktop vào hệ thống.
+> Cuối cùng, bạn mở Dashboard và đọc giúp tôi tổng doanh thu cùng số lượng đơn hàng hiện tại.
+> Trong lúc thực hiện, bạn hãy vừa làm vừa nói to suy nghĩ của mình."
+
+Tiêu chí hoàn thành kịch bản:
+- Tạo thành công sản phẩm với đúng tên và giá ban đầu.
+- Cập nhật đúng giá mới vào danh sách.
+- Thực hiện xong thao tác import dữ liệu từ file CSV.
+- Đọc đúng hai chỉ số thống kê trên màn hình Dashboard.
+
+### 2.3 Công cụ thu thập dữ liệu
+
+Buổi kiểm thử sử dụng 3 công cụ chuẩn bị trước:
+- Phiếu khảo sát SUS gồm 10 nhận định chuẩn tiếng Việt với thang điểm từ 1 đến 5.
+- Bộ câu hỏi mở đào sâu sau phiên, chia theo 4 nhóm: độ rõ ràng, xử lý lỗi, tốc độ phản hồi và độ tin cậy.
+- Phiếu đồng thuận tham gia kiểm thử có chữ ký của người dùng, chấp nhận ghi hình màn hình và cuộc gọi xác minh của trợ giảng.
+
+### 2.4 Người tham gia và phiên pilot
+
+Người tham gia được tuyển chọn ngoài lớp môn học, ưu tiên người có kinh nghiệm dùng máy tính văn phòng hoặc bán hàng online.
+Phiên pilot được thực hiện trước với người tham gia P00 để rà soát kịch bản và chuẩn bị dữ liệu.
+Bảng dưới đây là danh sách người tham gia, số liên lạc được che bốn số giữa.
+
+| Mã | Họ và tên | Nghề nghiệp | Liên hệ (che giữa) | Đồng ý TA gọi |
+| --- | --- | --- | --- | --- |
+| P00 | Lê Minh Trí | Kinh doanh | 0903***812 | Có |
+| P01 | Nguyễn Văn Hùng | Quản lý kho | 0918***452 | Có |
+| P02 | Phạm Thị Mai | Kế toán nội bộ | 0982***331 | Có |
+| P03 | Trần Quốc Bảo | Bán hàng online | 0973***904 | Có |
+| P04 | Đỗ Hoàng Yến | Thu ngân | 0934***118 | Có |
+| P05 | Vũ Đình Trọng | Nhân viên văn phòng | 0909***775 | Có |
+| P06 | Hoàng Thu Trang | Chủ shop thời trang | 0988***620 | Có |
+| P07 | Đặng Thanh Tùng | Chăm sóc khách hàng | 0925***419 | Có |
+
+Bài học từ phiên pilot:
+- Cần đặt sẵn file `products.csv` ngoài màn hình Desktop trước khi bắt đầu.
+- Người điều hành cần giữ thái độ trung lập khi phần mềm phát sinh lỗi giao diện.
+
+### 2.5 Kết quả đánh giá SUS
+
+Sau khi hoàn thành thao tác, 7 người tham gia làm bài khảo sát SUS.
+Điểm từng câu được quy đổi theo công thức chuẩn và nhân hệ số 2.5 để ra điểm trên thang 100.
+
+| Mã | Vai trò | Thời gian làm | Điểm SUS | Đánh giá |
+| --- | --- | --- | --- | --- |
+| P01 | Quản lý kho | 11p30 | 62.5 | Trung bình |
+| P02 | Kế toán | 13p10 | 55.0 | Dưới trung bình |
+| P03 | Bán online | 10p15 | 65.0 | Trung bình |
+| P04 | Thu ngân | 15p45 | 50.0 | Kém |
+| P05 | Văn phòng | 12p20 | 57.5 | Dưới trung bình |
+| P06 | Chủ shop | 11p00 | 62.5 | Trung bình |
+| P07 | CSKH | 13p40 | 55.0 | Dưới trung bình |
+| **TB** | **Toàn đoàn** | **12p31** | **58.2** | **Dưới trung bình** |
+
+Điểm trung bình của 7 phiên đạt 58.2 điểm.
+Mức điểm này thấp hơn ngưỡng trung bình ngành 68 điểm, tương đương mức D.
+Kết quả cho thấy hệ thống chưa thân thiện và còn nhiều rào cản tương tác.
+
+### 2.6 Phân tích và phân loại vấn đề
+
+Từ ghi chú quan sát trong 7 phiên, các vấn đề được gom nhóm và xếp hạng theo mức độ nghiêm trọng.
+Có 6 vấn đề nổi bật, gồm lỗi chức năng và lỗi thiết kế giao diện.
+
+| Mã | Nội dung phát hiện | Phân loại | Mức độ | Số người gặp |
+| --- | --- | --- | --- | --- |
+| UF-01 | Thiếu phản hồi khi lưu sản phẩm mới | Thiết kế UI | Major | 5/7 |
+| UF-02 | Tên toàn bộ sản phẩm bị đổi khi sửa một món | Lỗi chức năng | Critical | 7/7 |
+| UF-03 | Form thiếu nhãn và dấu sao bắt buộc | Thiết kế UI | Minor | 6/7 |
+| UF-04 | Nút bấm import CSV dễ bị bỏ sót sau khi chọn tệp | Tương tác | Major | 4/7 |
+| UF-05 | Doanh thu Dashboard sai lệch và nhãn tiếng Anh | Lỗi chức năng | Critical | 3/7 |
+| UF-06 | Thanh bên không đổi URL, tải lại trang mất dữ liệu | Điều hướng | Major | 2/7 |
+
+Chi tiết các vấn đề chính:
+- UF-01: Form thêm sản phẩm tự xóa trắng sau khi bấm lưu nhưng không hiện thông báo thành công. Người dùng không biết đã lưu được chưa nên phải cuộn chuột kiểm tra.
+- UF-02: Đây là lỗi chức năng nghiêm trọng trong mã nguồn (mã hóa BUG-12). Khi bấm lưu sau khi sửa một sản phẩm, danh sách bên dưới bị đổi toàn bộ tên sang sản phẩm vừa sửa. Cả 7 người dùng đều bất ngờ và lo lắng mất dữ liệu.
+- UF-03: Các ô nhập chỉ có chữ chìm mà không có nhãn trường phía trên. Khi người dùng bắt đầu gõ thì mất chữ gợi ý, gây khó khăn cho việc kiểm tra lại thông tin.
+- UF-04: Sau khi chọn file CSV, bảng xem trước hiện ra nhưng nút bấm nạp dữ liệu nằm ở vị trí khó thấy, làm 4 người lầm tưởng thao tác đã hoàn thành.
+- UF-05: Doanh thu Dashboard bị tính gấp đôi đơn hoàn tất, hiển thị 1000000 đ thay vì 500000 đ. Lỗi này làm mất lòng tin của người dùng làm kế toán và kho hàng.
+
+### 2.7 Báo cáo lỗi và trạng thái thực hiện
+
+Qua buổi đánh giá usability, nhóm kiểm thử phát hiện thêm 1 lỗi chức năng mới ngoài checklist của Task 1:
+- BUG-12: Chức năng sửa sản phẩm cập nhật nhầm tên cho tất cả sản phẩm trong bảng (Severity: Critical, liên quan FR-15).
+- Lỗi BUG-04 từ Task 1 tiếp tục tái hiện tại Dashboard khi người dùng kiểm tra doanh thu.
+
+Trạng thái thực hiện hiện tại:
+- Tài liệu kịch bản, phiếu khảo sát, ghi chú phiên và phân tích đã lưu đầy đủ trong thư mục `docs/usability/`.
+- Chưa tải các đoạn video ghi hình màn hình lên YouTube do cần cắt ghép và che thông tin riêng tư. Cần tạo link unlisted trước khi nộp bài.
+- Cần tạo GitHub Issue mới cho lỗi BUG-12 và gắn nhãn `bug`, `usability`, `severity: critical`.

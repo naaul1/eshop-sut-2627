@@ -23,7 +23,7 @@
 * [x] Không paste nguyên si tài liệu có bản quyền lên AI.  
 * [x] Không paste code công ty / code open-source giới hạn license.  
 * [] Đã ghi mọi prompt + phản hồi AI vào prompt_log.md có timestamp. 
-(Các prompt đã ghi trong file [AI-05]([AI-05]-FIT@HCMUS-AI_Privacy_Checklist_Vn.md))
+(Các prompt đã ghi trong file [AI-02]([AI-02]-FIT@HCMUS-AI_Audit_Report_Vn.md))
 
 ## **3. Trước khi nộp bài**
 
@@ -47,7 +47,7 @@
 | **Lớp / Khoá:** | 23_3 |
 | **Môn học:** | CS423 / CSC13003 – Kiểm chứng Phần mềm |
 | **Giảng viên:** | Lâm Quang Vũ |
-| **Ngày:** | 20/10/2026 |
+| **Ngày:** | 09/11/2026 |
 | **Chữ ký:** | vothiennhan |
 
 ## **Tham khảo**

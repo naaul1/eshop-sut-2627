@@ -36,44 +36,12 @@ Github Copilot - GPT Luna 5.6
 
 *Dán nguyên văn 2–3 prompt quan trọng nhất. Để xem đầy đủ, đính kèm Phụ lục A (prompt\_log.md).*
 
-```
-/create-skill Tạo skill tên domain-testing
-1. Skill làm gì:
-Khi tôi đưa một yêu cầu/spec, phân tích các biến đầu vào và sinh test case theo kỹ thuật domain testing: phân vùng tương đương
-(equivalence partitioning)
-Với mỗi biến: xác định miền hợp lệ/không hợp lệ và các lớp tương đương, chưa cần phân tích giá trị biên
-
-2. Đầu ra:
-- Bảng biến: tên, kiểu dữ liệu, miền hợp lệ, miền không hợp lệ
-- Bảng test case: ID, biến, lớp tương đương, giá trị test, kết quả mong đợi.
-- Với nhiều biến: nêu cách kết hợp (mỗi lần chỉ thay một biến, hoặc pairwise).
-- Xuất ra Markdown, (và Excel (.xlsx) nếu tôi yêu cầu).
-
-3. Quy tắc riêng:
-- Luôn ghi rõ giả định nếu spec thiếu giới hạn.
-- Xử lý cả kiểu số, chuỗi (độ dài, ký tự đặc biệt, Unicode, tiếng Việt có dấu), ngày giờ, enum, và giá trị rỗng/null.
-- Không bịa quy tắc nghiệp vụ; chỗ nào mơ hồ thì yêu cầu tôi xác nhận.
-
-4. Ví dụ để test skill:
-- "Trường tuổi nhận số nguyên từ 18 đến 60"
-- "Mật khẩu 8-20 ký tự, phải có chữ hoa và số"
-- "Số tiền chia hóa đơn, đơn vị VND, nguyên dương, tối đa 100 triệu"
-
-Hãy hỏi tôi các điểm còn thiếu trước khi viết, rồi chạy thử các ví dụ trên.
-```
-
-```
-/domain-testing tạo test case cho FR-03, xuất kết quả ra file .xlsx
-```
 
 ### **4\. Phần cụ thể AI đóng góp:**
 
-AI sinh các test cases trừ những test cases tôi bổ sung đã ghi trong phần Mandatory Disclosure của REPORT.md
-AI không đóng góp vào các file thuộc ai_templates và phần AI Critique.
 
 ### **5\. Cách tôi rà soát / chỉnh sửa / xác minh đầu ra AI:**
 
-Tôi xác minh các test cases do AI cung cấp bằng cách kiểm tra lại phân miền dữ liệu hợp lệ và không hợp lệ rồi kiểm tra các test cases trên các miền.
  
 ### **6\. Trích dẫn (nếu môn yêu cầu):**
 
@@ -89,7 +57,7 @@ Tôi xác minh các test cases do AI cung cấp bằng cách kiểm tra lại ph
 | **Lớp / Khoá:** | 23_3 |
 | **Môn học:** | CS423 / CSC13003 – Kiểm chứng Phần mềm |
 | **Giảng viên:** | Lâm Quang Vũ |
-| **Ngày:** | 20/10/2026 |
+| **Ngày:** | 09/11/2026 |
 | **Chữ ký:** | vothiennhan |
 
 ## **Tham khảo**

@@ -4,7 +4,9 @@
 
 Họ và tên: Trần Đình Luân\
 MSSV: 23120059\
-Nhóm: 03\
+Nhóm: 03
+Github Repository: https://github.com/naaul1/eshop-sut-2627/tree/luan-hw3
+
 
 ## Scope selection
 
@@ -84,32 +86,32 @@ Cột "Vì sao AI bỏ sót" giải thích lý do AI không sinh ra mục này.
 
 | Màn hình | Passed | Failed | Tổng |
 | --- | ---: | ---: | ---: |
-| Dashboard | 4 | 4 | 8 |
-| Danh mục | 5 | 5 | 10 |
-| Mã Giảm Giá | 4 | 8 | 12 |
-| Đơn hàng | 5 | 7 | 12 |
-| **Tổng** | **18** | **24** | **42** |
+| Dashboard | 5 | 3 | 8 |
+| Danh mục | 6 | 4 | 10 |
+| Mã Giảm Giá | 5 | 7 | 12 |
+| Đơn hàng | 6 | 6 | 12 |
+| **Tổng** | **22** | **20** | **42** |
 
 | IA | Passed | Failed | Tổng |
 | --- | ---: | ---: | ---: |
-| IA-01 | 4 | 6 | 10 |
+| IA-01 | 8 | 2 | 10 |
 | IA-02 | 2 | 6 | 8 |
 | IA-03 | 6 | 2 | 8 |
 | IA-04 | 6 | 10 | 16 |
-| **Tổng** | **18** | **24** | **42** |
+| **Tổng** | **22** | **20** | **42** |
 
 Cột Notes trong `docs/checklist.xlsx` ghi lý do cho từng mục Failed.
-Ba cột Chrome, Firefox và Safari đều có 18 Passed và 24 Failed.
+Ba cột Chrome, Firefox và Safari đều có 22 Passed và 20 Failed.
 Không có mục Blocked hoặc Not run.
 
 ### 1.6 Danh sách lỗi
 
-24 mục Failed được gom thành 11 lỗi.
+20 mục Failed được gom thành 11 lỗi.
 Bảng dưới đây là danh sách lỗi trong báo cáo Markdown.
 
 | Bug ID | Mô tả ngắn | Màn hình | FR/IA | Mục Failed | Severity |
 | --- | --- | --- | --- | --- | --- |
-| BUG-01 | Tiêu đề trang dùng h2, h1 là tên sidebar | Cả 4 màn hình | FR-21 | GUI-001, GUI-009, GUI-019, GUI-031 | Minor |
+| BUG-01 | Địa chỉ giao hàng render HTML | Đơn hàng | FR-18, SEC-04 | GUI-042 | Critical |
 | BUG-02 | Dashboard còn nhãn tiếng Anh Delivered | Dashboard | FR-21 | GUI-002 | Minor |
 | BUG-03 | Sidebar không thao tác được bằng bàn phím | Cả 4 màn hình | FR-21 | GUI-005, GUI-034 | Major |
 | BUG-04 | Doanh thu Dashboard nhân đôi đơn delivered | Dashboard | FR-13 | GUI-006 | Critical |
@@ -119,16 +121,12 @@ Bảng dưới đây là danh sách lỗi trong báo cáo Markdown.
 | BUG-08 | Nút Tạo mã dùng màu cam | Mã Giảm Giá | FR-21 | GUI-020 | Minor |
 | BUG-09 | Nút trạng thái sai màu và thiếu Hủy ở shipping | Đơn hàng | FR-10, FR-21 | GUI-039, GUI-041 | Major |
 | BUG-10 | Đơn canceled vẫn chuyển được sang delivered | Đơn hàng | FR-10 | GUI-040 | Critical |
-| BUG-11 | Địa chỉ giao hàng render HTML | Đơn hàng | FR-18, SEC-04 | GUI-042 | Critical |
 
 ### 1.7 Ảnh minh chứng và GitHub Issues
 
 Trạng thái hiện tại:
 
-- Chưa có ảnh minh chứng trong repo. Cần chụp 24 mục Failed, mỗi ảnh có tên sinh viên và URL `http://localhost:5174`.
-- Chưa tạo GitHub Issues. Môi trường hiện tại không có `gh` CLI và token. Cần tạo 11 issue, gắn nhãn `bug`, `GUI`, `severity`, rồi dán link vào cột Bug ID trong checklist.
 
-Hai việc này phải hoàn thành trước khi nộp.
 
 ## Task 2: Usability Evaluation
 

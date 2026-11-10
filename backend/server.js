@@ -8,7 +8,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const SECRET_KEY = "super_secret_key_that_should_not_be_here";
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://admin-nmip.onrender.com', // Domain frontend trên Render của bạn
+    'http://localhost:5173',           // Hoặc cổng chạy vite ở local (tuỳ port của bạn)
+    'http://localhost:3000'
+  ],
+  credentials: true
+}));
 app.use(bodyParser.json());
 
 const userCarts = {};

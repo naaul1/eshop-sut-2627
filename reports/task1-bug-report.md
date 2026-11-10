@@ -16,7 +16,7 @@
 *ER-UI-14*: Màn hình Đăng nhập hiển thị mật khẩu dạng văn bản (không che mật khẩu)
 ![alt text](bug-report/task1/ER-UI-14.png)
 
-*ER-UI-15*: Nút đăng nhập hiển thị tiếng Anh thì vì tiếng Việt
+*ER-UI-15*: Nút đăng nhập hiển thị tiếng Anh thay vì tiếng Việt
 ![alt text](bug-report/task1/ER-UI-15.png)
 
 *ER-FRM-01*: Label không focus vào input tương ứng
@@ -42,17 +42,7 @@
 *ER-FRM-19*: Form quên mật khẩu không có field xác nhận mật khẩu mới
 ![alt text](bug-report/task1/ER-FRM-19.png)
 
-*ER-FRM-21*: Không thể focus vào nút đăng nhập bằng tab
-Tab lần 1:
-![alt text](bug-report/task1/ER-FRM-21-1.png)
-Tab lần 2:
-![alt text](bug-report/task1/ER-FRM-21-2.png)
-Tab lần 3:
-![alt text](bug-report/task1/ER-FRM-21-3.png)
-Tab lần 4:
-![alt text](bug-report/task1/ER-FRM-21-4.png)
-Tab lần 5:
-![alt text](bug-report/task1/ER-FRM-21-5.png)
+*ER-FRM-21*: Nút đăng nhập được ưu tiên focus sau các thành phần của browser khi focus bằng tab
 
 *ER-FRM-23*: Không có nút ẩn/hiện mật khẩu
 ![alt text](bug-report/task1/ER-FRM-23-1.png)

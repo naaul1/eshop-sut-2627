@@ -1,4 +1,4 @@
-**Các lỗi đã tìm được:**
+## Task 1:
 
 *ER-UI-01*: Luồng đăng nhập hiển thị "Đăng ký"
 ![alt text](bug-report/task1/ER-UI-01.png)
@@ -70,3 +70,25 @@
 
 *ER-FB-09*: Khi tài khoản bị khóa, chỉ hiển thị thông báo đăng nhập thất bại, không thông báo lỗi rõ ràng
 ![alt text](bug-report/task1/ER-FB-09.png)
+
+## Task 2:
+
+*ER-US-01*: Không thể đăng nhập với mật khẩu thỏa điều kiện được nêu
+![alt text](bug-report/task2/ER-US-01.png)
+
+*ER-US-02*: Dễ nhầm lẫn ở trường email của màn hình Đăng nhập vì label để 'Username' thay vì 'Email'
+![alt text](bug-report/task2/ER-US-02.png)
+
+*ER-US-03*: Điều kiện mật khẩu mạnh khó thấy
+![alt text](bug-report/task2/ER-US-03.png)
+
+## Task 3:
+
+*ER-FRM-M06*: Lỗi không gắn với field liên quan, chỉ thấy lỗi mật khẩu yếu dù field email đang trống.
+![alt text](bug-report/task3-expo-go/ER-FRM-M06.jpg)
+
+*ER-NAV-M01*: Thanh điều hướng không có liên kết đến luồng Đăng ký
+![alt text](bug-report/task3-expo-go/ER-NAV-M01.jpg)
+
+*ER-FB-M11*: Không hiển thị mã OTP trên môi trường demo
+![alt text](bug-report/task3-expo-go/ER-FB-M11.jpg)

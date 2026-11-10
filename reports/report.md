@@ -8,6 +8,7 @@
 ## 1.2. Thông tin hệ thống kiểm thử
 - Tên hệ thống: EShop — Phiên bản dành cho Kiểm thử Phần mềm
 - Link repo: https://github.com/naaul1/eshop-sut-2627 (branch: vtnhan-hw03)
+Trang issues: https://github.com/naaul1/eshop-sut-2627/issues
 - Môi trường kiểm thử:
     + OS: Windows 11
     + Browser: Opera GX (Task 1), Chrome, Firefox (Task 3)
@@ -64,7 +65,7 @@ NAV-13 bị bỏ sót có khả năng là do hạn chế trong suy luận của 
 - Không kiểm tra: 2
 
 **Các lỗi tìm được:**
-Xem file [task1-bug-report](task1-bug-report.md)
+Xem [bug-report](bug-report.md) - mục Task 1
 
 ## Task 2. Usability Evaluation
 
@@ -78,28 +79,45 @@ Xem file [task1-bug-report](task1-bug-report.md)
 **Thang đánh giá:** UEQ-S
 **Người dùng tham gia đánh giá:**
 - Gia Bảo - 038****517
-- Tài Võ -
-- Trí Dũng - 
+- Tài Võ - 082****515
+- Trí Dũng - 097****329
 
 ### b. Thực hiện đánh giá và báo cáo
+**Kết quả đánh giá:** Item 1-8 là các item trong thang UEQ-S
+| User No. | Item 1 | Item 2 | Item 3 | Item 4 | Item 5 | Item 6 | Item 7 | Item 8 | Pragmatic Quality | Hedonic Quality | UEQ-S |
+|-|-|-|-|-|-|-|-|-|-|-|-|
+| 1 | -1 | 1 | -1 | -3 | -2 | -1 | -2 | -2 | -1.00 | -1.75 | -1.38 |
+| 2 | 0 | -3 | -3 | 0 | -1 | -1 | -3 | -3 | -1.50 | -2.00 | -1.75 |
+| 3 | 1 | 0 | 1 | 2 | 2 | 0 | 1 | 2 | 1.00 | 1.25 | 1.13 |
+| Trung bình | 0 | -0.67 | -1 | -0.33 | -0.33 | -0.67 | -1.33 | -1 | -0.50 | -0.83 | -0.67 |
+**Pain point phổ biến:** 
+| Pain point | Severity |
+| Không thể đặt mật khẩu đúng theo yêu cầu (vì hệ thống nhận sai yêu cầu mật khẩu, là lỗi ER-FR03-02 đã ghi nhận ở HW#02) | High - làm kẹt luồng |
+| Người dùng nhầm lẫn họ tên và email ở màn hình Đăng nhập (vì ER-UI-11) | High |
+| Người dùng khó đọc điều kiện mật khẩu mạnh ở màn hình đăng ký | Medium |
+**Báo cáo lỗi:**
+Xem [bug-report](bug-report.md) - Mục Task 2
+
 
 ## Task 3. Cross-Browser / Cross-Platform
 
 ### a. Kết quả thực hiện trên Chrome
 [task3-chrome](gui-checklist-task3-chrome.xlsx)
-Không tìm thấy lỗi mới so với Task 1
 Screenshot lỗi trong folder [task3-chrome](bug-report/task3-chrome)
+Không tìm thấy lỗi mới so với Task 1
 
 ### b. Kết quả thực hiện trên Firefox
 [task3-firefox](gui-checklist-task3-firefox.xlsx)
+Screenshot lỗi trong folder [task3-firefox](bug-report/task3-firefox)
 Không tìm thấy lỗi mới so với Task 1
-Screenshot lỗi trong folder [task3-chrome](bug-report/task3-firefox)
 
 ### c. Kết quả thực hiện trên Expo Go
 [task3-expo-go](gui-checklist-task3-expo-go.xlsx)
-
-
-**Các lỗi tìm được:** (sẽ không liệt kê lại các lỗi đã có trong task 1)
+Screenshot lỗi trong folder [task3-expo-go](bug-report/task3-expo-go)
+**Các lỗi tìm được:** (không liệt kê lại các lỗi đã có trong task 1)
+- ER-FRM-M06
+- ER-NAV-M01
+- ER-FB-M11
 
 # 3. Agent Skill
 **Skill đã sử dụng:**
@@ -107,14 +125,10 @@ Screenshot lỗi trong folder [task3-chrome](bug-report/task3-firefox)
 - [gui-checklist](../.agents/skills/gui-checklist): sử dụng để tạo GUI checklist
 
 # 4. AI Critique
+Trong quá trình làm bài tập này, AI đã sinh tương đối đầy đủ cái item cần kiểm tra, nhưng đã bỏ qua một số item quan trọng ảnh hưởng trực tiếp đến trải nghiệm người dùng. Nguyên nhân chủ yếu là do tôi đã yêu cầu AI sinh ra checklist dựa trên đặc tả của hệ thống, còn các item bị bỏ sót là cái yêu cầu chung về thiết kế GUI mà không được viết trong đặc tả. Qua đó, tôi rút ra được kinh nghiệm là cần viết prompt yêu cầu AI kiểm tra thêm các yêu cầu phổ biến ảnh hưởng đến người dùng thay vì bám hoàn toàn vào đặc tả, cũng như cần kiểm tra kỹ lưỡng kết quả do AI sinh ra trước khi sử dụng.
 
 # 5. AI Audit Report
-    Xem file: ai-templates/[AI-02]-FIT@HCMUS-AI_Audit_Report_Vn.md
+Xem file: ai-templates/[AI-02]-FIT@HCMUS-AI_Audit_Report_Vn.md
 
 # 6. Mandatory Disclosure
-
-
-
-```
-    Các file FR-03_boundary_test_cases.xlsx, FR-03_domain_test_cases.xlsx, FR-09_boundary_test_cases.xlsx, FR-09_domain_test_cases.xlsx, FR-17_boundary_test_cases.xlsx, FR-17_domain_test_cases.xlsx được sinh phiên bản đầu bởi Github Copilot; tôi đã rà soát và chỉnh sửa 1 số dữ liệu đầu vào, bổ sung các test cases TC-FR03-38, TCB-FR03-30 đến TCB-FR03-34,  TC-FR17-29 đến TC-FR17-34, miền không hợp lệ cho OTP: sai OTP; REPORT.md, README.md và BUG-REPORT.md do tôi tự viết. AI Audit Report chi tiết đính kèm ở Phụ lục A. Tôi cam đoan không dùng AI để sinh bất kỳ artifact nào thuộc danh mục bị cấm.
-```
+Skill gui-checklist được sinh bởi Claude Sonnet 5.5, file gui-checklist.md được sinh phiên bản đầu bởi Github Copilot, là file gui-checklist-authentication.md trong folder ai-artifacts, file gui-checklist.xlsx được sinh bởi Github Copilot dựa trên file gui-checklist.md sau khi tôi chỉnh sửa; tôi đã rà soát và thêm các item UI-15, FRM-23, FRM-24, FRM-25, NAV-13; chỉnh sửa các item UI-08, FRM-13; loại bỏ các item FRM-09, FRM-11, FRM-16; các phần còn lại do tôi tự viết. AI Audit Report chi tiết đính kèm ở Phụ lục A. Tôi cam đoan không dùng AI để sinh bất kỳ artifact nào thuộc danh mục bị cấm.

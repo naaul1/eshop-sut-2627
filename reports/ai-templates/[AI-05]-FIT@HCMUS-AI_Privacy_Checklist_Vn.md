@@ -47,7 +47,7 @@
 | **Lớp / Khoá:** | 23_3 |
 | **Môn học:** | CS423 / CSC13003 – Kiểm chứng Phần mềm |
 | **Giảng viên:** | Lâm Quang Vũ |
-| **Ngày:** | 09/11/2026 |
+| **Ngày:** | 11/11/2026 |
 | **Chữ ký:** | vothiennhan |
 
 ## **Tham khảo**

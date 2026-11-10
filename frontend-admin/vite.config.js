@@ -7,5 +7,8 @@ export default defineConfig({
   server: {
     port: 5174,
     strictPort: true,
+  },
+  preview: {
+    allowedHosts: ['admin-nmip.onrender.com', '.onrender.com'], // Cho phép tên miền cụ thể hoặc toàn bộ domain render
   }
 })

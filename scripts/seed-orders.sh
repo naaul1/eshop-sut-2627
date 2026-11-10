@@ -7,6 +7,12 @@
 #   #4 shipping  600.000 ₫   #5 canceled 200.000 ₫
 #   Tổng số đơn = 5, doanh thu delivered (API) = 500.000 ₫
 #
+# Đơn #3 mang địa chỉ "123 Đường <b>Test</b>, Quận 1": payload HTML cố ý cho
+# BUG-01 (GUI-042, SEC-04). Cột Địa chỉ ở màn Đơn hàng admin render HTML thay
+# vì escape, nên chữ Test hiện đậm và thẻ <b> biến mất. Không dùng onerror/alert
+# trong seed để hộp thoại alert không nổ lại mỗi lần reload màn Đơn hàng và
+# không phá ảnh minh chứng của các mục checklist khác trên cùng màn hình.
+#
 # Script chỉ gọi API, không sửa code và không sửa database trực tiếp.
 # Dữ liệu sẽ mất khi restart backend (database.js drop + seed lại mỗi lần chạy server.js).
 
@@ -194,15 +200,26 @@ fi
 
 printf '[3/4] Tạo 5 đơn hàng...\n'
 AMOUNTS=(500000 300000 400000 600000 200000)
+# Đơn thứ 3 (chỉ số 2) mang payload HTML cho BUG-01, các đơn còn lại dùng địa chỉ thường.
+ADDRESSES=(
+  "123 Đường Test, Quận 1"
+  "123 Đường Test, Quận 1"
+  "123 Đường <b>Test</b>, Quận 1"
+  "123 Đường Test, Quận 1"
+  "123 Đường Test, Quận 1"
+)
+[[ ${#AMOUNTS[@]} -eq ${#ADDRESSES[@]} ]] ||
+  fail "AMOUNTS và ADDRESSES phải cùng số phần tử."
 ORDER_IDS=()
-for amount in "${AMOUNTS[@]}"; do
+for i in "${!AMOUNTS[@]}"; do
+  amount="${AMOUNTS[$i]}"
   api_call POST "/checkout" "$USER_TOKEN" \
-    "{\"total_amount\":$amount,\"shipping_address\":\"123 Đường Test, Quận 1\"}"
+    "{\"total_amount\":$amount,\"shipping_address\":\"${ADDRESSES[$i]}\"}"
   [[ "$RESP_STATUS" == "200" ]] || fail "Tạo đơn $amount ₫ thất bại (HTTP $RESP_STATUS): $RESP_BODY"
   order_id="$(json_get "$RESP_BODY" orderId)"
   [[ "$order_id" =~ ^[0-9]+$ ]] || fail "Checkout không trả về orderId hợp lệ: $RESP_BODY"
   ORDER_IDS+=("$order_id")
-  printf '  Đơn #%s: %s ₫ (pending)\n' "$order_id" "$(format_vnd "$amount")"
+  printf '  Đơn #%s: %s ₫ (pending) - %s\n' "$order_id" "$(format_vnd "$amount")" "${ADDRESSES[$i]}"
 done
 
 printf '[4/4] Chuyển trạng thái...\n'

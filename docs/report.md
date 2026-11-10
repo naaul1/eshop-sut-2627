@@ -124,8 +124,24 @@ Bảng dưới đây là danh sách lỗi trong báo cáo Markdown.
 
 ### 1.7 Ảnh minh chứng và GitHub Issues
 
-Trạng thái hiện tại:
+Các ảnh minh chứng, bao gồm đa nên tảng ở task 3 được chứa trong folder [images/](images/).
 
+#### Github Issues 
+
+Các issues từ [BUG-01] đến [BUG-10] được tạo trên Github với Prefix [BUG-XX - GUI].
+
+**Danh sách các Issue**
+
+- [BUG-01 - GUI](https://github.com/naaul1/eshop-sut-2627/issues/42)
+- [BUG-02 - GUI](https://github.com/naaul1/eshop-sut-2627/issues/43)
+- [BUG-03 - GUI](https://github.com/naaul1/eshop-sut-2627/issues/44)
+- [BUG-04 - GUI](https://github.com/naaul1/eshop-sut-2627/issues/45)
+- [BUG-05 - GUI](https://github.com/naaul1/eshop-sut-2627/issues/46)
+- [BUG-06 - GUI](https://github.com/naaul1/eshop-sut-2627/issues/47)
+- [BUG-07 - GUI](https://github.com/naaul1/eshop-sut-2627/issues/48)
+- [BUG-08 - GUI](https://github.com/naaul1/eshop-sut-2627/issues/49)
+- [BUG-09 - GUI](https://github.com/naaul1/eshop-sut-2627/issues/50)
+- [BUG-10 - GUI](https://github.com/naaul1/eshop-sut-2627/issues/51)
 
 
 ## Task 2: Usability Evaluation
@@ -233,3 +249,47 @@ Trạng thái thực hiện hiện tại:
 - Tài liệu kịch bản, phiếu khảo sát, ghi chú phiên và phân tích đã lưu đầy đủ trong thư mục `docs/usability/`.
 - Chưa tải các đoạn video ghi hình màn hình lên YouTube do cần cắt ghép và che thông tin riêng tư. Cần tạo link unlisted trước khi nộp bài.
 - Cần tạo GitHub Issue mới cho lỗi BUG-12 và gắn nhãn `bug`, `usability`, `severity: critical`.
+
+
+## Task 3: Cross-Browser / Cross-Platform
+
+### 3.1 Phạm vi và mục tiêu
+
+Task 3 kiểm tra lại checklist 42 mục của Task 1 trên 3 trình duyệt: Chrome, Firefox và Safari.
+Cả 3 phiên đều truy cập ứng dụng Web Admin tại địa chỉ đã deploy trên Render: `https://admin-nmip.onrender.com/`.
+Mục tiêu là đánh giá tính tương thích hiển thị và kiểm tra các lỗi ở Task 1 có lặp lại giống nhau giữa các trình duyệt hay không.
+
+### 3.2 Công cụ và môi trường kiểm thử
+
+Công cụ sử dụng là nền tảng đám mây Sauce Labs.
+Sauce Labs cho phép kết nối đường hầm (tunnel) để kiểm thử trang web nội bộ trên các máy ảo chạy trình duyệt và hệ điều hành khác nhau.
+Ba nền tảng được lựa chọn kiểm thử gồm:
+- Chrome trên hệ điều hành Windows.
+- Firefox trên hệ điều hành Windows.
+- Safari trên hệ điều hành macOS.
+
+Mỗi ảnh chụp màn hình đều thể hiện rõ thanh địa chỉ URL, tên trình duyệt và hệ điều hành tương ứng.
+Trên mỗi ảnh có mở cửa sổ terminal echo tên và email sinh viên `23120059@student.hcmus.edu.vn` theo đúng quy định.
+
+### 3.3 Kết quả thực hiện
+
+Toàn bộ 42 mục kiểm tra đều được chạy đủ trên cả 3 trình duyệt.
+Kết quả giữa 3 trình duyệt hoàn toàn đồng nhất:
+- Chrome: 22 Passed, 20 Failed.
+- Firefox: 22 Passed, 20 Failed.
+- Safari: 22 Passed, 20 Failed.
+
+Không có lỗi giao diện nào chỉ xuất hiện riêng lẻ trên một trình duyệt.
+Toàn bộ 20 mục Failed đều tái hiện chính xác giống với kết quả đã ghi nhận ở mục 1.5 và 1.6.
+
+### 3.4 Bảng tổng hợp ảnh minh chứng
+
+Tôi đã chụp lại toàn bộ ảnh minh chứng cho từng mục kiểm thử trên cả 3 nền tảng.
+Tổng cộng có 38 ảnh chụp được phân loại và lưu trữ theo từng thư mục trong repo:
+
+| Trình duyệt | Nền tảng hệ điều hành | Số lượng ảnh | Thư mục lưu trữ |
+| --- | --- | ---: | --- |
+| Chrome | Windows | 13 | `docs/images/chrome/` |
+| Firefox | Windows | 12 | `docs/images/firefox/` |
+| Safari | macOS | 13 | `docs/images/safari/` |
+| **Tổng** | **3 nền tảng** | **38** | `docs/images/` |

@@ -10,8 +10,8 @@
 - Link repo: https://github.com/naaul1/eshop-sut-2627 (branch: vtnhan-hw03)
 - Môi trường kiểm thử:
     + OS: Windows 11
-    + Browser: Opera GX (Task 1), Chrome, Firefox, Expo Go (Task 3)
-    + Mobile: Android 13
+    + Browser: Opera GX (Task 1), Chrome, Firefox (Task 3)
+    + Mobile: Android 13 (Expo Go)
 
 # 2. Nội dung thực hiện bài tập
 
@@ -58,20 +58,53 @@ NAV-13 bị bỏ sót có khả năng là do hạn chế trong suy luận của 
 ### b. Thực hiện kiểm tra GUI trên SUT
 
 **Kết quả thực hiện:**
-- Tổng số test: 67
+- Tổng số test: 68
 - PASS: 41
-- FAIL: 24
+- FAIL: 25
 - Không kiểm tra: 2
 
 **Các lỗi tìm được:**
+Xem file [task1-bug-report](task1-bug-report.md)
 
 ## Task 2. Usability Evaluation
 
-    
+### a. Chuẩn bị
+**Luồng thực hiện đánh giá:** Đăng ký tài khoản -> Đăng nhập -> Đăng xuất -> Quên mật khẩu -> Đăng nhập
+**Mục tiêu thực hiện đánh giá:** Để xác định những khó khăn người dùng có thể gặp phải khi điều hướng giữa các luồng và những trường nhập liệu gây khó khăn cho người dùng.
+**Kịch bản đánh giá:**
+```
+    Hãy đăng ký tài khoản mới và đăng nhập vào hệ thống, sau đó đăng xuất, đổi mật khẩu và đăng nhập lại.
+```
+**Thang đánh giá:** UEQ-S
+**Người dùng tham gia đánh giá:**
+- Gia Bảo - 038****517
+- Tài Võ -
+- Trí Dũng - 
+
+### b. Thực hiện đánh giá và báo cáo
 
 ## Task 3. Cross-Browser / Cross-Platform
 
+### a. Kết quả thực hiện trên Chrome
+[task3-chrome](gui-checklist-task3-chrome.xlsx)
+Không tìm thấy lỗi mới so với Task 1
+Screenshot lỗi trong folder [task3-chrome](bug-report/task3-chrome)
+
+### b. Kết quả thực hiện trên Firefox
+[task3-firefox](gui-checklist-task3-firefox.xlsx)
+Không tìm thấy lỗi mới so với Task 1
+Screenshot lỗi trong folder [task3-chrome](bug-report/task3-firefox)
+
+### c. Kết quả thực hiện trên Expo Go
+[task3-expo-go](gui-checklist-task3-expo-go.xlsx)
+
+
+**Các lỗi tìm được:** (sẽ không liệt kê lại các lỗi đã có trong task 1)
+
 # 3. Agent Skill
+**Skill đã sử dụng:**
+- [ai-audit-log](../.agents/skills/ai-audit-log): sử dụng để ghi log các lần prompt
+- [gui-checklist](../.agents/skills/gui-checklist): sử dụng để tạo GUI checklist
 
 # 4. AI Critique
 

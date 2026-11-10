@@ -5,7 +5,7 @@ const db = require("./database");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const SECRET_KEY = "super_secret_key_that_should_not_be_here";
 
 app.use(cors());
@@ -510,8 +510,8 @@ app.delete("/api/admin/users/:id", authenticateToken, (req, res) => {
 app.get("/api/admin/orders", authenticateToken, (req, res) => {
   db.all(
     `
-        SELECT orders.*, users.name as user_name 
-        FROM orders 
+        SELECT orders.*, users.name as user_name
+        FROM orders
         LEFT JOIN users ON orders.user_id = users.id
         ORDER BY orders.id DESC
     `,

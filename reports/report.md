@@ -10,7 +10,7 @@
 - Link repo: https://github.com/naaul1/eshop-sut-2627 (branch: vtnhan-hw03)
 - Môi trường kiểm thử:
     + OS: Windows 11
-    + Browser: Opera GX, Chrome, Firefox, Expo Go
+    + Browser: Opera GX (Task 1), Chrome, Firefox, Expo Go (Task 3)
     + Mobile: Android 13
 
 # 2. Nội dung thực hiện bài tập
@@ -34,6 +34,7 @@
     + UI-15: sử dụng đồng nhất ngôn ngữ tiếng Việt trên giao diện
     + FRM-23: nút ẩn/hiện mật khẩu
     + FRM-24: ràng buộc kiểu dữ liệu nhập cho ô OTP
+    + FRM-25: bàn phím trên mobile không che ô nhập dữ liệu
     + NAV-13: điều hướng người dùng khi đã đăng nhập
 - **Chỉnh sửa các item:** 
     + UI-08: bổ sung kiểm tra ở tỉ lệ zoom 300% và 400%
@@ -46,14 +47,20 @@
 **Nguyên nhân AI bỏ sót các item đã được thêm:**
 Nguyên nhân chủ yếu khiến AI bỏ sót các item cần kiểm tra là vì prompt đã yêu cầu AI tạo checklist dựa trên đặc tả của SUT. Khi tạo checklist AI đã bám theo đặc tả được ghi trong file README.md, còn các yêu cầu được bổ sung không có trong đặc tả, cụ thể:
 - UI-15: Đây là yêu cầu quan trọng về sự nhất quán trong giao diện, đã bị AI bỏ qua vì đặc tả không yêu cầu.
-- FRM-23: Đây là 1 trong những chức năng quan trọng hỗ trợ người dùng trong trường hợp cần kiểm tra lỗi gõ phím, đã bị AI bỏ qua vì đặc tả không yêu cầu.
-- FRM-24: Đây là 1 ràng buộc giao diện hỗ trợ người dùng mobile trong việc nhập liệu ở các trường bắt buộc kiểu số, đã bị AI bỏ qua vì đặc tả không yêu cầu.
+- FRM-23: Đây là một trong những chức năng quan trọng hỗ trợ người dùng trong trường hợp cần kiểm tra lỗi gõ phím, đã bị AI bỏ qua vì đặc tả không yêu cầu.
+- FRM-24: Đây là ràng buộc giao diện hỗ trợ người dùng mobile trong việc nhập liệu ở các trường bắt buộc kiểu số, đã bị AI bỏ qua vì đặc tả không yêu cầu.
+- FRM-25: Đây là ràng buộc giao diện quan trọng giúp người dùng kiểm tra lại dữ liệu đã nhập, đã bị AI bỏ qua vì đặc tả không yêu cầu.
 
 NAV-13 bị bỏ sót có khả năng là do hạn chế trong suy luận của AI khi không xét đến trường hợp người dùng đã đăng nhập nhưng cố truy cập vào trang /login hoặc /register.
 
 **Kết quả sau sửa đổi, bổ sung:** [gui-checklist](gui-checklist.md)
 
 ### b. Thực hiện kiểm tra GUI trên SUT
+**Kết quả thực hiện:**
+- Tổng số test: 67
+- PASS: 41
+- FAIL: 24
+- Không kiểm tra: 2
 
 ## Task 2. Usability Evaluation
 

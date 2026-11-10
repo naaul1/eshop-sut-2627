@@ -33,7 +33,7 @@
 | UI-11 | Chung | Label, placeholder và thuật ngữ nhất quán | Dùng thống nhất các tên “Email”, “Mật khẩu”, “Xác nhận mật khẩu”, “Đăng nhập” | Trung bình | | |
 | UI-12 | Chung | Không còn placeholder nội dung hoặc lỗi chính tả | Không hiển thị “Lorem ipsum”, “TODO” hay câu chữ chưa dịch | Thấp | | |
 | UI-13 | Form Quên mật khẩu | Chỉ báo bước được trình bày dễ nhận biết | Bước 1/2 và Bước 2/2 hiển thị đúng trạng thái hiện tại | Cao | | |
-| UI-14 | Form mật khẩu | Ký tự mật khẩu được che theo mặc định | Nội dung mật khẩu không hiển thị dạng văn bản thường khi nhập | Cao | | |
+| UI-14 | Chung | Ký tự mật khẩu được che theo mặc định | Nội dung mật khẩu không hiển thị dạng văn bản thường khi nhập | Cao | | |
 | UI-15 | Chung | Sử dụng thống nhất ngôn ngữ tiếng Việt | Tất cả nội dung, trừ tên riêng, thuật ngữ, các từ không có bản dịch tương đương, được viết bằng tiếng Việt. | Trung bình | | |
 
 ## 4. Checklist — Forms
@@ -61,6 +61,7 @@
 | FRM-22 | Chung — paste/autofill | Paste và autofill không phá vỡ layout hoặc xóa dữ liệu hợp lệ | Giá trị được điền vào đúng field và vẫn nhìn thấy trạng thái hợp lệ | Trung bình | | |
 | FRM-23 | Chung | Nút ẩn/hiện mật khẩu | Có nút ghi bằng chữ hoặc có icon con mắt nằm bên phải ô nhập mật khẩu, bấm vào thay đổi các hiển thị mật khẩu mà không làm mất dữ liệu hoặc vị trí con trỏ | Trung bình | | |
 | FRM-24 | Quên mật khẩu B2 - OTP | Ràng buộc kiểu dữ liệu nhập cho ô OTP | Ô OTP chỉ nhận kiểu số, kích hoạt bàn phím số trên mobile | Trung bình | | |
+| FRM-25 | Chung | Vị trí bàn phím trên mobile | Bàn phím trên thiết bị mobile không che ô nhập liệu | Cao | | |
 
 ## 5. Checklist — Navigation
 

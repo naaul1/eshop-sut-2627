@@ -56,13 +56,18 @@ NAV-13 bị bỏ sót có khả năng là do hạn chế trong suy luận của 
 **Kết quả sau sửa đổi, bổ sung:** [gui-checklist](gui-checklist.md)
 
 ### b. Thực hiện kiểm tra GUI trên SUT
+
 **Kết quả thực hiện:**
 - Tổng số test: 67
 - PASS: 41
 - FAIL: 24
 - Không kiểm tra: 2
 
+**Các lỗi tìm được:**
+
 ## Task 2. Usability Evaluation
+
+    
 
 ## Task 3. Cross-Browser / Cross-Platform
 

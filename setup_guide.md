@@ -33,6 +33,20 @@ Backend cung cấp dữ liệu và xử lý logic cho toàn bộ hệ thống.
    *Terminal sẽ thông báo: `Server is running on http://localhost:3000`.*
    *(Lưu ý: Bạn phải để Terminal này chạy liên tục trong suốt quá trình test).*
 
+### Deploy Backend lên Render
+
+1. Push mã nguồn lên GitHub và tạo **Web Service** mới trên [Render](https://render.com).
+2. Chọn repository của dự án, đặt **Root Directory** là `backend`.
+3. Chọn runtime **Node** và nhập:
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+4. Nhấn **Create Web Service**. Render tự cung cấp biến môi trường `PORT`; server đã được cấu hình để sử dụng biến này.
+5. Trong **Environment Variables**, thêm `JWT_SECRET` với một giá trị bí mật dài, ngẫu nhiên.
+6. Sau khi deploy thành công, kiểm tra URL Render bằng một endpoint API, ví dụ:
+   `https://<ten-service>.onrender.com/api/products`
+
+**Lưu ý về SQLite:** `database.sqlite` nằm trên filesystem tạm thời của Render và có thể mất dữ liệu khi service redeploy/restart. Nếu cần giữ dữ liệu, cấu hình Persistent Disk (nếu gói Render hỗ trợ) hoặc chuyển backend sang PostgreSQL và cập nhật `database.js`. Không commit thông tin bí mật; các secret nên đặt trong mục **Environment Variables** của Render.
+
 ---
 
 ## 2. Khởi chạy Frontend Web

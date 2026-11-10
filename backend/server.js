@@ -5,8 +5,8 @@ const db = require("./database");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-const PORT = 3000;
-const SECRET_KEY = "super_secret_key_that_should_not_be_here";
+const PORT = process.env.PORT || 3000;
+const SECRET_KEY = process.env.JWT_SECRET || "development-only-secret";
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -568,5 +568,5 @@ app.put("/api/admin/orders/:id/status", authenticateToken, (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

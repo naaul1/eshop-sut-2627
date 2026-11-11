@@ -157,9 +157,9 @@ Tiêu chí hoàn thành kịch bản:
 
 ### 2.3 Công cụ thu thập dữ liệu
 
-Buổi kiểm thử được tổ chức trực tuyến qua Discord, người tham gia share màn hình để người điều hành quan sát.
-Người điều hành ghi lại điểm nghẽn, thời gian và phát biểu của người tham gia trong khi họ thực hiện kịch bản.
-Ba công cụ được chuẩn bị trước:
+Buổi kiểm thử được tổ chức trực tuyến qua Discord, người tham gia share màn hình để người điều hành quan sát. Các phiên khảo sát đều truy cập ứng dụng Web Admin tại địa chỉ đã deploy trên Render: `https://admin-nmip.onrender.com/`.
+
+Công cụ được chuẩn bị trước:
 - Phiếu khảo sát SUS gồm 10 nhận định chuẩn tiếng Việt với thang điểm từ 1 đến 5.
 - Bộ câu hỏi mở đào sâu sau phiên, chia theo 4 nhóm: độ rõ ràng, xử lý lỗi, tốc độ phản hồi và độ tin cậy.
 
@@ -172,13 +172,13 @@ Bảng dưới đây là danh sách người tham gia, số liên lạc được
 
 | Mã | Họ và tên | Nghề nghiệp | Liên hệ (che giữa) |
 | --- | --- | --- | --- |
-| P00 | Trần Anh Đức | Sinh viên | 0346***645 |
-| P01 | Nguyễn Hồng Dương | Sinh viên | 0768***504 |
-| P02 | Dương Trọng Nhân | Sinh viên | 0978***824 |
+| P00 | Trần Anh Đức | Sinh viên | 034****645 |
+| P01 | Nguyễn Hồng Dương | Sinh viên | 076****504 |
+| P02 | Dương Trọng Nhân | Sinh viên | 097****824 |
 | P03 | Hà Nhất Khang | Sinh viên | Discord: khang***gai |
 | P04 | Lê Hoàng Thịnh | Sinh viên | Discord: nut***822 |
 | P05 | Đỗ Nguyên Hoàng | Sinh viên | 0865***872 |
-| P06 | Phạm Quốc Huy | Sinh viên | Discord: cheese**tu |
+| P06 | Phạm Quốc Huy | Sinh viên | Discord: cheese***tu |
 | P07 | Lê Bảo Anh | Sinh viên | Discord: thered***ler |
 
 Bài học từ phiên pilot:
@@ -228,8 +228,8 @@ Chi tiết các vấn đề chính:
 
 ### 2.7 Báo cáo lỗi và trạng thái thực hiện
 
-Qua buổi đánh giá usability, nhóm kiểm thử phát hiện thêm 1 lỗi chức năng mới ngoài checklist của Task 1:
-- BUG-11: Chức năng sửa sản phẩm cập nhật nhầm tên cho tất cả sản phẩm trong bảng (Severity: Critical, liên quan FR-15).
+Qua buổi đánh giá usability, nhóm kiểm thử phát hiện thêm 1 lỗi chức năng mới ngoài checklist của Task 1 (trong phạm vi HW03):
+- BUG-11: Chức năng sửa sản phẩm cập nhật nhầm tên cho tất cả sản phẩm trong bảng (Severity: Critical, liên quan FR-15), và được report ở [BUG-11 - GUI](https://github.com/naaul1/eshop-sut-2627/issues/52).
 - Lỗi BUG-04 từ Task 1 tiếp tục tái hiện tại Dashboard khi người dùng kiểm tra doanh thu.
 
 Trạng thái thực hiện hiện tại:
@@ -246,7 +246,7 @@ Mục tiêu là đánh giá tính tương thích hiển thị và kiểm tra cá
 ### 3.2 Công cụ và môi trường kiểm thử
 
 Công cụ sử dụng là nền tảng đám mây Sauce Labs.
-Sauce Labs cho phép kết nối đường hầm (tunnel) để kiểm thử trang web nội bộ trên các máy ảo chạy trình duyệt và hệ điều hành khác nhau.
+Sauce Labs cho phép kết nối kiểm thử trang web nội bộ trên các máy ảo chạy trình duyệt và hệ điều hành khác nhau.
 Ba nền tảng được lựa chọn kiểm thử gồm:
 - Chrome trên hệ điều hành Windows.
 - Firefox trên hệ điều hành Windows.
@@ -277,3 +277,19 @@ Tổng cộng có 38 ảnh chụp được phân loại và lưu trữ theo từ
 | Firefox | Windows | 12 | `docs/images/firefox/` |
 | Safari | macOS | 13 | `docs/images/safari/` |
 | **Tổng** | **3 nền tảng** | **38** | `docs/images/` |
+
+## Agent skill
+
+Bài làm có tạo sử dụng AI skill, bao gồm `ai-log` và `document-write`.
+
+Video demo sử dụng: https://youtu.be/qZwdQojjvRE
+
+## Appendix A
+
+### AI Audit repot
+
+Xem trong [`AI Audit Report.md`](<AI Audit Report.md>).
+
+### AI Critique
+
+Xem trong [`AI Critique.md`](<AI Critique.md>)

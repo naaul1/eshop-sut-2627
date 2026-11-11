@@ -19,7 +19,7 @@
 | **Lớp / Khoá:** | 23CTT1\_3 |
 | **Mã bài tập (ví dụ HW\#00, HW\#02):** | HW\#03 |
 | **Ngày làm bài:** | 07/11/2026 |
-| **Công cụ AI đã dùng:** | OpenCode (DeepSeek V4.1 Flash), Antigravity |
+| **Công cụ AI đã dùng:** | OpenCode (DeepSeek V4.1 Flash, Big Pickle), Antigravity |
 | **Công cụ AI đã dùng:** | \[x\] Có  \[ \] Không |
 
 ## **2\. Hướng dẫn (đọc trước khi điền)**
@@ -40,12 +40,8 @@
 | **Artifact \#2 - Nội dung Task 1 trong report**<br>**Tool: OpenCode (DeepSeek V4.1 Flash)<br>Thời gian: 04:23 09/11/2026<br>Prompt: (không còn nguyên văn) \"Viết phần Task 1 GUI Checklist vào docs/report.md, gồm phạm vi, thiết kế checklist, prompt AI, mục SV thêm, kết quả thực thi, danh sách lỗi, ảnh minh chứng và GitHub Issues.\"** | Bản cuối cùng trong `docs/report.md`, mục Task 1. Nội dung: 42 mục, 35 AI + 7 SV, 18 Passed, 24 Failed, 11 bug. Mục 1.7 ghi rõ chưa có ảnh minh chứng và chưa tạo GitHub Issues. Không dán toàn bộ 140 dòng vì output quá dài; xem file đính kèm. | INCOMPLETE | HW03 Task 1 yêu cầu ảnh cho từng mục Failed và bug phải có trên GitHub Issues. Report đã có 42 mục, 35 AI + 7 SV, Notes cho 24 mục Failed và 11 bug, nhưng mục 1.7 nói chưa có ảnh và chưa tạo issue. | Chụp 24 ảnh cho mục Failed, tạo 11 GitHub Issues kèm ảnh, dán link vào cột Bug ID trong `docs/checklist.xlsx`, cập nhật mục 1.7 của `docs/report.md`. |
 | **Artifact \#3 - Nội dung Task 2 trong report và phân tích**<br>**Tool: Antigravity<br>Thời gian: 04:13 10/11/2026<br>Prompt: \"được rồi, hãy thực hiện toàn bộ các phase theo kế hoạch. đối với việc điền vào docs/report.md: [trích dẫn Task 1], dùng skill /home/naul1/Projects/software-testing/eshop-sut-2627/.agents/skills/document-write/ .\"** | Nội dung hoàn chỉnh của Task 2 trong `docs/report.md` (mục 2.1 đến 2.7) cùng các tài liệu phân tích: `docs/usability/sessions/session-summary.md`, `docs/usability/analysis.md`. Báo cáo ghi nhận điểm SUS trung bình 58.2/100, xếp hạng 6 vấn đề (UF-01 đến UF-06) và phát hiện lỗi chức năng mới BUG-11. | INCOMPLETE | Task 2 Phase 2 và Phase 3 yêu cầu ghi nhận diễn biến phiên, điểm SUS, tổng hợp phân loại lỗi theo mức độ nghiêm trọng và tạo issue cho lỗi phát hiện. Cần bổ sung báo cáo về BUG-11 và tạo GitHub Issue, cũng như ghi lại trong báo cáo trước khi nộp. | Bổ sung thêm phần phân tích về các loại các phát hiện và ghi thêm báo cáo về BUG-11|
 | **Artifact \#4 - Nội dung Task 3 trong report**<br>**Tool: Antigravity<br>Thời gian: 05:13 11/11/2026<br>Prompt: Viết phần 3 đơn giản cho Report: ## Task 3: Cross-Browser / Cross-Platform . trong đó, đề cập tới công cụ tôi dùng là Sauce Labs, và tôi test trên 3 nền tảng chrome, firefox và safari. tôi đã chụp lại toàn bộ screenshot.\"** | Bản cuối cùng trong `docs/report.md`, mục Task 3 (mục 3.1 đến 3.4). Nội dung: 3.1 Phạm vi kiểm tra 42 mục trên Chrome, Firefox, Safari trên Web Admin; 3.2 Công cụ Sauce Labs trên Windows và macOS, có gắn overlay email sinh viên; 3.3 Kết quả 22 Passed và 20 Failed đồng nhất trên cả 3 trình duyệt; 3.4 Bảng tổng hợp 38 ảnh minh chứng lưu trong `docs/images/` (Chrome: 13, Firefox: 12, Safari: 13). | VALID | HW03 Task 3 yêu cầu kiểm thử lại checklist trên ít nhất 3 nền tảng (Chrome, Firefox, Safari), dùng công cụ cloud (Sauce Labs) và đối chiếu kết quả thực thi. Nội dung do AI sinh đáp ứng đầy đủ và chính xác tất cả yêu cầu này theo đúng quy chuẩn báo cáo. | Giữ nguyên nội dung do AI sinh, cập nhật trực tiếp vào `docs/report.md` mục Task 3 và đối chiếu với 38 ảnh minh chứng đã lưu tại `docs/images/chrome`, `docs/images/firefox`, `docs/images/safari`. |
-| **Artifact \#5**   |  |  |  |  |
-| **Artifact \#6**   |  |  |  |  |
-| **Artifact \#7**   |  |  |  |  |
-| **Artifact \#8**   |  |  |  |  |
-| **Artifact \#9**   |  |  |  |  |
-| **Artifact \#10**   |  |  |  |  |
+| **Artifact \#5 - Nội dung AI Critique**<br>**Tool: OpenCode (Big Pickle)<br>Thời gian: 11:00 11/11/2026<br>Prompt: "hoàn thiện /home/naul1/Projects/software-testing/eshop-sut-2627/docs/AI Critique.md" (tin nhắn kèm nội dung file lúc đó chỉ có phần đầu và đường dẫn skill document-write)** | Bản cuối cùng trong `docs/AI Critique.md`, phần sau tiêu đề. Nội dung 283 từ, chia 5 đoạn: điểm AI sai (mục ngoài phạm vi, expected không có trong README, đếm 18 Passed và 24 Failed thay vì 22 và 20), 7 mục AI bỏ sót khi làm checklist, ba lý do AI sai và nguyên tắc rút ra. Xem file đính kèm. | INCOMPLETE | HW03 mục 10 yêu cầu một đoạn văn 200 đến 300 từ trả lời ba câu hỏi: AI sai ở đâu, vì sao sai, học được nguyên tắc gì. Bản AI sinh đủ 283 từ và đủ ba ý nhưng chia 5 đoạn thay vì một đoạn, và là output thô chưa qua rà soát của sinh viên theo nguyên tắc Human review ở mục 2 của đề. | Đã sửa: gộp 5 đoạn thành một đoạn văn duy nhất, giữ nguyên 283 từ; sinh viên rà soát các ví dụ đối chiếu `docs/report.md` mục 1.3, 1.4 và bảng audit trước khi nộp. |
+| **Artifact \#6 - Phần test summary trong README**<br>**Tool: OpenCode (Big Pickle)<br>Thời gian: 11:00 11/11/2026<br>Prompt: "trong docs/README.md, thêm phần report tổng hợp thật ngắn gọn, self assessment tôi sẽ tự ghi." (trích từ tin nhắn đầu của phiên, phần nội dung README lược bớt)** | Bản cuối cùng trong `docs/README.md`, mục Test summary report. Nội dung: 4 màn hình, 1 luồng usability, 42 mục checklist chạy 126 lượt với 22 Passed và 20 Failed mỗi trình duyệt, 11 bug có GitHub Issues, 7 người tham gia và 1 pilot với điểm SUS trung bình 58.2, 3 nền tảng cross-browser và link video demo skill. Xem file đính kèm. | INCOMPLETE | HW03 mục 14 yêu cầu README chứa bảng self-assessment và test summary nêu số màn hình, luồng, mục checklist thiết kế và thực thi, Passed, Failed, số bug, số người tham gia và video demo. Bản AI sinh đủ các số liệu nhưng cột Self-Assessed còn trống và chưa được sinh viên rà soát. | Sinh viên rà soát các con số khớp `docs/report.md` và `docs/checklist.xlsx`, sau đó tự điền cột Self-Assessed và điểm tự đánh giá trong tên file zip. |
 
 ## **4\. Tổng kết Độ chính xác AI**
 
@@ -53,20 +49,20 @@ Tổng hợp verdict từ Mục 3 và điền vào bảng dưới.
 
 | Chỉ số | Số lượng | Tỉ lệ |
 | :---- | :---- | :---- |
-| **Tổng artifact AI sinh đã audit** | 4 | 100% |
-| **VALID (đúng, dùng nguyên)** | 1 | 25% |
+| **Tổng artifact AI sinh đã audit** | 6 | 100% |
+| **VALID (đúng, dùng nguyên)** | 1 | 16.7% |
 | **INVALID (sai; loại bỏ)** | 0 | 0% |
-| **INCOMPLETE (chấp nhận sau khi sửa)** | 3 | 75% |
+| **INCOMPLETE (chấp nhận sau khi sửa)** | 5 | 83.3% |
 
 ## **5\. Kết luận — Khi nào nên / không nên dùng AI?**
 
 Viết 80–150 chữ mô tả pattern quan sát được. AI mạnh ở đâu? AI sai ở đâu? Khuyến nghị của bạn cho việc dùng AI trong loại công việc này?
 
-Qua 4 artifact đã audit, AI mạnh ở việc dựng khung và viết nháp nhanh. AI làm tốt checklist, bảng điểm SUS và các mục báo cáo theo mẫu cho sẵn. AI yếu ở chỗ bám nguồn: nhắm sai FR trong README, đếm lệch số Passed và Failed, không biết dữ liệu người tham gia là thật hay bịa. Tôi dùng AI để sinh bản nháp đầu, rồi tự đối chiếu từng con số với checklist và file đính kèm. Không nên dùng AI để thu thập dữ liệu thật hay khẳng định bug khi chưa tái hiện. Sau mỗi lần AI sinh artifact, cần rà soát và ghi vào AI Audit Report ngay để không mất prompt gốc.
+Qua 6 artifact đã audit, AI mạnh ở việc dựng khung và viết nháp nhanh. AI làm tốt checklist, bảng điểm SUS và các mục báo cáo theo mẫu cho sẵn. AI yếu ở chỗ bám nguồn: nhắm sai FR trong README, đếm lệch số Passed và Failed, không biết dữ liệu người tham gia là thật hay bịa. Tôi dùng AI để sinh bản nháp đầu, rồi tự đối chiếu từng con số với checklist và file đính kèm. Không nên dùng AI để thu thập dữ liệu thật hay khẳng định bug khi chưa tái hiện. Sau mỗi lần AI sinh artifact, cần rà soát và ghi vào AI Audit Report ngay để không mất prompt gốc.
 
 ## **6\. Mandatory Disclosure (dán nguyên văn)**
 
-*"Checklist, báo cáo và các tài liệu usability trong bài này được sinh phiên bản đầu bởi OpenCode (DeepSeek V4.1 Flash) và Antigravity; tôi đã rà soát và chỉnh sửa các mục checklist theo FR trong README, bổ sung 7 mục GUI do AI bỏ sót và phần phân tích BUG-11; danh sách 7 người tham gia, điểm SUS từng phiên và toàn bộ ảnh chụp màn hình do tôi tự thu thập. AI Audit Report chi tiết đính kèm ở Phụ lục A. Tôi cam đoan không dùng AI để sinh bất kỳ artifact nào thuộc danh mục bị cấm."*
+*"Checklist, báo cáo và các tài liệu usability trong bài này được sinh phiên bản đầu bởi OpenCode (DeepSeek V4.1 Flash, Big Pickle) và Antigravity; tôi đã rà soát và chỉnh sửa các mục checklist theo FR trong README, bổ sung 7 mục GUI do AI bỏ sót và phần phân tích BUG-11; danh sách 7 người tham gia, điểm SUS từng phiên và toàn bộ ảnh chụp màn hình do tôi tự thu thập. AI Audit Report chi tiết đính kèm ở Phụ lục A. Tôi cam đoan không dùng AI để sinh bất kỳ artifact nào thuộc danh mục bị cấm."*
 
 ## **Chữ ký**
 

@@ -177,7 +177,7 @@ Bảng dưới đây là danh sách người tham gia, số liên lạc được
 | P02 | Dương Trọng Nhân | Sinh viên | 097****824 |
 | P03 | Hà Nhất Khang | Sinh viên | Discord: khang***gai |
 | P04 | Lê Hoàng Thịnh | Sinh viên | Discord: nut***822 |
-| P05 | Đỗ Nguyên Hoàng | Sinh viên | 0865***872 |
+| P05 | Đỗ Nguyên Hoàng | Sinh viên | 086****872 |
 | P06 | Phạm Quốc Huy | Sinh viên | Discord: cheese***tu |
 | P07 | Lê Bảo Anh | Sinh viên | Discord: thered***ler |
 

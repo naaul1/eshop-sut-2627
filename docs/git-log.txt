@@ -1,0 +1,90 @@
+commit cde6a270dce47f6ec64659ba526b0988c6191d90
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Wed Nov 11 09:29:31 2026 +0700
+
+    update: Images and minor changes in `report`.
+
+commit eb18f97c310cc30a63a4481cb4d6c82bc7ff5e64
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Wed Nov 11 08:38:42 2026 +0700
+
+    update: Remove duplicated `checklist`. Adjustion in `session-summary`.
+
+commit 52d5b20bc467f9c56f50e9d479f9cf2889e00ab1
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Wed Nov 11 08:05:56 2026 +0700
+
+    update: Adding participants' detail in Task2.
+
+commit dcbbac2574729e731100e6e8da018566489269ae
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Wed Nov 11 06:27:22 2026 +0700
+
+    add: Screenshots of the bugs and complete Task3.
+
+commit d1bb31e2f4eadb10353a32cc4f44dee2ede8d652
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Tue Nov 10 23:50:28 2026 +0700
+
+    update: backend's CORS config to allow frontend reqs.
+
+commit 0583f220621fbc93aa521a60eaae53f0d98a5107
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Tue Nov 10 23:25:39 2026 +0700
+
+    update: Use environment API_URL for deploymenting frontend-admin.
+
+commit 1dafd737bcf23755f326a03fb8d8cf8eda9cad01
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Tue Nov 10 23:17:43 2026 +0700
+
+    update: Allow `.onrender.com` hosts to open a preview.
+
+commit 94ebe0264fd2871e1b546b780534044ad761df28
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Tue Nov 10 22:40:32 2026 +0700
+
+    update: Have a way to inject port number for servers.
+
+commit 0521057ab38f6dc4dba0a775b6a50f6c9f54dcef
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Tue Nov 10 22:26:53 2026 +0700
+
+    add: Products .csv and seed-orders script added. Minor adjustment in
+    Task 1 result.
+
+commit 6ded8fc1cee99175ba50c099ba6780e1ef471618
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Tue Nov 10 04:26:11 2026 +0700
+
+    add: Partially completed Task2 - `usability/`
+
+commit bae9f6956999ad131e3b8f999e78c07cddedf6c9
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Mon Nov 9 04:49:02 2026 +0700
+
+    add: Complete Task 1 with `checklist.xlsx` and content in `report`.
+
+commit 2cd38371f83db5daa2a408cb93b36ad6fc2a57de
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Mon Nov 9 02:52:53 2026 +0700
+
+    add: Init `usability-session` and redone the `run_server.sh`.
+
+commit 7273ba0f6e061a90347e21859a8345ea4c4194af
+Author: naaul1 <113044785+naaul1@users.noreply.github.com.>
+Date:   Sat Nov 7 22:40:18 2026 +0700
+
+    add: Init documents. Add reference and create ai-log skill.
+
+commit 85af3ba875c88283615e22cb108f13e2fccaf0e9
+Author: ttbhanh-hcmus <ttbhanh@hcmus.edu.vn>
+Date:   Fri May 15 08:30:35 2026 +0700
+
+    first upload
+
+commit 2f9bf2bab45855abf211377a5d5eba10031649e3
+Author: Hanh Tran <ttbhanh@fit.hcmus.edu.vn>
+Date:   Fri May 15 08:27:44 2026 +0700
+
+    Initial commit

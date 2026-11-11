@@ -53,30 +53,20 @@ Tổng hợp verdict từ Mục 3 và điền vào bảng dưới.
 
 | Chỉ số | Số lượng | Tỉ lệ |
 | :---- | :---- | :---- |
-| **Tổng artifact AI sinh đã audit** |  |  |
-| **VALID (đúng, dùng nguyên)** |  | % |
-| **INVALID (sai; loại bỏ)** |  | % |
-| **INCOMPLETE (chấp nhận sau khi sửa)** |  | % |
+| **Tổng artifact AI sinh đã audit** | 4 | 100% |
+| **VALID (đúng, dùng nguyên)** | 1 | 25% |
+| **INVALID (sai; loại bỏ)** | 0 | 0% |
+| **INCOMPLETE (chấp nhận sau khi sửa)** | 3 | 75% |
 
 ## **5\. Kết luận — Khi nào nên / không nên dùng AI?**
 
 Viết 80–150 chữ mô tả pattern quan sát được. AI mạnh ở đâu? AI sai ở đâu? Khuyến nghị của bạn cho việc dùng AI trong loại công việc này?
 
-\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-
-\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-
-\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-
-\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-
-\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-
-\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+Qua 4 artifact đã audit, AI mạnh ở việc dựng khung và viết nháp nhanh. AI làm tốt checklist, bảng điểm SUS và các mục báo cáo theo mẫu cho sẵn. AI yếu ở chỗ bám nguồn: nhắm sai FR trong README, đếm lệch số Passed và Failed, không biết dữ liệu người tham gia là thật hay bịa. Tôi dùng AI để sinh bản nháp đầu, rồi tự đối chiếu từng con số với checklist và file đính kèm. Không nên dùng AI để thu thập dữ liệu thật hay khẳng định bug khi chưa tái hiện. Sau mỗi lần AI sinh artifact, cần rà soát và ghi vào AI Audit Report ngay để không mất prompt gốc.
 
 ## **6\. Mandatory Disclosure (dán nguyên văn)**
 
-*"\[Test case / script / dataset / báo cáo\] này được sinh phiên bản đầu bởi \[tên công cụ AI\]; tôi đã rà soát và chỉnh sửa \[phần X\], bổ sung \[edge case Y, Z\]; \[phần W\] do tôi tự viết. AI Audit Report chi tiết đính kèm ở Phụ lục A. Tôi cam đoan không dùng AI để sinh bất kỳ artifact nào thuộc danh mục bị cấm."*
+*"Checklist, báo cáo và các tài liệu usability trong bài này được sinh phiên bản đầu bởi OpenCode (DeepSeek V4.1 Flash) và Antigravity; tôi đã rà soát và chỉnh sửa các mục checklist theo FR trong README, bổ sung 7 mục GUI do AI bỏ sót và phần phân tích BUG-11; danh sách 7 người tham gia, điểm SUS từng phiên và toàn bộ ảnh chụp màn hình do tôi tự thu thập. AI Audit Report chi tiết đính kèm ở Phụ lục A. Tôi cam đoan không dùng AI để sinh bất kỳ artifact nào thuộc danh mục bị cấm."*
 
 ## **Chữ ký**
 
@@ -86,7 +76,7 @@ Viết 80–150 chữ mô tả pattern quan sát được. AI mạnh ở đâu? 
 | **Lớp / Khoá:** | 23CTT1\_3 |
 | **Môn học:** | CS423 / CSC13003 – Kiểm chứng Phần mềm |
 | **Giảng viên:** | Lâm Quang Vũ |
-| **Ngày:** | 21/10/2026 |
+| **Ngày:** | 11/11/2026 |
 | **Chữ ký:** | Trần Đình Luân |
 
 ## **Tham khảo**

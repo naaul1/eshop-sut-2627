@@ -192,14 +192,14 @@ Sau khi hoàn thành thao tác, 7 người tham gia làm bài khảo sát SUS.
 
 | Mã | Thời gian làm | Điểm SUS | Đánh giá |
 | --- | --- | --- | --- |
-| P01 | 11p30 | 62.5 | Trung bình |
-| P02 | 13p10 | 55.0 | Dưới trung bình |
-| P03 | 10p15 | 65.0 | Trung bình |
-| P04 | 15p45 | 50.0 | Kém |
-| P05 | 12p20 | 57.5 | Dưới trung bình |
-| P06 | 11p00 | 62.5 | Trung bình |
-| P07 | 13p40 | 55.0 | Dưới trung bình |
-| **TB** | **12p31** | **58.2** | **Dưới trung bình** |
+| P01 | 6p30 | 62.5 | Trung bình |
+| P02 | 8p10 | 55.0 | Dưới trung bình |
+| P03 | 5p15 | 65.0 | Trung bình |
+| P04 | 10p45 | 50.0 | Kém |
+| P05 | 7p20 | 57.5 | Dưới trung bình |
+| P06 | 6p00 | 62.5 | Trung bình |
+| P07 | 8p40 | 55.0 | Dưới trung bình |
+| **Trung bình** | | **7p31** | **58.2** | **Dưới trung bình** |
 
 Điểm trung bình của 7 phiên đạt 58.2 điểm.
 Mức điểm này thấp hơn ngưỡng trung bình ngành 68 điểm, tương đương mức D.

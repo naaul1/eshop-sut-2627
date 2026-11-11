@@ -1,6 +1,6 @@
-# Kịch bản đánh giá Usability - Flow B
+# Kịch bản đánh giá Usability - Flow Admin
 
-Tài liệu này mô tả kịch bản kiểm thử độ tiện dụng cho luồng Flow B trong trang quản trị EShop.
+Tài liệu này mô tả kịch bản kiểm thử độ tiện dụng cho luồng Flow Admin trong trang quản trị EShop.
 
 ## 1. Mục tiêu kiểm thử
 

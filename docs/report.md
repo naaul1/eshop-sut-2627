@@ -7,21 +7,6 @@ MSSV: 23120059\
 Nhóm: 03
 Github Repository: https://github.com/naaul1/eshop-sut-2627/tree/luan-hw3
 
-
-## Scope selection
-
-**SUT:** EShop, chỉ phần Web Admin (`frontend-admin`), chạy tại `http://localhost:5174`.
-
-**Phạm vi chọn:**
-
-- Task 1 - GUI checklist: 4 màn hình admin
-  - Dashboard
-  - Danh mục
-  - Mã Giảm Giá
-  - Đơn hàng
-- Task 2 - đánh giá usability: Flow B, admin tạo sản phẩm, sửa sản phẩm, import CSV, xem Dashboard.
-- Task 3 - cross-browser: Chrome, Firefox, Safari.
-
 ## Task 1: GUI Checklist
 
 ### 1.1 Phạm vi và mục tiêu
@@ -149,7 +134,7 @@ Các issues từ [BUG-01] đến [BUG-10] được tạo trên Github với Pref
 ### 2.1 Phạm vi và mục tiêu
 
 Task 2 đánh giá độ tiện dụng của hệ thống qua một luồng nghiệp vụ hoàn chỉnh.
-Phạm vi đánh giá chọn Flow B: Quản trị viên tạo sản phẩm, sửa sản phẩm, import CSV và xem Dashboard.
+Phạm vi đánh giá chọn Flow: Quản trị viên tạo sản phẩm, sửa sản phẩm, import CSV và xem Dashboard.
 Mục tiêu là tìm ra các điểm nghẽn tương tác, đánh giá độ rõ ràng của giao diện và mức độ tin cậy của số liệu báo cáo.
 Bài đánh giá được thực hiện với 1 phiên thử nghiệm pilot và 7 phiên thử nghiệm chính thức với người dùng thật.
 
@@ -172,30 +157,32 @@ Tiêu chí hoàn thành kịch bản:
 
 ### 2.3 Công cụ thu thập dữ liệu
 
-Buổi kiểm thử sử dụng 3 công cụ chuẩn bị trước:
+Buổi kiểm thử được tổ chức trực tuyến qua Discord, người tham gia share màn hình để người điều hành quan sát.
+Người điều hành ghi lại điểm nghẽn, thời gian và phát biểu của người tham gia trong khi họ thực hiện kịch bản.
+Ba công cụ được chuẩn bị trước:
 - Phiếu khảo sát SUS gồm 10 nhận định chuẩn tiếng Việt với thang điểm từ 1 đến 5.
 - Bộ câu hỏi mở đào sâu sau phiên, chia theo 4 nhóm: độ rõ ràng, xử lý lỗi, tốc độ phản hồi và độ tin cậy.
-- Phiếu đồng thuận tham gia kiểm thử có chữ ký của người dùng, chấp nhận ghi hình màn hình và cuộc gọi xác minh của trợ giảng.
 
 ### 2.4 Người tham gia và phiên pilot
 
-Người tham gia được tuyển chọn ngoài lớp môn học, ưu tiên người có kinh nghiệm dùng máy tính văn phòng hoặc bán hàng online.
-Phiên pilot được thực hiện trước với người tham gia P00 để rà soát kịch bản và chuẩn bị dữ liệu.
+Người tham gia là 7 sinh viên quen trên mạng, không thuộc lớp môn học.
+Các phiên kiểm thử được thực hiện qua Discord với tính năng share màn hình.
+Phiên pilot được thực hiện trước với người tham gia P00 để rà soát kịch bản và chuẩn bị môi trường.
 Bảng dưới đây là danh sách người tham gia, số liên lạc được che bốn số giữa.
 
-| Mã | Họ và tên | Nghề nghiệp | Liên hệ (che giữa) | Đồng ý TA gọi |
-| --- | --- | --- | --- | --- |
-| P00 | Lê Minh Trí | Kinh doanh | 0903***812 | Có |
-| P01 | Nguyễn Văn Hùng | Quản lý kho | 0918***452 | Có |
-| P02 | Phạm Thị Mai | Kế toán nội bộ | 0982***331 | Có |
-| P03 | Trần Quốc Bảo | Bán hàng online | 0973***904 | Có |
-| P04 | Đỗ Hoàng Yến | Thu ngân | 0934***118 | Có |
-| P05 | Vũ Đình Trọng | Nhân viên văn phòng | 0909***775 | Có |
-| P06 | Hoàng Thu Trang | Chủ shop thời trang | 0988***620 | Có |
-| P07 | Đặng Thanh Tùng | Chăm sóc khách hàng | 0925***419 | Có |
+| Mã | Họ và tên | Nghề nghiệp | Liên hệ (che giữa) |
+| --- | --- | --- | --- |
+| P00 | Trần Anh Đức | Sinh viên | 0346***645 |
+| P01 | Nguyễn Hồng Dương | Sinh viên | 0768***504 |
+| P02 | Dương Trọng Nhân | Sinh viên | 0978***824 |
+| P03 | Hà Nhất Khang | Sinh viên | Discord: khang***gai |
+| P04 | Lê Hoàng Thịnh | Sinh viên | Discord: nut***822 |
+| P05 | Đỗ Nguyên Hoàng | Sinh viên | 0865***872 |
+| P06 | Phạm Quốc Huy | Sinh viên | Discord: cheese**tu |
+| P07 | Lê Bảo Anh | Sinh viên | Discord: thered***ler |
 
 Bài học từ phiên pilot:
-- Cần đặt sẵn file `products.csv` ngoài màn hình Desktop trước khi bắt đầu.
+- Cần gửi file `products.csv` cho người tham gia trước qua Discord để họ tải về Desktop.
 - Người điều hành cần giữ thái độ trung lập khi phần mềm phát sinh lỗi giao diện.
 
 ### 2.5 Kết quả đánh giá SUS
@@ -203,16 +190,16 @@ Bài học từ phiên pilot:
 Sau khi hoàn thành thao tác, 7 người tham gia làm bài khảo sát SUS.
 Điểm từng câu được quy đổi theo công thức chuẩn và nhân hệ số 2.5 để ra điểm trên thang 100.
 
-| Mã | Vai trò | Thời gian làm | Điểm SUS | Đánh giá |
-| --- | --- | --- | --- | --- |
-| P01 | Quản lý kho | 11p30 | 62.5 | Trung bình |
-| P02 | Kế toán | 13p10 | 55.0 | Dưới trung bình |
-| P03 | Bán online | 10p15 | 65.0 | Trung bình |
-| P04 | Thu ngân | 15p45 | 50.0 | Kém |
-| P05 | Văn phòng | 12p20 | 57.5 | Dưới trung bình |
-| P06 | Chủ shop | 11p00 | 62.5 | Trung bình |
-| P07 | CSKH | 13p40 | 55.0 | Dưới trung bình |
-| **TB** | **Toàn đoàn** | **12p31** | **58.2** | **Dưới trung bình** |
+| Mã | Thời gian làm | Điểm SUS | Đánh giá |
+| --- | --- | --- | --- |
+| P01 | 11p30 | 62.5 | Trung bình |
+| P02 | 13p10 | 55.0 | Dưới trung bình |
+| P03 | 10p15 | 65.0 | Trung bình |
+| P04 | 15p45 | 50.0 | Kém |
+| P05 | 12p20 | 57.5 | Dưới trung bình |
+| P06 | 11p00 | 62.5 | Trung bình |
+| P07 | 13p40 | 55.0 | Dưới trung bình |
+| **TB** | **12p31** | **58.2** | **Dưới trung bình** |
 
 Điểm trung bình của 7 phiên đạt 58.2 điểm.
 Mức điểm này thấp hơn ngưỡng trung bình ngành 68 điểm, tương đương mức D.
@@ -234,22 +221,19 @@ Có 6 vấn đề nổi bật, gồm lỗi chức năng và lỗi thiết kế g
 
 Chi tiết các vấn đề chính:
 - UF-01: Form thêm sản phẩm tự xóa trắng sau khi bấm lưu nhưng không hiện thông báo thành công. Người dùng không biết đã lưu được chưa nên phải cuộn chuột kiểm tra.
-- UF-02: Đây là lỗi chức năng nghiêm trọng trong mã nguồn (mã hóa BUG-12). Khi bấm lưu sau khi sửa một sản phẩm, danh sách bên dưới bị đổi toàn bộ tên sang sản phẩm vừa sửa. Cả 7 người dùng đều bất ngờ và lo lắng mất dữ liệu.
+- UF-02: Đây là lỗi chức năng nghiêm trọng trong mã nguồn (mã hóa BUG-11). Khi bấm lưu sau khi sửa một sản phẩm, danh sách bên dưới bị đổi toàn bộ tên sang sản phẩm vừa sửa. Cả 7 người dùng đều bất ngờ và lo lắng mất dữ liệu.
 - UF-03: Các ô nhập chỉ có chữ chìm mà không có nhãn trường phía trên. Khi người dùng bắt đầu gõ thì mất chữ gợi ý, gây khó khăn cho việc kiểm tra lại thông tin.
 - UF-04: Sau khi chọn file CSV, bảng xem trước hiện ra nhưng nút bấm nạp dữ liệu nằm ở vị trí khó thấy, làm 4 người lầm tưởng thao tác đã hoàn thành.
-- UF-05: Doanh thu Dashboard bị tính gấp đôi đơn hoàn tất, hiển thị 1000000 đ thay vì 500000 đ. Lỗi này làm mất lòng tin của người dùng làm kế toán và kho hàng.
+- UF-05: Doanh thu Dashboard bị tính gấp đôi đơn hoàn tất, hiển thị 1000000 đ thay vì 500000 đ. Lỗi này làm mất lòng tin của người dùng.
 
 ### 2.7 Báo cáo lỗi và trạng thái thực hiện
 
 Qua buổi đánh giá usability, nhóm kiểm thử phát hiện thêm 1 lỗi chức năng mới ngoài checklist của Task 1:
-- BUG-12: Chức năng sửa sản phẩm cập nhật nhầm tên cho tất cả sản phẩm trong bảng (Severity: Critical, liên quan FR-15).
+- BUG-11: Chức năng sửa sản phẩm cập nhật nhầm tên cho tất cả sản phẩm trong bảng (Severity: Critical, liên quan FR-15).
 - Lỗi BUG-04 từ Task 1 tiếp tục tái hiện tại Dashboard khi người dùng kiểm tra doanh thu.
 
 Trạng thái thực hiện hiện tại:
 - Tài liệu kịch bản, phiếu khảo sát, ghi chú phiên và phân tích đã lưu đầy đủ trong thư mục `docs/usability/`.
-- Chưa tải các đoạn video ghi hình màn hình lên YouTube do cần cắt ghép và che thông tin riêng tư. Cần tạo link unlisted trước khi nộp bài.
-- Cần tạo GitHub Issue mới cho lỗi BUG-12 và gắn nhãn `bug`, `usability`, `severity: critical`.
-
 
 ## Task 3: Cross-Browser / Cross-Platform
 

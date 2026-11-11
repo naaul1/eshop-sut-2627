@@ -1,6 +1,6 @@
-# Phân tích kết quả đánh giá Usability - Flow B
+# Phân tích kết quả đánh giá Usability - Flow Admin
 
-Tài liệu này tổng hợp và phân tích các phát hiện từ 7 phiên kiểm thử thực tế của luồng Flow B trong hệ thống EShop Admin.
+Tài liệu này tổng hợp và phân tích các phát hiện từ 7 phiên kiểm thử thực tế của luồng Flow Admin trong hệ thống EShop Admin.
 
 ## 1. Đánh giá tổng quan điểm SUS
 
@@ -31,7 +31,7 @@ Mức độ nghiêm trọng chia thành: Blocker, Critical, Major, Minor.
 - Hậu quả: 5 trên 7 người tham gia tưởng rằng bấm trượt hoặc hệ thống chưa nhận lệnh, dẫn đến bấm lưu lặp lại hoặc phải cuộn trang kiểm tra.
 - Đề xuất: Thêm thanh thông báo màu xanh báo lưu thành công trên góc màn hình trong 3 giây.
 
-### UF-02: Đổi tên hàng loạt khi sửa một sản phẩm (BUG-12)
+### UF-02: Đổi tên hàng loạt khi sửa một sản phẩm (BUG-11)
 - Mô tả: Khi sửa một sản phẩm và bấm lưu, hàm cập nhật trên giao diện gán nhầm tên sản phẩm vừa sửa cho tất cả sản phẩm đang có trong bảng.
 - Hậu quả: Toàn bộ 7 người tham gia đều thấy hoang mang và mất niềm tin vào tính an toàn của phần mềm.
 - Đề xuất: Sửa logic cập nhật state của danh sách sản phẩm, chỉ cập nhật dòng có mã ID tương ứng.

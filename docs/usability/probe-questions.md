@@ -12,12 +12,10 @@ Các câu hỏi tập trung vào bốn khía cạnh chính: độ rõ ràng, x�
 ### Độ rõ ràng
 - Bạn có hiểu các thông tin và nút bấm trên màn hình cần làm gì không?
 - Phần nào trong giao diện làm bạn thấy khó hiểu nhất? Vì sao?
-- Màn hình Dashboard có giúp bạn nắm bắt được tình hình bán hàng không?
 
 ### Xử lý lỗi
 - Khi gặp lỗi hoặc nhập sai dữ liệu, bạn có biết cách tự sửa lại không?
 - Các câu thông báo của hệ thống có giúp bạn biết cần làm gì tiếp theo không?
-- Khi đưa file CSV vào hệ thống, bạn có biết thông tin nào bị sai không?
 
 ### Tốc độ phản hồi
 - Bạn đánh giá thế nào về tốc độ xử lý khi bấm các nút trên trang?

@@ -2,5 +2,27 @@
   "namePrefix": "FR01 Happy Path",
   "emailPrefix": "fr01-happy-path",
   "emailDomain": "example.com",
-  "password": "Abcdef1!"
+  "password": "Abcdef1!",
+  "negativeCases": [
+    {
+      "title": "FIND-REG-03: reject email without @",
+      "invalidField": "email-format",
+      "emailTemplate": "{prefix}-{suffix}.example.com"
+    },
+    {
+      "title": "FIND-REG-04: reject email without domain",
+      "invalidField": "email-format",
+      "emailTemplate": "{prefix}-{suffix}@"
+    },
+    {
+      "title": "REG-05: require full name",
+      "invalidField": "name",
+      "emailTemplate": "{prefix}-{suffix}@{domain}"
+    },
+    {
+      "title": "REG-06: require email",
+      "invalidField": "email-required",
+      "emailTemplate": ""
+    }
+  ]
 }

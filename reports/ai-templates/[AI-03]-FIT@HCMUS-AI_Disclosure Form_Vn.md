@@ -15,10 +15,10 @@
 | Mục | Giá trị |
 | :---- | :---- |
 | **Môn học:** | CS423 / CSC13003 – Kiểm chứng Phần mềm |
-| **Mã bài tập:** | HW#03 |
+| **Mã bài tập:** | HW#04 |
 | **Tên bài tập:** |  GUI & Usability |
 | **Cấp độ AI (1–5):** | Cấp 4 |
-| **Ngày:** | 11/11/2026 |
+| **Ngày:** | 16/11/2026 |
 | **Họ tên sinh viên:** | Võ Thiện Nhân |
 | **MSSV:** | 23120066 |
 
@@ -36,16 +36,11 @@ Github Copilot - GPT Luna 5.6
 
 *Dán nguyên văn 2–3 prompt quan trọng nhất. Để xem đầy đủ, đính kèm Phụ lục A (prompt\_log.md).*
 
-Công cụ: GitHub Copilot<br>Timestamp: 2026-11-09T17:50:34+07:00<br>Prompt: /gui-checklist Tạo checklist với tối thiểu 40 item để kiểm tra GUI của các màn hình đăng ký, đăng nhập, quên mật khẩu, kết quả sinh ra đặt trong folder ai-artifacts
-
-
 
 ### **4\. Phần cụ thể AI đóng góp:**
 
-
 ### **5\. Cách tôi rà soát / chỉnh sửa / xác minh đầu ra AI:**
 
- 
 ### **6\. Trích dẫn (nếu môn yêu cầu):**
 
 ## **3\. Cam đoan Trung thực**
@@ -60,7 +55,7 @@ Công cụ: GitHub Copilot<br>Timestamp: 2026-11-09T17:50:34+07:00<br>Prompt: /g
 | **Lớp / Khoá:** | 23_3 |
 | **Môn học:** | CS423 / CSC13003 – Kiểm chứng Phần mềm |
 | **Giảng viên:** | Lâm Quang Vũ |
-| **Ngày:** | 11/11/2026 |
+| **Ngày:** | 16/11/2026 |
 | **Chữ ký:** | vothiennhan |
 
 ## **Tham khảo**

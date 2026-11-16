@@ -13,10 +13,9 @@ export class CartPage {
         this.rows = page.locator('table tbody tr');
         this.emptyMessage = page.getByRole('heading', { name: 'Giỏ hàng của bạn đang trống' });
         this.emptyIllustration = page.locator('main img, main svg');
-        this.totalLabel = page.getByText('Tổng cộng', { exact: false });
+        this.totalLabel = page.getByText(/^Tổng (?:cộng|tạm tính):/);
         this.continueShoppingLink = page.getByRole('link', {
-            name: 'Tiếp tục mua sắm',
-            exact: true,
+            name: /Tiếp tục mua sắm|Mua tiếp/,
         });
     }
 

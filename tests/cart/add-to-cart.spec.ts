@@ -14,6 +14,8 @@ const cartData = JSON.parse(
         airpods: { id: number; name: string };
     };
     emptyMessage: string;
+    expectedUnitPrice: string;
+    expectedLineTotal: string;
     expectedHeaders: string[];
 };
 const PRODUCTS = cartData.products;
@@ -97,6 +99,21 @@ test('FIND-CART-02: cart table has the specified columns', async ({ page }) => {
     await expect.soft(headers).toHaveText(cartData.expectedHeaders);
 });
 
+test('CART-06: unit price and line total are displayed correctly', async ({ page }) => {
+    const home = new HomePage(page);
+    const cart = new CartPage(page);
+
+    await home.goto();
+    await home.addProductToCart(PRODUCTS.iphone.name);
+    await home.openCart();
+
+    const row = cart.row(PRODUCTS.iphone.name);
+    await expect.soft(row).toBeVisible();
+    await expect.soft(row.locator('td').nth(1)).toHaveText(cartData.expectedUnitPrice);
+    await expect.soft(row.locator('td').nth(2)).toHaveText('1');
+    await expect.soft(row.locator('td').nth(3)).toHaveText(cartData.expectedLineTotal);
+});
+
 test('Test 5: FIND-B2 cart quantity controls update quantity and total', async ({ page }) => {
     const home = new HomePage(page);
     const cart = new CartPage(page);
@@ -141,7 +158,19 @@ test('Test 6: FIND-B3 removing a product requires confirmation', async ({ page }
     await expect(cart.emptyMessage).toBeVisible();
 });
 
-test('Test 7: FIND-B4 cart total and continue-shopping labels match the specification', async ({
+test('FIND-CART-12: total label is exactly Tổng cộng', async ({ page }) => {
+    const home = new HomePage(page);
+    const cart = new CartPage(page);
+
+    await home.goto();
+    await home.addProductToCart(PRODUCTS.iphone.name);
+    await home.openCart();
+
+    await expect.soft(cart.totalLabel).toBeVisible();
+    await expect.soft(cart.totalLabel).toHaveText(/^Tổng cộng:/);
+});
+
+test('FIND-CART-13: continue-shopping link has the specified label and destination', async ({
     page,
 }) => {
     const home = new HomePage(page);
@@ -151,8 +180,11 @@ test('Test 7: FIND-B4 cart total and continue-shopping labels match the specific
     await home.addProductToCart(PRODUCTS.iphone.name);
     await home.openCart();
 
-    await expect.soft(cart.totalLabel).toBeVisible();
     await expect.soft(cart.continueShoppingLink).toBeVisible();
+    await expect.soft(cart.continueShoppingLink).toHaveText(/^Tiếp tục mua sắm$/);
+    await expect.soft(cart.continueShoppingLink).toHaveAttribute('href', '/');
+    await cart.continueShoppingLink.click();
+    await expect.soft(page).toHaveURL('/');
 });
 
 test('FIND-CART-01: empty cart has an illustration and message', async ({ page }) => {

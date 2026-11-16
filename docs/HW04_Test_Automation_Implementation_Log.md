@@ -37,3 +37,10 @@ Ghi lại phạm vi, file thay đổi và kết quả xác minh cho từng promp
 - **Expected theo đặc tả:** CART-01/02/04 được đánh dấu finding trong tên test; CART-03/05 là hành vi mong đợi thông thường.
 - **Xác minh:** Không chạy test theo yêu cầu của người dùng. `git diff --check` sạch.
 
+### Prompt 5 — CART-06, CART-12, CART-13
+
+- **Phạm vi:** Đơn giá/thành tiền; nhãn tổng chính xác “Tổng cộng”; link “Tiếp tục mua sắm” và điều hướng về trang chủ.
+- **File:** Cập nhật [add-to-cart.spec.ts](../tests/cart/add-to-cart.spec.ts), [CartPage.ts](../tests/pages/CartPage.ts), [fr07-cart.json](../tests/cart/data/fr07-cart.json) và nhật ký này.
+- **Finding theo source:** SUT dùng “Giá”, “Tổng tạm tính” và “← Mua tiếp”; các assertion giữ expected theo đặc tả.
+- **Xác minh:** Không chạy test theo yêu cầu của người dùng.
+

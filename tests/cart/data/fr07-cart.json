@@ -10,6 +10,8 @@
     }
   },
   "emptyMessage": "Giỏ hàng của bạn đang trống",
+  "expectedUnitPrice": "30.000.000 ₫",
+  "expectedLineTotal": "30.000.000 ₫",
   "expectedHeaders": [
     "Sản phẩm",
     "Đơn giá",

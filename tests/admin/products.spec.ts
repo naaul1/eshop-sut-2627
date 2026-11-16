@@ -1,0 +1,190 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { expect, test, APIRequestContext, Page } from '@playwright/test';
+import { applyApiThrottle } from '../support/throttle';
+
+const API_URL = 'http://localhost:3000/api';
+
+const productData = JSON.parse(
+  readFileSync(join(__dirname, 'data', 'fr15-products.json'), 'utf8'),
+) as {
+  admin: { email: string; password: string };
+  product: {
+    namePrefix: string;
+    price: number;
+    updatedPrice: number;
+    description: string;
+    imageUrl: string;
+    categoryId: number;
+  };
+  seedProductNames: string[];
+};
+
+function uniqueProductName(label: string): string {
+  return `${productData.product.namePrefix} ${label} ${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
+}
+
+async function loginAsAdmin(page: Page): Promise<void> {
+  await page.goto('http://localhost:5174/', { waitUntil: 'domcontentloaded' });
+  await page.getByPlaceholder('Email').fill(productData.admin.email);
+  await page.getByPlaceholder('Password').fill(productData.admin.password);
+  await page.getByRole('button', { name: 'Login' }).click();
+  await expect(page.getByText('Sản phẩm', { exact: true })).toBeVisible();
+}
+
+async function openProductsTab(page: Page): Promise<void> {
+  await page.getByText('Sản phẩm', { exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Quản lý Sản phẩm' })).toBeVisible();
+}
+
+async function createProductThroughUI(page: Page, name: string): Promise<number> {
+  const responsePromise = page.waitForResponse(
+    (response) =>
+      response.request().method() === 'POST' &&
+      response.url() === `${API_URL}/products`,
+  );
+
+  await page.getByPlaceholder('Tên sản phẩm').fill(name);
+  await page.getByPlaceholder('Giá tiền').fill(String(productData.product.price));
+  await page.locator('form select').selectOption(String(productData.product.categoryId));
+  await page.getByRole('button', { name: 'Lưu sản phẩm' }).click();
+
+  const response = await responsePromise;
+  expect(response.ok()).toBe(true);
+  const result = await response.json() as { id: number };
+  return result.id;
+}
+
+async function createProductThroughAPI(
+  request: APIRequestContext,
+  name: string,
+): Promise<number> {
+  const response = await request.post(`${API_URL}/products`, {
+    data: {
+      name,
+      price: productData.product.price,
+      description: productData.product.description,
+      imageUrl: productData.product.imageUrl,
+      category_id: productData.product.categoryId,
+    },
+  });
+  expect(response.ok()).toBe(true);
+  const result = await response.json() as { id: number };
+  return result.id;
+}
+
+async function deleteProductById(
+  request: APIRequestContext,
+  productId: number,
+): Promise<void> {
+  const response = await request.delete(`${API_URL}/products/${productId}`);
+  expect(response.ok()).toBe(true);
+}
+
+test.beforeEach(async ({ page }) => {
+  const delay = Number(process.env.THROTTLE_MS || 0);
+  if (delay > 0) await applyApiThrottle(page, delay);
+});
+
+test('PROD-01: create a product with valid data', async ({ page, request }) => {
+  const name = uniqueProductName('create');
+  let productId: number | undefined;
+
+  try {
+    await loginAsAdmin(page);
+    await openProductsTab(page);
+    productId = await createProductThroughUI(page, name);
+
+    const row = page.locator('table tbody tr').filter({ hasText: name });
+    await expect.soft(row).toBeVisible();
+    await expect.soft(row).toContainText(`${productData.product.price} ₫`);
+
+    const response = await request.get(`${API_URL}/products`);
+    expect(response.ok()).toBe(true);
+    const products = await response.json() as {
+      id: number;
+      name: string;
+      price: number;
+      category_id: number;
+    }[];
+    const createdProduct = products.find((product) => product.id === productId);
+    expect(createdProduct?.name).toBe(name);
+    expect(createdProduct?.price).toBe(productData.product.price);
+    expect(createdProduct?.category_id).toBe(productData.product.categoryId);
+  } finally {
+    if (productId !== undefined) await deleteProductById(request, productId);
+  }
+});
+
+test('PROD-02: view the existing product list', async ({ page }) => {
+  await loginAsAdmin(page);
+  await openProductsTab(page);
+
+  const rows = page.locator('table tbody tr');
+  for (const name of productData.seedProductNames) {
+    const row = rows.filter({ hasText: name });
+    await expect.soft(row).toHaveCount(1);
+    await expect.soft(row).toBeVisible();
+  }
+});
+
+test('FIND-PROD-03: editing one product leaves other products unchanged', async ({
+  page,
+  request,
+}) => {
+  const targetName = uniqueProductName('edit-target');
+  const otherName = uniqueProductName('edit-other');
+  const updatedName = uniqueProductName('edited');
+  const targetId = await createProductThroughAPI(request, targetName);
+  let otherId: number | undefined;
+
+  try {
+    otherId = await createProductThroughAPI(request, otherName);
+    await loginAsAdmin(page);
+    await openProductsTab(page);
+
+    const targetRow = page.locator('table tbody tr').filter({ hasText: targetName });
+    await targetRow.getByRole('button', { name: 'Sửa' }).click();
+    await page.getByPlaceholder('Tên sản phẩm').fill(updatedName);
+    await page.getByPlaceholder('Giá tiền').fill(String(productData.product.updatedPrice));
+    await page.locator('form select').selectOption(String(productData.product.categoryId));
+    page.once('dialog', (dialog) => dialog.accept());
+    await page.getByRole('button', { name: 'Lưu sản phẩm' }).click();
+
+    const updatedRow = page.locator('table tbody tr').filter({ hasText: updatedName });
+    const otherRow = page.locator('table tbody tr').filter({ hasText: otherName });
+    await expect.soft(updatedRow).toHaveCount(1);
+    await expect.soft(otherRow).toHaveCount(1);
+
+    const response = await request.get(`${API_URL}/products`);
+    expect(response.ok()).toBe(true);
+    const products = await response.json() as { id: number; name: string }[];
+    expect(products.find((product) => product.id === targetId)?.name).toBe(updatedName);
+    expect(products.find((product) => product.id === otherId)?.name).toBe(otherName);
+  } finally {
+    await deleteProductById(request, targetId);
+    if (otherId !== undefined) await deleteProductById(request, otherId);
+  }
+});
+
+test('PROD-04: delete a product', async ({ page, request }) => {
+  const name = uniqueProductName('delete');
+  let productId: number | undefined;
+
+  try {
+    await loginAsAdmin(page);
+    await openProductsTab(page);
+    productId = await createProductThroughUI(page, name);
+
+    const row = page.locator('table tbody tr').filter({ hasText: name });
+    await row.getByRole('button', { name: 'Xóa' }).click();
+    await expect.soft(row).toHaveCount(0);
+
+    const response = await request.get(`${API_URL}/products`);
+    expect(response.ok()).toBe(true);
+    const products = await response.json() as { id: number }[];
+    expect(products.some((product) => product.id === productId)).toBe(false);
+  } finally {
+    if (productId !== undefined) await deleteProductById(request, productId);
+  }
+});

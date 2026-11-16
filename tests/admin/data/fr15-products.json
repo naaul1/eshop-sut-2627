@@ -1,0 +1,18 @@
+{
+  "admin": {
+    "email": "admin@eshop.com",
+    "password": "Admin123!"
+  },
+  "product": {
+    "namePrefix": "HW04 FR15",
+    "price": 12345,
+    "updatedPrice": 23456,
+    "description": "FR-15 automation test product",
+    "imageUrl": "",
+    "categoryId": 1
+  },
+  "seedProductNames": [
+    "iPhone 15 Pro Max",
+    "Tai nghe AirPods Pro 2"
+  ]
+}

@@ -51,3 +51,13 @@ Ghi lại phạm vi, file thay đổi và kết quả xác minh cho từng promp
 - **Finding theo source:** SUT hiện không có nút tăng/giảm và xóa sản phẩm không hiện dialog; expected trong test vẫn theo đặc tả.
 - **Xác minh:** Không chạy test theo yêu cầu của người dùng.
 
+## FR-15 — Quản lý sản phẩm Admin
+
+### Prompt 7 — PROD-01 đến PROD-04
+
+- **Phạm vi:** Thêm sản phẩm hợp lệ; xem sản phẩm; sửa một sản phẩm và giữ nguyên các sản phẩm khác; xóa sản phẩm.
+- **File:** [products.spec.ts](../tests/admin/products.spec.ts), [fr15-products.json](../tests/admin/data/fr15-products.json) và nhật ký này.
+- **Dữ liệu:** Tên sản phẩm tạo mới dùng suffix ngẫu nhiên; fixture chứa tài khoản Admin demo, giá và danh mục seed.
+- **Finding theo source:** Luồng sửa cập nhật tên mọi sản phẩm trong state UI dù API chỉ sửa ID được chọn; PROD-03 giữ expected theo đặc tả.
+- **Xác minh:** Không chạy test theo yêu cầu của người dùng.
+

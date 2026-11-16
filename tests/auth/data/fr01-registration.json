@@ -3,26 +3,78 @@
   "emailPrefix": "fr01-happy-path",
   "emailDomain": "example.com",
   "password": "Abcdef1!",
-  "negativeCases": [
+  "registrationCases": [
+    {
+      "title": "FIND-REG-02: reject duplicate email",
+      "caseType": "duplicate-email",
+      "emailTemplate": "{prefix}-{suffix}@{domain}",
+      "expectedOutcome": "reject"
+    },
     {
       "title": "FIND-REG-03: reject email without @",
-      "invalidField": "email-format",
-      "emailTemplate": "{prefix}-{suffix}.example.com"
+      "caseType": "email-no-at",
+      "emailTemplate": "{prefix}-{suffix}.example.com",
+      "expectedOutcome": "reject"
     },
     {
       "title": "FIND-REG-04: reject email without domain",
-      "invalidField": "email-format",
-      "emailTemplate": "{prefix}-{suffix}@"
+      "caseType": "email-no-domain",
+      "emailTemplate": "{prefix}-{suffix}@",
+      "expectedOutcome": "reject"
     },
     {
       "title": "REG-05: require full name",
-      "invalidField": "name",
-      "emailTemplate": "{prefix}-{suffix}@{domain}"
+      "caseType": "name-required",
+      "emailTemplate": "{prefix}-{suffix}@{domain}",
+      "expectedOutcome": "reject"
     },
     {
       "title": "REG-06: require email",
-      "invalidField": "email-required",
-      "emailTemplate": ""
+      "caseType": "email-required",
+      "emailTemplate": "",
+      "expectedOutcome": "reject"
+    },
+    {
+      "title": "REG-07: require password",
+      "caseType": "password-required",
+      "emailTemplate": "{prefix}-{suffix}@{domain}",
+      "password": "",
+      "expectedOutcome": "reject"
+    },
+    {
+      "title": "REG-08: reject password shorter than 8 characters",
+      "caseType": "password-too-short",
+      "emailTemplate": "{prefix}-{suffix}@{domain}",
+      "password": "Abcde1!",
+      "expectedOutcome": "reject"
+    },
+    {
+      "title": "FIND-REG-09: accept strong password of exactly 8 characters",
+      "caseType": "password-valid-boundary",
+      "emailTemplate": "{prefix}-{suffix}@{domain}",
+      "password": "Abcdef1!",
+      "expectedOutcome": "accept"
+    },
+    {
+      "title": "REG-10: reject password without uppercase letter",
+      "caseType": "password-no-uppercase",
+      "emailTemplate": "{prefix}-{suffix}@{domain}",
+      "password": "abcdef1!",
+      "expectedOutcome": "reject"
+    },
+    {
+      "title": "REG-11: reject password without lowercase letter",
+      "caseType": "password-no-lowercase",
+      "emailTemplate": "{prefix}-{suffix}@{domain}",
+      "password": "ABCDEF1!",
+      "expectedOutcome": "reject"
+    },
+    {
+      "title": "REG-12: reject password without digit",
+      "caseType": "password-no-digit",
+      "emailTemplate": "{prefix}-{suffix}@{domain}",
+      "password": "Abcdefg!",
+      "expectedOutcome": "reject"
     }
   ]
 }

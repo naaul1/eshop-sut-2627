@@ -1,14 +1,29 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { test, expect } from '@playwright/test';
 import { CartPage } from '../pages/CartPage';
 import { HomePage } from '../pages/HomePage';
 import { ProductDetailPage } from '../pages/ProductDetailPage';
+import { applyApiThrottle } from '../support/throttle';
 
-const PRODUCTS = {
-    iphone: { id: 1, name: 'iPhone 15 Pro Max' },
-    airpods: { id: 4, name: 'AirPods Pro 2' },
+const cartData = JSON.parse(
+    readFileSync(join(__dirname, 'data', 'fr07-cart.json'), 'utf8'),
+) as {
+    products: {
+        iphone: { id: number; name: string };
+        airpods: { id: number; name: string };
+    };
+    emptyMessage: string;
+    expectedHeaders: string[];
 };
+const PRODUCTS = cartData.products;
 
-test('Test 1: Add one product to the cart from the catalog', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
+    const delay = Number(process.env.THROTTLE_MS || 0);
+    if (delay > 0) await applyApiThrottle(page, delay);
+});
+
+test('CART-03: add one product to the cart from the catalog', async ({ page }) => {
     const home = new HomePage(page);
     const cart = new CartPage(page);
 
@@ -17,11 +32,12 @@ test('Test 1: Add one product to the cart from the catalog', async ({ page }) =>
     await home.openCart();
 
     await expect(cart.rows).toHaveCount(1);
+    await expect(cart.rows.first()).toBeVisible();
     await expect(cart.rows.first()).toContainText(PRODUCTS.iphone.name);
     await expect(cart.rows.first().locator('td').nth(2)).toHaveText('1');
 });
 
-test('Test 2: Add two different products to the cart', async ({ page }) => {
+test('CART-05: add two different products to the cart', async ({ page }) => {
     const home = new HomePage(page);
     const cart = new CartPage(page);
 
@@ -32,7 +48,9 @@ test('Test 2: Add two different products to the cart', async ({ page }) => {
 
     await expect(cart.rows).toHaveCount(2);
     await expect(cart.row(PRODUCTS.iphone.name)).toHaveCount(1);
+    await expect(cart.row(PRODUCTS.iphone.name)).toBeVisible();
     await expect(cart.row(PRODUCTS.airpods.name)).toHaveCount(1);
+    await expect(cart.row(PRODUCTS.airpods.name)).toBeVisible();
 });
 
 test('Test 3: Add a product from its detail page', async ({ page }) => {
@@ -52,7 +70,7 @@ test('Test 3: Add a product from its detail page', async ({ page }) => {
     await expect(cart.rows.first().locator('td').nth(2)).toHaveText('2');
 });
 
-test('Test 4: FIND-B1 adding the same product twice merges into one row', async ({ page }) => {
+test('FIND-CART-04: adding the same product twice merges into one row', async ({ page }) => {
     const home = new HomePage(page);
     const cart = new CartPage(page);
 
@@ -63,6 +81,20 @@ test('Test 4: FIND-B1 adding the same product twice merges into one row', async 
 
     await expect.soft(cart.rows).toHaveCount(1);
     await expect.soft(cart.rows.first().locator('td').nth(2)).toHaveText('2');
+});
+
+test('FIND-CART-02: cart table has the specified columns', async ({ page }) => {
+    const home = new HomePage(page);
+
+    await home.goto();
+    await home.addProductToCart(PRODUCTS.iphone.name);
+    await home.openCart();
+
+    const table = page.locator('table');
+    const headers = table.locator('thead th');
+    await expect.soft(table).toBeVisible();
+    await expect.soft(headers).toHaveCount(cartData.expectedHeaders.length);
+    await expect.soft(headers).toHaveText(cartData.expectedHeaders);
 });
 
 test('Test 5: FIND-B2 cart quantity controls update quantity and total', async ({ page }) => {
@@ -123,11 +155,13 @@ test('Test 7: FIND-B4 cart total and continue-shopping labels match the specific
     await expect.soft(cart.continueShoppingLink).toBeVisible();
 });
 
-test('Test 8: FIND-B5 empty cart includes an illustration and message', async ({ page }) => {
+test('FIND-CART-01: empty cart has an illustration and message', async ({ page }) => {
     const cart = new CartPage(page);
     await cart.goto();
 
-    await expect(cart.emptyMessage).toBeVisible();
+    await expect.soft(cart.rows).toHaveCount(0);
+    await expect.soft(cart.emptyMessage).toBeVisible();
+    await expect.soft(cart.emptyMessage).toHaveText(cartData.emptyMessage);
     await expect.soft(cart.emptyIllustration.first()).toBeVisible();
 });
 

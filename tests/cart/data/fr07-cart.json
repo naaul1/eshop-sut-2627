@@ -12,6 +12,7 @@
   "emptyMessage": "Giỏ hàng của bạn đang trống",
   "expectedUnitPrice": "30.000.000 ₫",
   "expectedLineTotal": "30.000.000 ₫",
+  "expectedTotalAfterRemovingIPhone": "Tổng cộng: 6.000.000 ₫",
   "quantity": {
     "initial": 1,
     "increased": 2,

@@ -3,6 +3,10 @@
   "emailPrefix": "fr01-happy-path",
   "emailDomain": "example.com",
   "password": "Abcdef1!",
+  "admin": {
+    "email": "admin@eshop.com",
+    "password": "Admin123!"
+  },
   "registrationCases": [
     {
       "title": "FIND-REG-02: reject duplicate email",

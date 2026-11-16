@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect, test, APIRequestContext, Page } from '@playwright/test';
+import { expect, test, APIRequestContext, Page, Response } from '@playwright/test';
 import { applyApiThrottle } from '../support/throttle';
 
 const API_URL = 'http://localhost:3000/api';
@@ -183,7 +183,12 @@ test('FIND-PROD-03: editing one product leaves other products unchanged', async 
 }) => {
   const targetName = uniqueProductName('edit-target');
   const otherName = uniqueProductName('edit-other');
-  const updatedName = uniqueProductName('edited');
+  const editedCategoryId = productData.categories.find(
+    ({ id }) => id !== productData.product.categoryId,
+  )?.id;
+  if (editedCategoryId === undefined) {
+    throw new Error('Fixture must include a category different from the product default.');
+  }
   const targetId = await createProductThroughAPI(request, targetName);
   let otherId: number | undefined;
 
@@ -194,22 +199,29 @@ test('FIND-PROD-03: editing one product leaves other products unchanged', async 
 
     const targetRow = page.locator('table tbody tr').filter({ hasText: targetName });
     await targetRow.getByRole('button', { name: 'Sửa' }).click();
-    await page.getByPlaceholder('Tên sản phẩm').fill(updatedName);
     await page.getByPlaceholder('Giá tiền').fill(String(productData.product.updatedPrice));
-    await page.locator('form select').selectOption(String(productData.product.categoryId));
+    await page.locator('form select').selectOption(String(editedCategoryId));
     page.once('dialog', (dialog) => dialog.accept());
     await page.getByRole('button', { name: 'Lưu sản phẩm' }).click();
 
-    const updatedRow = page.locator('table tbody tr').filter({ hasText: updatedName });
+    const updatedRow = page.locator('table tbody tr').filter({ hasText: targetName });
     const otherRow = page.locator('table tbody tr').filter({ hasText: otherName });
     await expect.soft(updatedRow).toHaveCount(1);
     await expect.soft(otherRow).toHaveCount(1);
 
     const response = await request.get(`${API_URL}/products`);
     expect(response.ok()).toBe(true);
-    const products = await response.json() as { id: number; name: string }[];
-    expect(products.find((product) => product.id === targetId)?.name).toBe(updatedName);
-    expect(products.find((product) => product.id === otherId)?.name).toBe(otherName);
+    const products = await response.json() as ProductRecord[];
+    const targetProduct = products.find((product) => product.id === targetId);
+    const otherProduct = products.find((product) => product.id === otherId);
+    expect(targetProduct?.name).toBe(targetName);
+    expect(Number(targetProduct?.price)).toBe(productData.product.updatedPrice);
+    expect(Number(targetProduct?.category_id)).toBe(editedCategoryId);
+    expect(targetProduct?.description).toBe(productData.product.description);
+    expect(otherProduct?.name).toBe(otherName);
+    expect(Number(otherProduct?.price)).toBe(productData.product.price);
+    expect(Number(otherProduct?.category_id)).toBe(productData.product.categoryId);
+    expect(otherProduct?.description).toBe(productData.product.description);
   } finally {
     await deleteProductById(request, targetId);
     if (otherId !== undefined) await deleteProductById(request, otherId);
@@ -255,8 +267,39 @@ for (const testCase of productData.validationCases) {
       await openProductsTab(page);
       await fillProductForm(page, name, testCase.price, description, categoryId);
 
+      let productResponse: Response | undefined;
+      page.on('response', (response) => {
+        if (
+          response.request().method() === 'POST' &&
+          response.url() === `${API_URL}/products`
+        ) {
+          productResponse = response;
+        }
+      });
       page.on('dialog', (dialog) => dialog.accept());
       await page.getByRole('button', { name: 'Lưu sản phẩm' }).click();
+
+      if (testCase.expectedOutcome === 'reject') {
+        const form = page.locator('form');
+        await expect.poll(async () =>
+          productResponse !== undefined ||
+          !(await form.evaluate((element) =>
+            (element as HTMLFormElement).checkValidity(),
+          )),
+        ).toBe(true);
+
+        if (productResponse) {
+          expect.soft(productResponse.status()).toBeGreaterThanOrEqual(400);
+          expect.soft(productResponse.status()).toBeLessThan(500);
+          expect.soft(productResponse.ok()).toBe(false);
+        } else {
+          expect.soft(
+            await form.evaluate((element) =>
+              (element as HTMLFormElement).checkValidity(),
+            ),
+          ).toBe(false);
+        }
+      }
 
       const createdProducts = (await getProducts(request)).filter(
         (product) => product.description === description,

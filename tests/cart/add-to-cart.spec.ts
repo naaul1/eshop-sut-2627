@@ -16,6 +16,7 @@ const cartData = JSON.parse(
     emptyMessage: string;
     expectedUnitPrice: string;
     expectedLineTotal: string;
+    expectedTotalAfterRemovingIPhone: string;
     quantity: {
         initial: number;
         increased: number;
@@ -42,7 +43,7 @@ test('CART-03: add one product to the cart from the catalog', async ({ page }) =
     await expect(cart.rows).toHaveCount(1);
     await expect(cart.rows.first()).toBeVisible();
     await expect(cart.rows.first()).toContainText(PRODUCTS.iphone.name);
-    await expect(cart.rows.first().locator('td').nth(2)).toHaveText('1');
+    await expect(cart.rows.first().locator('td').nth(2)).toHaveText(String(cartData.quantity.initial));
 });
 
 test('CART-05: add two different products to the cart', async ({ page }) => {
@@ -68,14 +69,14 @@ test('Test 3: Add a product from its detail page', async ({ page }) => {
 
     await home.goto();
     await home.openProductDetails(PRODUCTS.iphone.name);
-    await detail.setQuantity(2);
+    await detail.setQuantity(cartData.quantity.increased);
     await detail.addToCart();
     await detail.addToCart();
     await cart.openCartFromHeader();
 
     await expect(cart.rows).toHaveCount(1);
     await expect(cart.rows.first()).toContainText(PRODUCTS.iphone.name);
-    await expect(cart.rows.first().locator('td').nth(2)).toHaveText('2');
+    await expect(cart.rows.first().locator('td').nth(2)).toHaveText(String(cartData.quantity.increased));
 });
 
 test('FIND-CART-04: adding the same product twice merges into one row', async ({ page }) => {
@@ -88,7 +89,7 @@ test('FIND-CART-04: adding the same product twice merges into one row', async ({
     await home.openCart();
 
     await expect.soft(cart.rows).toHaveCount(1);
-    await expect.soft(cart.rows.first().locator('td').nth(2)).toHaveText('2');
+    await expect.soft(cart.rows.first().locator('td').nth(2)).toHaveText(String(cartData.quantity.increased));
 });
 
 test('FIND-CART-02: cart table has the specified columns', async ({ page }) => {
@@ -116,7 +117,7 @@ test('CART-06: unit price and line total are displayed correctly', async ({ page
     const row = cart.row(PRODUCTS.iphone.name);
     await expect.soft(row).toBeVisible();
     await expect.soft(row.locator('td').nth(1)).toHaveText(cartData.expectedUnitPrice);
-    await expect.soft(row.locator('td').nth(2)).toHaveText('1');
+    await expect.soft(row.locator('td').nth(2)).toHaveText(String(cartData.quantity.initial));
     await expect.soft(row.locator('td').nth(3)).toHaveText(cartData.expectedLineTotal);
 });
 
@@ -166,6 +167,7 @@ test('FIND-CART-09: removing a product requires confirmation', async ({ page }) 
 
     await home.goto();
     await home.addProductToCart(PRODUCTS.iphone.name);
+    await home.addProductToCart(PRODUCTS.airpods.name);
     await home.openCart();
     page.once('dialog', async (dialog) => {
         confirmationShown = dialog.type() === 'confirm';
@@ -175,7 +177,11 @@ test('FIND-CART-09: removing a product requires confirmation', async ({ page }) 
     await cart.removeProduct(PRODUCTS.iphone.name);
 
     expect.soft(confirmationShown).toBe(true);
-    await expect.soft(cart.rows).toHaveCount(0);
+    await expect.soft(cart.rows).toHaveCount(1);
+    await expect.soft(cart.row(PRODUCTS.airpods.name)).toBeVisible();
+    await expect.soft(cart.totalLabel).toHaveText(
+        cartData.expectedTotalAfterRemovingIPhone,
+    );
 });
 
 test('FIND-CART-10: canceling removal keeps the product in the cart', async ({ page }) => {
@@ -243,7 +249,7 @@ test('Test 9: FIND-B6 the cart navigation link shows the item-count badge', asyn
     await home.addProductToCart(PRODUCTS.iphone.name);
 
     const badge = page.getByRole('link', { name: /Giỏ hàng/ }).locator('span');
-    await expect.soft(badge).toHaveText('1');
+    await expect.soft(badge).toHaveText(String(cartData.quantity.initial));
 });
 
 test('Test 10: FIND-B7 catalog product images have descriptive alt text', async ({ page }) => {

@@ -16,6 +16,12 @@ const cartData = JSON.parse(
     emptyMessage: string;
     expectedUnitPrice: string;
     expectedLineTotal: string;
+    quantity: {
+        initial: number;
+        increased: number;
+        minimum: number;
+        lineTotalAfterIncrease: string;
+    };
     expectedHeaders: string[];
 };
 const PRODUCTS = cartData.products;
@@ -114,7 +120,7 @@ test('CART-06: unit price and line total are displayed correctly', async ({ page
     await expect.soft(row.locator('td').nth(3)).toHaveText(cartData.expectedLineTotal);
 });
 
-test('Test 5: FIND-B2 cart quantity controls update quantity and total', async ({ page }) => {
+test('FIND-CART-07: increase button updates quantity and line total', async ({ page }) => {
     const home = new HomePage(page);
     const cart = new CartPage(page);
 
@@ -124,21 +130,36 @@ test('Test 5: FIND-B2 cart quantity controls update quantity and total', async (
 
     const row = cart.row(PRODUCTS.iphone.name);
     const increase = row.getByRole('button', { name: '+' });
-    const decrease = row.getByRole('button', { name: '-' });
     await expect.soft(increase).toBeVisible();
-    await expect.soft(decrease).toBeVisible();
 
-    if (await increase.count() > 0 && await decrease.count() > 0) {
+    await expect.soft(row.locator('td').nth(2)).toHaveText(String(cartData.quantity.initial));
+    if (await increase.count() > 0) {
         await increase.click();
-        await expect(row.locator('td').nth(2)).toHaveText('2');
-        await expect(row.locator('td').nth(3)).toContainText('60.000.000 ₫');
-
-        await decrease.click();
-        await expect(row.locator('td').nth(2)).toHaveText('1');
+        await expect.soft(row.locator('td').nth(2)).toHaveText(String(cartData.quantity.increased));
+        await expect.soft(row.locator('td').nth(3)).toHaveText(cartData.quantity.lineTotalAfterIncrease);
     }
 });
 
-test('Test 6: FIND-B3 removing a product requires confirmation', async ({ page }) => {
+test('FIND-CART-08: decrease button does not reduce quantity below one', async ({ page }) => {
+    const home = new HomePage(page);
+    const cart = new CartPage(page);
+
+    await home.goto();
+    await home.addProductToCart(PRODUCTS.iphone.name);
+    await home.openCart();
+
+    const row = cart.row(PRODUCTS.iphone.name);
+    const decrease = row.getByRole('button', { name: '-' });
+    await expect.soft(decrease).toBeVisible();
+    await expect.soft(row.locator('td').nth(2)).toHaveText(String(cartData.quantity.minimum));
+
+    if (await decrease.count() > 0 && !(await decrease.isDisabled())) {
+        await decrease.click();
+    }
+    await expect.soft(row.locator('td').nth(2)).toHaveText(String(cartData.quantity.minimum));
+});
+
+test('FIND-CART-09: removing a product requires confirmation', async ({ page }) => {
     const home = new HomePage(page);
     const cart = new CartPage(page);
     let confirmationShown = false;
@@ -154,8 +175,27 @@ test('Test 6: FIND-B3 removing a product requires confirmation', async ({ page }
     await cart.removeProduct(PRODUCTS.iphone.name);
 
     expect.soft(confirmationShown).toBe(true);
-    await expect(cart.rows).toHaveCount(0);
-    await expect(cart.emptyMessage).toBeVisible();
+    await expect.soft(cart.rows).toHaveCount(0);
+});
+
+test('FIND-CART-10: canceling removal keeps the product in the cart', async ({ page }) => {
+    const home = new HomePage(page);
+    const cart = new CartPage(page);
+    let confirmationShown = false;
+
+    await home.goto();
+    await home.addProductToCart(PRODUCTS.iphone.name);
+    await home.openCart();
+    page.once('dialog', async (dialog) => {
+        confirmationShown = dialog.type() === 'confirm';
+        await dialog.dismiss();
+    });
+
+    await cart.removeProduct(PRODUCTS.iphone.name);
+
+    expect.soft(confirmationShown).toBe(true);
+    await expect.soft(cart.row(PRODUCTS.iphone.name)).toBeVisible();
+    await expect.soft(cart.rows).toHaveCount(1);
 });
 
 test('FIND-CART-12: total label is exactly Tổng cộng', async ({ page }) => {

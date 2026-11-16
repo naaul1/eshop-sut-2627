@@ -12,6 +12,12 @@
   "emptyMessage": "Giỏ hàng của bạn đang trống",
   "expectedUnitPrice": "30.000.000 ₫",
   "expectedLineTotal": "30.000.000 ₫",
+  "quantity": {
+    "initial": 1,
+    "increased": 2,
+    "minimum": 1,
+    "lineTotalAfterIncrease": "60.000.000 ₫"
+  },
   "expectedHeaders": [
     "Sản phẩm",
     "Đơn giá",

@@ -44,3 +44,10 @@ Ghi lại phạm vi, file thay đổi và kết quả xác minh cho từng promp
 - **Finding theo source:** SUT dùng “Giá”, “Tổng tạm tính” và “← Mua tiếp”; các assertion giữ expected theo đặc tả.
 - **Xác minh:** Không chạy test theo yêu cầu của người dùng.
 
+### Prompt 6 — CART-07 đến CART-10
+
+- **Phạm vi:** Tăng số lượng và cập nhật thành tiền; không giảm dưới 1; yêu cầu xác nhận trước khi xóa; hủy xác nhận thì giữ sản phẩm.
+- **File:** Cập nhật [add-to-cart.spec.ts](../tests/cart/add-to-cart.spec.ts), [fr07-cart.json](../tests/cart/data/fr07-cart.json) và nhật ký này.
+- **Finding theo source:** SUT hiện không có nút tăng/giảm và xóa sản phẩm không hiện dialog; expected trong test vẫn theo đặc tả.
+- **Xác minh:** Không chạy test theo yêu cầu của người dùng.
+

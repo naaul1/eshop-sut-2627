@@ -11,8 +11,64 @@
     "imageUrl": "",
     "categoryId": 1
   },
+  "categories": [
+    {
+      "id": 1,
+      "name": "Điện thoại"
+    },
+    {
+      "id": 2,
+      "name": "Laptop"
+    }
+  ],
   "seedProductNames": [
     "iPhone 15 Pro Max",
     "Tai nghe AirPods Pro 2"
+  ],
+  "validationCases": [
+    {
+      "title": "PROD-05: reject an empty product name",
+      "nameValue": "",
+      "price": 12345,
+      "expectedOutcome": "reject"
+    },
+    {
+      "title": "PROD-06: accept a product name of exactly 255 characters",
+      "nameLength": 255,
+      "price": 12345,
+      "expectedOutcome": "accept"
+    },
+    {
+      "title": "FIND-PROD-07: reject a product name longer than 255 characters",
+      "nameLength": 256,
+      "price": 12345,
+      "expectedOutcome": "reject"
+    },
+    {
+      "title": "PROD-08: accept the smallest positive product price",
+      "price": 1,
+      "expectedOutcome": "accept"
+    },
+    {
+      "title": "FIND-PROD-09: reject a zero product price",
+      "price": 0,
+      "expectedOutcome": "reject"
+    },
+    {
+      "title": "FIND-PROD-10: reject a negative product price",
+      "price": -1,
+      "expectedOutcome": "reject"
+    },
+    {
+      "title": "FIND-PROD-11: reject a missing product price",
+      "price": "",
+      "expectedOutcome": "reject"
+    },
+    {
+      "title": "PROD-12: save the selected existing category",
+      "price": 12345,
+      "categoryId": 2,
+      "expectedOutcome": "accept"
+    }
   ]
 }

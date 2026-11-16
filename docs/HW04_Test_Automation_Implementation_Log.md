@@ -61,3 +61,11 @@ Ghi lại phạm vi, file thay đổi và kết quả xác minh cho từng promp
 - **Finding theo source:** Luồng sửa cập nhật tên mọi sản phẩm trong state UI dù API chỉ sửa ID được chọn; PROD-03 giữ expected theo đặc tả.
 - **Xác minh:** Không chạy test theo yêu cầu của người dùng.
 
+### Prompt 8 — PROD-05 đến PROD-12
+
+- **Phạm vi:** Tên rỗng; tên 255/256 ký tự; giá 1/0/âm/trống; chọn và lưu danh mục có sẵn.
+- **File:** Cập nhật [products.spec.ts](../tests/admin/products.spec.ts), [fr15-products.json](../tests/admin/data/fr15-products.json) và nhật ký này.
+- **Dọn dữ liệu:** Mô tả sản phẩm gắn suffix duy nhất; sau mỗi ca chỉ xóa sản phẩm mang đúng mô tả fixture của ca đó, kể cả khi SUT chấp nhận dữ liệu không hợp lệ.
+- **Finding theo source:** Form không giới hạn 255 ký tự, không bắt buộc/giới hạn giá dương; expected vẫn theo FR-15.
+- **Xác minh:** Không chạy test theo yêu cầu của người dùng.
+

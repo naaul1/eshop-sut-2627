@@ -17,11 +17,32 @@ const productData = JSON.parse(
     imageUrl: string;
     categoryId: number;
   };
+  categories: { id: number; name: string }[];
   seedProductNames: string[];
+  validationCases: {
+    title: string;
+    nameValue?: string;
+    nameLength?: number;
+    price: number | string;
+    categoryId?: number;
+    expectedOutcome: 'accept' | 'reject';
+  }[];
+};
+
+type ProductRecord = {
+  id: number;
+  name: string;
+  price: number | string | null;
+  description: string;
+  category_id: number | string;
 };
 
 function uniqueProductName(label: string): string {
   return `${productData.product.namePrefix} ${label} ${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
+}
+
+function uniqueProductNameOfLength(length: number, suffix: string): string {
+  return `${'P'.repeat(length - suffix.length)}${suffix}`;
 }
 
 async function loginAsAdmin(page: Page): Promise<void> {
@@ -37,6 +58,24 @@ async function openProductsTab(page: Page): Promise<void> {
   await expect(page.getByRole('heading', { name: 'Quản lý Sản phẩm' })).toBeVisible();
 }
 
+async function fillProductForm(
+  page: Page,
+  name: string,
+  price: number | string,
+  description: string,
+  categoryId: number,
+): Promise<void> {
+  const category = productData.categories.find(({ id }) => id === categoryId);
+  if (!category) throw new Error(`Unknown fixture category id: ${categoryId}`);
+
+  await page.getByPlaceholder('Tên sản phẩm').fill(name);
+  await page.getByPlaceholder('Giá tiền').fill(String(price));
+  await page.getByPlaceholder('Mô tả').fill(description);
+  const categorySelect = page.locator('form select');
+  await categorySelect.selectOption({ label: category.name });
+  await expect(categorySelect).toHaveValue(String(categoryId));
+}
+
 async function createProductThroughUI(page: Page, name: string): Promise<number> {
   const responsePromise = page.waitForResponse(
     (response) =>
@@ -44,15 +83,25 @@ async function createProductThroughUI(page: Page, name: string): Promise<number>
       response.url() === `${API_URL}/products`,
   );
 
-  await page.getByPlaceholder('Tên sản phẩm').fill(name);
-  await page.getByPlaceholder('Giá tiền').fill(String(productData.product.price));
-  await page.locator('form select').selectOption(String(productData.product.categoryId));
+  await fillProductForm(
+    page,
+    name,
+    productData.product.price,
+    productData.product.description,
+    productData.product.categoryId,
+  );
   await page.getByRole('button', { name: 'Lưu sản phẩm' }).click();
 
   const response = await responsePromise;
   expect(response.ok()).toBe(true);
   const result = await response.json() as { id: number };
   return result.id;
+}
+
+async function getProducts(request: APIRequestContext): Promise<ProductRecord[]> {
+  const response = await request.get(`${API_URL}/products`);
+  expect(response.ok()).toBe(true);
+  return response.json();
 }
 
 async function createProductThroughAPI(
@@ -188,3 +237,50 @@ test('PROD-04: delete a product', async ({ page, request }) => {
     if (productId !== undefined) await deleteProductById(request, productId);
   }
 });
+
+for (const testCase of productData.validationCases) {
+  test(testCase.title, async ({ page, request }) => {
+    const suffix = `${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
+    const name =
+      testCase.nameValue !== undefined
+        ? testCase.nameValue
+        : testCase.nameLength !== undefined
+          ? uniqueProductNameOfLength(testCase.nameLength, suffix)
+          : uniqueProductName(testCase.title);
+    const description = `${productData.product.description} ${suffix}`;
+    const categoryId = testCase.categoryId ?? productData.product.categoryId;
+
+    try {
+      await loginAsAdmin(page);
+      await openProductsTab(page);
+      await fillProductForm(page, name, testCase.price, description, categoryId);
+
+      page.on('dialog', (dialog) => dialog.accept());
+      await page.getByRole('button', { name: 'Lưu sản phẩm' }).click();
+
+      const createdProducts = (await getProducts(request)).filter(
+        (product) => product.description === description,
+      );
+      if (testCase.expectedOutcome === 'reject') {
+        await expect.soft(createdProducts).toHaveLength(0);
+      } else {
+        await expect.soft(createdProducts).toHaveLength(1);
+        const createdProduct = createdProducts[0];
+        if (createdProduct) {
+          const row = page.locator('table tbody tr').filter({ hasText: name });
+          await expect.soft(row).toBeVisible();
+          expect.soft(createdProduct.name).toBe(name);
+          expect.soft(Number(createdProduct.price)).toBe(Number(testCase.price));
+          expect.soft(Number(createdProduct.category_id)).toBe(categoryId);
+        }
+      }
+    } finally {
+      const createdProducts = (await getProducts(request)).filter(
+        (product) => product.description === description,
+      );
+      for (const product of createdProducts) {
+        await deleteProductById(request, product.id);
+      }
+    }
+  });
+}

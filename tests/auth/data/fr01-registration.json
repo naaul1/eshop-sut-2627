@@ -1,0 +1,6 @@
+{
+  "namePrefix": "FR01 Happy Path",
+  "emailPrefix": "fr01-happy-path",
+  "emailDomain": "example.com",
+  "password": "Abcdef1!"
+}

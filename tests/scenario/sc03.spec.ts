@@ -71,7 +71,7 @@ const couponCases = data as ReadonlyArray<{
   expectedTotal?: number;
 }>;
 
-for (const couponCase of couponCases) {
+couponCases.forEach((couponCase) => {
   test(`Scenario 3: ${couponCase.name}`, async ({ page, request }) => {
     await openCheckout(page, request);
     await applyCoupon(page, couponCase.code);
@@ -87,9 +87,9 @@ for (const couponCase of couponCases) {
     }
 
     await expect(page.locator('p').filter({ hasText: couponCase.expectedMessage })).toBeVisible();
-    await expect.
+
   });
-}
+});
 
 test('Scenario 3: BIGBUY is rejected below its minimum order amount', async ({ page, request }) => {
   await openCheckout(page, request);

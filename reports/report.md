@@ -76,8 +76,8 @@ Nút "Áp dụng" không bấm được xem như rejected
     + Ở TC-FR09-03, khi áp dụng coupon đã hết hạn sử dụng, status code trả về nên là 422 (Unprocessable Content) hoặc chấp nhận thay thế bằng status code 400 (Bad Request), nhưng AI đã kiểm tra status code 404 (Not Found) dành cho trường hợp coupon vốn không tồn tại, Từ đó dẫn đến sai lệch trong kết quả test. Nguyên nhân có thể là do prompt và đặc tả không quy định rõ status code cho từng trường hợp.
 - Kết quả thực hiện test:
     + Số test đã thực hiện: 36 (12 test mỗi browser)
-    + Số test pass: 27 (9 test mỗi browser)
-    + Số test fail: 9 (3 test mỗi browser)
+    + Số test pass: 30 (10 test mỗi browser)
+    + Số test fail: 6 (2 test mỗi browser)
 
 **c. FR-17: Quản lý Mã Giảm Giá (Coupon CRUD)**
 - Test data: [fr17-data](../tests/FR-17/fr17-cases.json)
@@ -91,13 +91,15 @@ Nút "Áp dụng" không bấm được xem như rejected
 test case: TC-FR17-03 đến TC-FR17-05, TC-FR17-07 đến TC-FR17-22
 ```
 2. Chạy test và đối chiếu kết quả với kết quả ở HW#02; kiểm tra lại script do AI sinh ra.
-- Các lỗi sai của AI đã phát hiện: Không có
+- Các lỗi sai của AI đã phát hiện:
+    + AI sinh sai expected message ở TC-FR17-03, nguyên nhân là có thể là do spec và test case không quy định rõ message khi đăng nhập thất bại là gì.
 - Kết quả thực hiện test:
     + Số test đã thực hiện: 57 (19 test mỗi browser)
     + Số test pass: 48 (16 test mỗi browser)
     + Số test fail: 9 (3 test mỗi browser)
 
 ## Task 2. Demo video
+Link video: https://youtu.be/zcvMxwNEpRg
 
 # 3. Agent Skill
 

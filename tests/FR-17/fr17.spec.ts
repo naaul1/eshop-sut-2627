@@ -20,7 +20,7 @@ test.describe('FR-17 - Quản lý Mã Giảm Giá', () => {
         await couponPage.login(testCase.credentials);
         const alert = await dialog;
         expect(alert.type()).toBe('alert');
-        expect(alert.message()).toContain('admin');
+        expect(alert.message()).toContain('Đăng nhập thất bại');
         await alert.dismiss();
         await couponPage.expectLoginVisible();
         return;

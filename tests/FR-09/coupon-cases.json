@@ -1,0 +1,168 @@
+[
+  {
+    "id": "TC-FR09-01",
+    "category": "valid",
+    "request": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 200,
+      "success": true
+    }
+  },
+  {
+    "id": "TC-FR09-02",
+    "category": "rejected",
+    "request": {
+      "code": "NOTFOUND",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 404,
+      "error": "Mã giảm giá không tồn tại hoặc đã bị vô hiệu hóa"
+    }
+  },
+  {
+    "id": "TC-FR09-03",
+    "category": "rejected",
+    "request": {
+      "code": "EXPIRED",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 403,
+      "error": "Mã giảm giá không tồn tại hoặc đã bị vô hiệu hóa`"
+    }
+  },
+  {
+    "id": "TC-FR09-04",
+    "category": "rejected",
+    "request": {
+      "code": 123,
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 404,
+      "error": "Mã giảm giá không tồn tại hoặc đã bị vô hiệu hóa"
+    }
+  },
+  {
+    "id": "TC-FR09-05",
+    "category": "rejected",
+    "request": {
+      "code": "",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 400,
+      "error": "Vui lòng nhập mã giảm giá",
+      "buttonDisabled": true
+    }
+  },
+  {
+    "id": "TC-FR09-06",
+    "category": "rejected",
+    "request": {
+      "code": "   ",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 404,
+      "error": "Mã giảm giá không tồn tại hoặc đã bị vô hiệu hóa",
+      "buttonDisabled": true
+    }
+  },
+  {
+    "id": "TC-FR09-09",
+    "category": "valid",
+    "request": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 200,
+      "success": true
+    }
+  },
+  {
+    "id": "TC-FR09-11",
+    "category": "rejected",
+    "request": {
+      "code": "EXPIRED",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 400,
+      "error": "Mã giảm giá đã hết hạn"
+    }
+  },
+  {
+    "id": "TC-FR09-31",
+    "category": "valid",
+    "request": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 200,
+      "success": true,
+      "discount_amount": 50000,
+      "final_amount": 450000
+    }
+  },
+  {
+    "id": "TC-FR09-32",
+    "category": "valid",
+    "request": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 200,
+      "success": true,
+      "discount_amount": 50000,
+      "final_amount": 550000
+    }
+  },
+  {
+    "id": "TC-FR09-34",
+    "category": "valid",
+    "request": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 200,
+      "success": true,
+      "discount_amount": 50000,
+      "final_amount": 450000
+    }
+  },
+  {
+    "id": "TC-FR09-35",
+    "category": "valid",
+    "request": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "expected": {
+      "status": 200,
+      "success": true,
+      "discount_amount": 50000,
+      "final_amount": 550000
+    }
+  }
+]

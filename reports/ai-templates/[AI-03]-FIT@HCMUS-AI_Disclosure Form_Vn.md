@@ -30,16 +30,43 @@ Github Copilot - GPT Luna 5.6
 
 ### **2\. Giai đoạn nào của bài tập có dùng AI:**
 
-*Tick tất cả: [x] brainstorm  [x] outline  [x] viết nháp  [] phản hồi  [x] sửa chữa  [] code  [x] phân tích dữ liệu  [] thiết kế đồ hoạ  [] khác (ghi rõ).*
+*Tick tất cả: [x] brainstorm  [x] outline  [x] viết nháp  [] phản hồi  [x] sửa chữa  [x] code  [x] phân tích dữ liệu  [] thiết kế đồ hoạ  [] khác (ghi rõ).*
 
 ### **3\. Prompt / nhiệm vụ chính cho AI:**
 
 *Dán nguyên văn 2–3 prompt quan trọng nhất. Để xem đầy đủ, đính kèm Phụ lục A (prompt\_log.md).*
 
+Viết test script cho các test case: TC-FR03-01 đến TC-FR03-04, TC-FR03-11, TC-FR03-12, TC-FR03-17 đến TC-FR03-20, TC-FR03-22 đến TC-FR03-27
+Đảm bảo các test được thực hiện theo dạng data-driven bằng cách import data từ file .json (nếu có thể), thực hiện test trên 3 trình duyệt là Chrome, Firefox và WebKit và sử dụng ít nhất 3 assertion pattern khác nhau.
+
+Tổng hợp các tác vụ đã thực hiện trong session này thành skill playwright-web-testing
+Đầu vào là mã tính năng và mã test case (nếu không có mã test case thì mặc định thực hiện tất cả các test case liên quan đến tính năng đó), file spec và file test cases.
+Đầu ra là mã nguồn POM, file test script và file test data.
+
+/playwright-web-testing tính năng: FR-09
+test cases: TC-FR09-01 đến TC-FR09-06, TC-FR09-09, TC-FR09-11, TC-FR09-31, TC-FR09-32, TC-FR09-34, TC-FR09-35
+Nút "Áp dụng" không bấm được xem như rejected
 
 ### **4\. Phần cụ thể AI đóng góp:**
 
+AI đã sinh các test script, test data và POM của cho trang liên quan đến các tính năng được test:
+- Test script:
+    + [fr03-script](../../tests/FR-03/forgot-password.spec.ts)
+    + [fr09-script](../../tests/FR-09/coupon.spec.ts)
+    + [fr17-script](../../tests/FR-17/fr17.spec.ts)
+- Test data:
+    + [fr03-data](../../tests/FR-03/forgot-password-cases.json)
+    + [fr09-data](../../tests/FR-09/coupon-cases.json)
+    + [fr17-data](../../tests/FR-17/fr17-cases.json)
+- POM:
+    + [fr03-pom](../../tests/pages/ForgotPasswordPage.ts)
+    + [fr09-pom](../../tests/pages/CouponPage.ts)
+    + [fr17-pom](../../tests/pages/AdminCouponPage.ts)
+(Các file trong folder [text](../ai-artifacts) đã được tạo từ HW#02)
+
 ### **5\. Cách tôi rà soát / chỉnh sửa / xác minh đầu ra AI:**
+
+Tôi đã rà soát và xác minh đầu ra của AI bằng cách chạy thử và đối chiếu kết quả với kết quả do tôi thực hiện test thủ công ở HW#02.
 
 ### **6\. Trích dẫn (nếu môn yêu cầu):**
 
@@ -55,7 +82,7 @@ Github Copilot - GPT Luna 5.6
 | **Lớp / Khoá:** | 23_3 |
 | **Môn học:** | CS423 / CSC13003 – Kiểm chứng Phần mềm |
 | **Giảng viên:** | Lâm Quang Vũ |
-| **Ngày:** | 16/11/2026 |
+| **Ngày:** | 17/11/2026 |
 | **Chữ ký:** | vothiennhan |
 
 ## **Tham khảo**

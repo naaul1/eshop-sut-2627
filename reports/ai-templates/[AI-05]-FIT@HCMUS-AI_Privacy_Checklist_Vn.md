@@ -29,7 +29,7 @@
 
 * [x] Mọi artifact AI sinh đã được gắn tag trong AI Audit Report.  
 * [x] Mọi trích dẫn AI đã được xác minh (nguồn thực sự tồn tại).  
-* [ ] Mọi code AI sinh đã được thực thi và test.  
+* [x] Mọi code AI sinh đã được thực thi và test.  
 * [x] AI Critique 200–300 chữ đã có trong báo cáo.  
 * [x] Đoạn Mandatory Disclosure ở cuối báo cáo.  
 * [x] Đính kèm AI Use Disclosure Form.  
@@ -47,7 +47,7 @@
 | **Lớp / Khoá:** | 23_3 |
 | **Môn học:** | CS423 / CSC13003 – Kiểm chứng Phần mềm |
 | **Giảng viên:** | Lâm Quang Vũ |
-| **Ngày:** | 16/11/2026 |
+| **Ngày:** | 17/11/2026 |
 | **Chữ ký:** | vothiennhan |
 
 ## **Tham khảo**

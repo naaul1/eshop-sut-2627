@@ -34,7 +34,7 @@
       "user_id": 2
     },
     "expected": {
-      "status": 403,
+      "status": 400,
       "error": "Mã giảm giá không tồn tại hoặc đã bị vô hiệu hóa`"
     }
   },

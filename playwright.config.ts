@@ -14,11 +14,11 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Timeout for each test */
-  timeout: 60_000,                 // per test
+  timeout: 30_000,                 // per test
   expect: { timeout: 3_000 },
   /* Retry on CI only */
   retries: 0, //process.env.CI ? 2 : 0,
@@ -32,11 +32,11 @@ export default defineConfig({
     baseURL: 'http://localhost:5173',
     locale: 'vi-VN',               // makes toLocaleString() deterministic: 6.000.000
     timezoneId: 'Asia/Ho_Chi_Minh',
-    headless: false,                // headless by default, unless test:headed
+    headless: true,                // headless by default, unless test:headed
     trace: 'retain-on-failure',    // evidence for flake investigations
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    launchOptions: { slowMo: 300 },//umber(process.env.SLOWMO || 0) },
+    launchOptions: { slowMo: 100 },//umber(process.env.SLOWMO || 0) },
   },
   /* Configure projects for major browsers */
   projects: [

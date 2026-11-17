@@ -28,43 +28,43 @@ Dùng `one-factor-at-a-time`. Giá trị chuẩn: email `test@eshop.com` đã đ
 
 | ID | Biến | Lớp tương đương | Giá trị test | Kết quả mong đợi |
 |---|---|---|---|---|
-| DT-001 | Email yêu cầu OTP | Email hợp lệ và đã đăng ký | `test@eshop.com` | Accepted; hệ thống sinh OTP 6 chữ số và chuyển sang bước 2 hoặc hiển thị mã theo demo. |
-| DT-002 | Email yêu cầu OTP | Sai format email | `test@` | Rejected; cần xác nhận thông báo lỗi. |
-| DT-003 | Email yêu cầu OTP | Chuỗi rỗng | `""` | Rejected; cần xác nhận thông báo lỗi. |
-| DT-004 | Email yêu cầu OTP | Whitespace-only | `"   "` | Rejected; cần xác nhận thông báo lỗi. |
-| DT-005 | Email yêu cầu OTP | Null/giá trị thiếu | `null` hoặc bỏ field | Rejected; cần xác nhận mã lỗi/thông báo. |
-| DT-006 | Email yêu cầu OTP | Email hợp lệ nhưng chưa đăng ký | `unknown@example.com` | Rejected vì FR-03 yêu cầu email đã đăng ký; thông báo cụ thể chưa được đặc tả. |
-| DT-007 | OTP | Đúng 6 chữ số | `482731` | Accepted khi gắn với đúng email và còn hiệu lực. |
-| DT-008 | OTP | Ít hơn 6 chữ số | `48273` | Rejected; cần xác nhận thông báo lỗi. |
-| DT-009 | OTP | Nhiều hơn 6 chữ số | `4827310` | Rejected; cần xác nhận thông báo lỗi. |
-| DT-010 | OTP | Chứa ký tự không phải số | `48A731` | Rejected; cần xác nhận thông báo lỗi. |
-| DT-011 | OTP | Chuỗi rỗng | `""` | Rejected; cần xác nhận thông báo lỗi. |
-| DT-012 | OTP | Whitespace-only | `"      "` | Rejected; cần xác nhận thông báo lỗi. |
-| DT-013 | OTP | Null/giá trị thiếu | `null` hoặc bỏ field | Rejected; cần xác nhận mã lỗi/thông báo. |
-| DT-014 | Email gắn với OTP | Trùng email đã yêu cầu | Bước 1 và bước 2 đều dùng `test@eshop.com` | Accepted nếu OTP hợp lệ; cho phép đặt lại mật khẩu. |
-| DT-015 | Email gắn với OTP | Khác email đã yêu cầu | Bước 1 `test@eshop.com`, bước 2 `other@eshop.com` | Rejected; OTP không được dùng cho email khác. |
-| DT-016 | OTP | Hết thời hạn | OTP hợp lệ nhưng quá thời hạn do hệ thống quy định | Rejected; OTP phải có thời hạn theo SEC-07; thời lượng cụ thể cần xác nhận. |
-| DT-017 | OTP | Đã sử dụng | Dùng lại OTP sau lần đặt lại thành công | Rejected; OTP phải bị vô hiệu hóa sau khi dùng theo SEC-07. |
-| DT-018 | Mật khẩu mới | Đủ mọi điều kiện FR-01 | `NewPass1!` | Accepted nếu OTP hợp lệ và xác nhận khớp. |
-| DT-019 | Mật khẩu mới | Chuỗi rỗng | `""` | Rejected; cần xác nhận thông báo lỗi. |
-| DT-020 | Mật khẩu mới | Whitespace-only | `"        "` | Rejected; không thỏa điều kiện mật khẩu mạnh; cần xác nhận thông báo. |
-| DT-021 | Mật khẩu mới | Null/giá trị thiếu | `null` hoặc bỏ field | Rejected; cần xác nhận mã lỗi/thông báo. |
-| DT-022 | Mật khẩu mới | Thiếu chữ hoa | `newpass1!` | Rejected vì thiếu ít nhất 1 chữ hoa. |
-| DT-023 | Mật khẩu mới | Thiếu chữ thường | `NEWPASS1!` | Rejected vì thiếu ít nhất 1 chữ thường. |
-| DT-024 | Mật khẩu mới | Thiếu chữ số | `NewPass!!` | Rejected vì thiếu ít nhất 1 chữ số. |
-| DT-025 | Mật khẩu mới | Thiếu ký tự đặc biệt hợp lệ | `NewPass12` | Rejected vì thiếu ký tự trong tập `@ $ ! % * ? &`. |
-| DT-026 | Mật khẩu mới | Ký tự đặc biệt ngoài tập cho phép | `NewPass1#` | Rejected vì không có ký tự đặc biệt thuộc tập được quy định. |
-| DT-027 | Mật khẩu mới | Ngắn hơn 8 ký tự | `Aa1!xyz` | Rejected vì không đạt tối thiểu 8 ký tự. |
-| DT-028 | Xác nhận mật khẩu mới | Trùng chính xác mật khẩu mới | Mật khẩu mới `NewPass1!`, xác nhận `NewPass1!` | Accepted nếu các điều kiện khác hợp lệ. |
-| DT-029 | Xác nhận mật khẩu mới | Không trùng mật khẩu mới | Mật khẩu mới `NewPass1!`, xác nhận `NewPass2!` | Rejected vì hai trường không khớp. |
-| DT-030 | Xác nhận mật khẩu mới | Chuỗi rỗng | `""` | Rejected vì thiếu xác nhận; cần xác nhận thông báo lỗi. |
-| DT-031 | Xác nhận mật khẩu mới | Whitespace-only | `"        "` | Rejected vì không khớp mật khẩu mới; cần xác nhận thông báo. |
-| DT-032 | Xác nhận mật khẩu mới | Null/giá trị thiếu | `null` hoặc bỏ field | Rejected; cần xác nhận mã lỗi/thông báo. |
-| DT-033 | Chỉ báo bước | Bước 1 hiển thị đúng | Hiển thị `Bước 1 / 2` ở form nhập email | UI accepted; chỉ báo phải hiện rõ bước hiện tại. |
-| DT-034 | Chỉ báo bước | Bước 2 hiển thị đúng | Hiển thị `Bước 2 / 2` ở form nhập OTP/mật khẩu | UI accepted; chỉ báo phải hiện rõ bước hiện tại. |
-| DT-035 | Chỉ báo bước | Thiếu hoặc sai chỉ báo | Không có chỉ báo, hoặc `Bước 1 / 3` | UI rejected; không tuân thủ yêu cầu Step Indicator. |
-| DT-036 | Nút quay lại đăng nhập | Hiển thị và điều hướng đúng | Bấm `Quay lại đăng nhập` ở luồng quên mật khẩu | Điều hướng về trang đăng nhập. |
-| DT-037 | Nút quay lại đăng nhập | Không hiển thị/điều hướng sai | Nút vắng mặt hoặc bấm không về trang đăng nhập | UI rejected; cần xác định lỗi giao diện. |
+| TC-FR03-01 | Email yêu cầu OTP | Email hợp lệ và đã đăng ký | `test@eshop.com` | Accepted; hệ thống sinh OTP 6 chữ số và chuyển sang bước 2 hoặc hiển thị mã theo demo. |
+| TC-FR03-02 | Email yêu cầu OTP | Sai format email | `test@` | Rejected; cần xác nhận thông báo lỗi. |
+| TC-FR03-03 | Email yêu cầu OTP | Chuỗi rỗng | `""` | Rejected; cần xác nhận thông báo lỗi. |
+| TC-FR03-04 | Email yêu cầu OTP | Whitespace-only | `"   "` | Rejected; cần xác nhận thông báo lỗi. |
+| TC-FR03-05 | Email yêu cầu OTP | Null/giá trị thiếu | `null` hoặc bỏ field | Rejected; cần xác nhận mã lỗi/thông báo. |
+| TC-FR03-06 | Email yêu cầu OTP | Email hợp lệ nhưng chưa đăng ký | `unknown@example.com` | Rejected vì FR-03 yêu cầu email đã đăng ký; thông báo cụ thể chưa được đặc tả. |
+| TC-FR03-07 | OTP | Đúng 6 chữ số | `482731` | Accepted khi gắn với đúng email và còn hiệu lực. |
+| TC-FR03-08 | OTP | Ít hơn 6 chữ số | `48273` | Rejected; cần xác nhận thông báo lỗi. |
+| TC-FR03-09 | OTP | Nhiều hơn 6 chữ số | `4827310` | Rejected; cần xác nhận thông báo lỗi. |
+| TC-FR03-10 | OTP | Chứa ký tự không phải số | `48A731` | Rejected; cần xác nhận thông báo lỗi. |
+| TC-FR03-11 | OTP | Chuỗi rỗng | `""` | Rejected; cần xác nhận thông báo lỗi. |
+| TC-FR03-12 | OTP | Whitespace-only | `"      "` | Rejected; cần xác nhận thông báo lỗi. |
+| TC-FR03-13 | OTP | Null/giá trị thiếu | `null` hoặc bỏ field | Rejected; cần xác nhận mã lỗi/thông báo. |
+| TC-FR03-14 | Email gắn với OTP | Trùng email đã yêu cầu | Bước 1 và bước 2 đều dùng `test@eshop.com` | Accepted nếu OTP hợp lệ; cho phép đặt lại mật khẩu. |
+| TC-FR03-15 | Email gắn với OTP | Khác email đã yêu cầu | Bước 1 `test@eshop.com`, bước 2 `other@eshop.com` | Rejected; OTP không được dùng cho email khác. |
+| TC-FR03-16 | OTP | Hết thời hạn | OTP hợp lệ nhưng quá thời hạn do hệ thống quy định | Rejected; OTP phải có thời hạn theo SEC-07; thời lượng cụ thể cần xác nhận. |
+| TC-FR03-17 | OTP | Đã sử dụng | Dùng lại OTP sau lần đặt lại thành công | Rejected; OTP phải bị vô hiệu hóa sau khi dùng theo SEC-07. |
+| TC-FR03-18 | Mật khẩu mới | Đủ mọi điều kiện FR-01 | `NewPass1!` | Accepted nếu OTP hợp lệ và xác nhận khớp. |
+| TC-FR03-19 | Mật khẩu mới | Chuỗi rỗng | `""` | Rejected; cần xác nhận thông báo lỗi. |
+| TC-FR03-20 | Mật khẩu mới | Whitespace-only | `"        "` | Rejected; không thỏa điều kiện mật khẩu mạnh; cần xác nhận thông báo. |
+| TC-FR03-21 | Mật khẩu mới | Null/giá trị thiếu | `null` hoặc bỏ field | Rejected; cần xác nhận mã lỗi/thông báo. |
+| TC-FR03-22 | Mật khẩu mới | Thiếu chữ hoa | `newpass1!` | Rejected vì thiếu ít nhất 1 chữ hoa. |
+| TC-FR03-23 | Mật khẩu mới | Thiếu chữ thường | `NEWPASS1!` | Rejected vì thiếu ít nhất 1 chữ thường. |
+| TC-FR03-24 | Mật khẩu mới | Thiếu chữ số | `NewPass!!` | Rejected vì thiếu ít nhất 1 chữ số. |
+| TC-FR03-25 | Mật khẩu mới | Thiếu ký tự đặc biệt hợp lệ | `NewPass12` | Rejected vì thiếu ký tự trong tập `@ $ ! % * ? &`. |
+| TC-FR03-26 | Mật khẩu mới | Ký tự đặc biệt ngoài tập cho phép | `NewPass1#` | Rejected vì không có ký tự đặc biệt thuộc tập được quy định. |
+| TC-FR03-27 | Mật khẩu mới | Ngắn hơn 8 ký tự | `Aa1!xyz` | Rejected vì không đạt tối thiểu 8 ký tự. |
+| TC-FR03-28 | Xác nhận mật khẩu mới | Trùng chính xác mật khẩu mới | Mật khẩu mới `NewPass1!`, xác nhận `NewPass1!` | Accepted nếu các điều kiện khác hợp lệ. |
+| TC-FR03-29 | Xác nhận mật khẩu mới | Không trùng mật khẩu mới | Mật khẩu mới `NewPass1!`, xác nhận `NewPass2!` | Rejected vì hai trường không khớp. |
+| TC-FR03-30 | Xác nhận mật khẩu mới | Chuỗi rỗng | `""` | Rejected vì thiếu xác nhận; cần xác nhận thông báo lỗi. |
+| TC-FR03-31 | Xác nhận mật khẩu mới | Whitespace-only | `"        "` | Rejected vì không khớp mật khẩu mới; cần xác nhận thông báo. |
+| TC-FR03-32 | Xác nhận mật khẩu mới | Null/giá trị thiếu | `null` hoặc bỏ field | Rejected; cần xác nhận mã lỗi/thông báo. |
+| TC-FR03-33 | Chỉ báo bước | Bước 1 hiển thị đúng | Hiển thị `Bước 1 / 2` ở form nhập email | UI accepted; chỉ báo phải hiện rõ bước hiện tại. |
+| TC-FR03-34 | Chỉ báo bước | Bước 2 hiển thị đúng | Hiển thị `Bước 2 / 2` ở form nhập OTP/mật khẩu | UI accepted; chỉ báo phải hiện rõ bước hiện tại. |
+| TC-FR03-35 | Chỉ báo bước | Thiếu hoặc sai chỉ báo | Không có chỉ báo, hoặc `Bước 1 / 3` | UI rejected; không tuân thủ yêu cầu Step Indicator. |
+| TC-FR03-36 | Nút quay lại đăng nhập | Hiển thị và điều hướng đúng | Bấm `Quay lại đăng nhập` ở luồng quên mật khẩu | Điều hướng về trang đăng nhập. |
+| TC-FR03-37 | Nút quay lại đăng nhập | Không hiển thị/điều hướng sai | Nút vắng mặt hoặc bấm không về trang đăng nhập | UI rejected; cần xác định lỗi giao diện. |
 
 ## 5. Coverage và câu hỏi xác nhận
 

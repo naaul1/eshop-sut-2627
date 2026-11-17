@@ -1,0 +1,67 @@
+﻿02c352c | 2026-11-16 23:07:34 +0700 | test: adjust lots of cases
+1fc3cda | 2026-11-16 22:23:14 +0700 | test: cover FR-15 validation
+704b440 | 2026-11-16 22:12:48 +0700 | test: cover FR-15 product CRUD
+72476ea | 2026-11-16 22:07:38 +0700 | test: cover FR-07 quantity and removal behavior
+ae06895 | 2026-11-16 21:59:52 +0700 | test: verify FR-07 duplicate items and totals
+15b6952 | 2026-11-16 21:55:59 +0700 | test: cover FR-07 basic cart flows
+9ca8e65 | 2026-11-16 21:51:39 +0700 | cover FR-01 password and duplicate email cases
+dd82b12 | 2026-11-16 21:46:15 +0700 | test: cover FR-01 required fields and email validation
+2d0cb73 | 2026-11-16 21:41:01 +0700 | test: add FR-01 registration happy path
+b95ef77 | 2026-11-04 13:13:41 +0700 | Revert "update: add test case for sc03"
+05c3776 | 2026-11-03 15:01:06 +0700 | update: Change locators strategy in `LoginPage` for demo purpose.
+f50aa1f | 2026-11-03 00:22:35 +0700 | update: add test case for sc03
+6e1d771 | 2026-11-02 23:42:33 +0700 | Merge branch 'main' of github.com:naaul1/eshop-sut-2627
+891ad75 | 2026-11-02 23:42:20 +0700 | update: sc03 data-driven & add tools theories
+99bb2cb | 2026-10-31 19:15:30 +0700 | add: Included `Seminar_Requirement` for reference.
+51cbab0 | 2026-10-27 23:27:02 +0700 | update: Minor inconsistence error changes on `report.md`
+26f7869 | 2026-10-27 21:04:50 +0700 | Merge pull request #41 from naaul1/playwright-sc03
+38e90e5 | 2026-10-27 21:03:19 +0700 | Merge pull request #40 from naaul1/webdriverio-sc03
+b437f9d | 2026-10-27 19:35:31 +0700 | update: deleted custom config (forgot on the previous commit)
+f3b32b3 | 2026-10-27 19:34:49 +0700 | update: report - added scenario 3, added webdriver docs, deleted custom config for sc03
+ef22dab | 2026-10-27 19:30:35 +0700 | add: added sc03 - playwright, added custom config (delete later)
+07b359c | 2026-10-27 18:55:47 +0700 | update: report - add webdriverio docs
+46ec329 | 2026-10-27 18:53:24 +0700 | update: reoort - add sc03 - wdio
+2ff7977 | 2026-10-27 18:49:33 +0700 | add: sc03 - wdio
+07fef44 | 2026-10-27 16:43:05 +0700 | update: report - add wdio section
+de50d06 | 2026-10-27 16:35:16 +0700 | add: sc02 - wdio
+579ed87 | 2026-10-26 15:44:54 +0700 | init wdio
+653141c | 2026-10-24 14:14:50 +0700 | add: Extract `AI_Usage_Declaration.md` from `report`.
+46e3f14 | 2026-10-24 13:59:27 +0700 | update: Match `report.md` to `sc01`'s behaviour.
+2b55e86 | 2026-10-24 13:38:34 +0700 | update: correct some report typo
+0979fae | 2026-10-24 05:55:55 +0700 | update: Minor bug fix.
+888495e | 2026-10-24 01:30:46 +0700 | Merge branch 'main' of github.com:naaul1/eshop-sut-2627
+2273143 | 2026-10-24 01:26:45 +0700 | update: Follow-up of the commit below.
+56b25eb | 2026-10-24 01:26:10 +0700 | update: Added TOC to, rewording section `Demo`, and redid inconsistent parts in `report.md`
+c44f296 | 2026-10-24 00:30:15 +0700 | update: Non-admin tests now use their own fresh account. Write in depth demo descriptions in `report.md`.
+c3f9aef | 2026-10-23 22:58:30 +0700 | Merge pull request #39 from naaul1/cart-test-NguyenNhan
+f4fd411 | 2026-10-23 22:21:52 +0700 | update: create new user for each lockout test
+81fde50 | 2026-10-23 22:18:47 +0700 | Merge branch 'cart-test-NguyenNhan'
+f33b253 | 2026-10-23 22:11:37 +0700 | add: `report.md` content, including Giß╗¢i thiß╗çu, C├ích c├ái ─æß║╖t, Config v├á Cß║Ñu tr├║c folder
+5d7b229 | 2026-10-23 21:08:53 +0700 | add: sc02
+b5c1a7c | 2026-10-23 17:50:12 +0700 | add: added cart test related pages, added test cases
+36f71ec | 2026-10-23 06:39:14 +0700 | update: Fix minor error in `tests/checkout/`
+bbe2292 | 2026-10-23 06:38:10 +0700 | update: Rewrite `Task_Assignment.md`. Have `playwright.config.ts`run headless by default (npm run test:headed for headed test). Move checkout tests into one place.
+447f6f6 | 2026-10-23 04:33:46 +0700 | update: Move existing .js playwright files to .ts
+ab76770 | 2026-10-23 01:25:16 +0700 | Merge branch 'main' of github.com:naaul1/eshop-sut-2627
+3cce828 | 2026-10-23 01:23:59 +0700 | ShareA: Login, Lockout & Demo scenario 1: Smoke test
+9051b86 | 2026-10-22 23:37:49 +0700 | Merge branch 'main' of github.com:naaul1/eshop-sut-2627
+b76d426 | 2026-10-22 21:16:13 +0700 | Disable CI Workflow
+ea6dc86 | 2026-10-22 21:03:37 +0700 | update ci workflow
+1ba4f7f | 2026-10-22 16:00:12 +0700 | Setup test folder & login test
+33f9af6 | 2026-10-22 12:55:59 +0700 | Playwright scaffold
+b113ab7 | 2026-10-22 05:59:56 +0700 | add: ShareC (Checkout) test cases provided. Temporary tests/support added as stub.
+74e6c35 | 2026-10-21 21:48:53 +0700 | Merge branch 'main' of github.com:naaul1/eshop-sut-2627
+f57cbac | 2026-10-21 21:48:25 +0700 | Merge branch 'main' of github.com:naaul1/eshop-sut-2627
+2d52a4d | 2026-10-21 21:43:32 +0700 | update: init `report.md`, move reference docs to their own folder.
+d877ba7 | 2026-10-21 21:25:13 +0700 | th├¬m gitignore
+fb8a3d8 | 2026-10-17 20:43:51 +0700 | add: `Task_Assignmend.md`, which divide the workload into 3 shares.
+897d764 | 2026-10-17 19:22:59 +0700 | update: Moved Playwright-Guide and Proposal into docs/. Added empty `User_Guide.md`
+48a9897 | 2026-10-10 00:29:15 +0700 | update: Exclude .sqlite in gitignore
+42468f3 | 2026-10-10 00:24:46 +0700 | add: Added section III (Demo script), gitignore, Playwright-Guide.md (unverified). Update package-lock.json on frontend-admin/ to address a bug.
+9384852 | 2026-10-02 23:55:42 +0700 | update: Fix info mismatch and typo in Proposal.md
+6643489 | 2026-10-02 23:46:02 +0700 | update: More tool to compare. Added Procedure section.
+d6ae6b6 | 2026-10-02 23:06:57 +0700 | update: Th├¬m phß║ºn definition v├á keywords trong Proposal.md
+4184ee5 | 2026-09-27 19:15:13 +0700 | update: add content to Proposal.md
+2301037 | 2026-09-27 18:13:46 +0700 | add: Proposal.md
+85af3ba | 2026-05-15 08:30:35 +0700 | first upload
+2f9bf2b | 2026-05-15 08:27:44 +0700 | Initial commit

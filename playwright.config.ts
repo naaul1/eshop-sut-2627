@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const studentId = process.env.STUDENT_ID ?? '23120064';
+const isoTimestamp = new Date().toISOString();
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -25,18 +28,24 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: 1, // process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: [
+  ['list'],
+  ['html', {
+    open: 'never',
+    title: `Run by: ${studentId} | Timestamp: ${isoTimestamp}`,
+  }],
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: 'http://localhost:5173',
     locale: 'vi-VN',               // makes toLocaleString() deterministic: 6.000.000
     timezoneId: 'Asia/Ho_Chi_Minh',
-    headless: false,                // headless by default, unless test:headed
+    headless: true,                // headless by default, unless test:headed
     trace: 'retain-on-failure',    // evidence for flake investigations
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    launchOptions: { slowMo: 100 },//umber(process.env.SLOWMO || 0) },
+    launchOptions: { slowMo: 0 },//umber(process.env.SLOWMO || 0) },
   },
 
   /* Configure projects for major browsers */
